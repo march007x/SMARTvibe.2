@@ -1,6 +1,6 @@
 # ---------- ความลับ ห้าม push เด็ดขาด ----------
-firmware/SmartVibe_ESP32S3/secrets.h
-dashboard/.streamlit/secrets.toml
+**/secrets.h
+**/secrets.toml
 
 # ---------- Python ----------
 __pycache__/
