@@ -1,0 +1,9 @@
+streamlit>=1.36
+pandas>=2.0
+numpy>=1.24
+scipy>=1.11
+requests>=2.31
+streamlit-autorefresh>=1.0.1
+
+# สำหรับรันเทสต์เท่านั้น (Streamlit Cloud ไม่จำเป็นต้องมี)
+pytest>=8.0
