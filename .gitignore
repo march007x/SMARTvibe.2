@@ -1,0 +1,21 @@
+# ---------- ความลับ ห้าม push เด็ดขาด ----------
+firmware/SmartVibe_ESP32S3/secrets.h
+dashboard/.streamlit/secrets.toml
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ---------- ระบบปฏิบัติการ ----------
+.DS_Store
+Thumbs.db
+
+# ---------- Arduino ----------
+build/
+*.bin
+*.elf
