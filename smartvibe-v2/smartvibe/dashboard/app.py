@@ -70,32 +70,8 @@ def main():
                      "ตรวจพบการกระตุ้นแบบไซน์ความถี่เดียว แต่โหมดปัจจุบันคือติดตาม fn "
                      "— ค่าที่เห็นคือความถี่ลำโพง ไม่ใช่ของตึก")
 
-    # เตือนเมื่อบางชั้นจับพีคที่เป็นฮาร์มอนิกของความถี่ลำโพง
-    if result.harmonic_floors and result.f_drive:
-        who = ", ".join(f"ชั้น {i+1}" for i in result.harmonic_floors)
-        theme.banner("warning",
-                     f"{who} จับพีคที่เป็นฮาร์มอนิก (ทวีคูณ) ของความถี่ลำโพง "
-                     f"— ระบบพับกลับมาใช้ {result.f_drive:.2f} Hz เป็นความถี่อ้างอิงแล้ว "
-                     "แต่แปลว่าลำโพงเล่นความถี่นี้ได้ไม่สะอาด")
-
-    # เตือนเมื่อรูปทรงการแกว่งผิดปกติ (ชั้นกลางเป็นโหนด หรือตึกไม่ขยายการสั่น)
-    if result.amp_ratio_hint:
-        theme.banner("warning", result.amp_ratio_hint)
-
-    # coherence ต่ำทั้งสองคู่ = ตัดสินอะไรไม่ได้เลย ต้องบอกวิธีแก้ให้ชัด
-    if (result.active_mode == "sine" and result.f_drive
-            and result.T21 is None and result.T32 is None
-            and max(result.coh21, result.coh32) > 0):
-        theme.banner("error",
-                     f"coherence ต่ำทั้งสองคู่ ({result.coh21:.2f} / {result.coh32:.2f}) "
-                     "ระบบจึงคำนวณ Health ไม่ได้ — ลองเพิ่มความดังลำโพง "
-                     "หรือเปลี่ยนความถี่ไปที่เรโซแนนซ์จริงของตึก")
-
-    # เสนอความถี่อื่นที่ตึกตอบสนอง ไว้ให้ลองปรับลำโพงหาเรโซแนนซ์
-    if result.other_resonances and result.active_mode == "sine":
-        lst = " · ".join(f"{f:.1f} Hz" for f in result.other_resonances)
-        st.caption(f"ตึกยังตอบสนองที่ความถี่อื่นด้วย: {lst} "
-                   "— ถ้ารูปทรงการแกว่งยังไม่เป็นขั้นบันได ลองปรับลำโพงไปที่ค่าเหล่านี้ทีละค่า")
+    # หมายเหตุ: คำเตือนอัตโนมัติ (ฮาร์มอนิก / โหนด / coherence ต่ำ) ถูกย้ายไปไว้ใน
+    # แผง debug ทั้งหมดแล้ว เพื่อไม่ให้มีแถบสีมาบังหน้าจอหลักตอนนำเสนอ
 
     # ---------- 4) ปุ่มควบคุม ----------
     c1, c2 = st.columns([2, 1], gap="medium")
