@@ -63,7 +63,14 @@ def render(result, df, t0, client, stuck):
             txt = (" · ".join(f"{f:.2f} Hz ({s:.0f})" for f, s in fr.peaks)
                    if fr.peaks else "—")
             rows += _item(f"ชั้น {i+1}", txt)
+        if result.other_resonances:
+            rows += _item("ความถี่อื่นที่ตึกตอบสนอง",
+                          " · ".join(f"{f:.1f} Hz" for f in result.other_resonances))
         st.markdown(f'<div class="sv-dbg">{rows}</div>', unsafe_allow_html=True)
+
+        # คำเตือนย้ายมาไว้ตรงนี้แทนที่จะเป็นแถบสีบนหน้าจอหลัก
+        if result.amp_ratio_hint:
+            st.caption(f"⚠️ {result.amp_ratio_hint}")
         st.markdown(
             f'<div class="sv-dbg-url">แหล่งข้อมูล: '
             f'{C.FIREBASE_DOMAIN or "—ยังไม่ตั้งค่า—"}/{C.DB_PATH}.json</div>',
