@@ -46,7 +46,8 @@ class AnalysisResult:
     coh32: float = 0.0
     n_points: int = 0
     harmonic_floors: List[int] = field(default_factory=list)  # ชั้นที่จับฮาร์มอนิกมา
-    amp_ratio_hint: str = ""            # คำเตือนเมื่อสัดส่วนแอมพลิจูดแบนผิดปกติ
+    amp_ratio_hint: str = ""            # คำเตือนเมื่อรูปทรงการแกว่งผิดปกติ
+    other_resonances: List[float] = field(default_factory=list)  # ความถี่อื่นที่ตึกตอบสนอง
 
 
 def _detect_sine(fns, sharps, fn_hists) -> bool:
@@ -143,11 +144,30 @@ def analyze(df: pd.DataFrame, ss, mode_choice: str, th) -> AnalysisResult:
     amps = [f.amp for f in res.floors]
     if all(a for a in amps):
         top_ratio = amps[-1] / amps[0]
-        if top_ratio < 1.25:
+        if amps[1] < min(amps[0], amps[2]) * 0.95:
+            # ชั้นกลางแกว่งน้อยกว่าทั้งชั้นล่างและชั้นบน = อยู่ใกล้จุดโหนด
+            # โหมดที่ 1 ต้องเพิ่มขึ้นตามความสูงเสมอ ถ้าเป็นแบบนี้แปลว่าไปโดนโหมดสูง
+            res.amp_ratio_hint = (
+                f"ชั้นกลางแกว่งน้อยกว่าทั้งชั้นบนและชั้นล่าง "
+                f"({amps[0]:.4f} / {amps[1]:.4f} / {amps[2]:.4f}) "
+                "— แปลว่าชั้น 2 อยู่ใกล้จุดโหนดของโหมดการสั่นที่ถูกกระตุ้นอยู่ "
+                "ความถี่นี้ไม่ใช่โหมดที่ 1 ไม่ควรใช้ล็อก baseline")
+        elif top_ratio < 1.25:
             res.amp_ratio_hint = (
                 f"ชั้นบนสุดแกว่งแรงกว่าชั้นล่างเพียง {top_ratio:.2f} เท่า "
                 "— ตึกยังแทบไม่ขยายการสั่น มักเกิดจากกระตุ้นที่ความถี่ห่างจาก "
                 "ความถี่ธรรมชาติมาก ควรปรับความถี่เข้าใกล้เรโซแนนซ์ หรือเปลี่ยนเป็นการเคาะ")
+
+    # ---------- 3.6) รวบรวมความถี่อื่นที่ตึกตอบสนอง (ไว้ช่วยหาเรโซแนนซ์) ----------
+    cand = {}
+    for fr in res.floors:
+        for f, sharp in fr.peaks:
+            if res.f_drive and abs(f - res.f_drive) < 0.8:
+                continue                        # ข้ามความถี่ที่กำลังขับอยู่
+            key = round(f * 2) / 2               # จับกลุ่มทุก 0.5 Hz
+            cand[key] = cand.get(key, 0.0) + sharp
+    res.other_resonances = [f for f, _ in
+                            sorted(cand.items(), key=lambda kv: -kv[1])[:3]]
 
     # ---------- 4) Transmissibility (H1 + coherence) ----------
     if res.active_mode == "sine" and res.f_drive and all(s is not None for s in signals):
