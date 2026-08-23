@@ -28,6 +28,7 @@ class FloorResult:
     df_shift: float = 0.0               # Δf เทียบ baseline
     health: Optional[float] = None
     psd: Optional[np.ndarray] = None
+    peaks: List[tuple] = field(default_factory=list)   # พีคเด่น 3 อันดับ (f, ความคม)
 
 
 @dataclass
@@ -44,6 +45,8 @@ class AnalysisResult:
     coh21: float = 0.0
     coh32: float = 0.0
     n_points: int = 0
+    harmonic_floors: List[int] = field(default_factory=list)  # ชั้นที่จับฮาร์มอนิกมา
+    amp_ratio_hint: str = ""            # คำเตือนเมื่อสัดส่วนแอมพลิจูดแบนผิดปกติ
 
 
 def _detect_sine(fns, sharps, fn_hists) -> bool:
@@ -95,6 +98,7 @@ def analyze(df: pd.DataFrame, ss, mode_choice: str, th) -> AnalysisResult:
         fr.sharpness = sh
         fr.fn = median_filter(ss[f"fn_hist{i}"], fn_raw, C.HISTORY_SIZE) if fn_raw else None
         fr.wideband = dsp.wideband_energy(fw, psd, fs=res.fs)
+        fr.peaks = dsp.top_peaks(fw, psd, fs=res.fs)
 
         fns.append(fr.fn); sharps.append(sh)
         res.floors.append(fr)
@@ -108,8 +112,8 @@ def analyze(df: pd.DataFrame, ss, mode_choice: str, th) -> AnalysisResult:
     else:
         res.active_mode = "sine"
 
-    valid_fns = [f for f in fns if f]
-    res.f_drive = float(np.median(valid_fns)) if valid_fns else None
+    # เลือกความถี่อ้างอิงแบบพับฮาร์มอนิกกลับลงมาก่อน (ดู dsp.fundamental_of)
+    res.f_drive, res.harmonic_floors = dsp.fundamental_of(fns)
     res.excitation_ok = all(f.rms >= th.rms_min for f in res.floors)
 
     # ---------- 3) แอมพลิจูด ----------
@@ -131,6 +135,19 @@ def analyze(df: pd.DataFrame, ss, mode_choice: str, th) -> AnalysisResult:
         if center:
             a_raw = dsp.band_rms(fw, psd, center - 0.5, center + 0.5)
             fr.amp = median_filter(ss[f"amp_hist{i}"], a_raw, C.HISTORY_SIZE)
+
+    # ---------- 3.5) ตรวจว่าอาคาร "ขยายการสั่น" พอหรือไม่ ----------
+    # ถ้าขับที่ความถี่ต่ำกว่าความถี่ธรรมชาติมาก ตึกจะขยับไปพร้อมกันแทบทั้งก้อน
+    # อัตราส่วนแอมพลิจูดระหว่างชั้นจะแบนเกือบเท่ากับ 1 ทำให้แยกชั้นไม่ออก
+    # และล็อก baseline ได้ค่าที่ไม่ไวต่อความเสียหาย
+    amps = [f.amp for f in res.floors]
+    if all(a for a in amps):
+        top_ratio = amps[-1] / amps[0]
+        if top_ratio < 1.25:
+            res.amp_ratio_hint = (
+                f"ชั้นบนสุดแกว่งแรงกว่าชั้นล่างเพียง {top_ratio:.2f} เท่า "
+                "— ตึกยังแทบไม่ขยายการสั่น มักเกิดจากกระตุ้นที่ความถี่ห่างจาก "
+                "ความถี่ธรรมชาติมาก ควรปรับความถี่เข้าใกล้เรโซแนนซ์ หรือเปลี่ยนเป็นการเคาะ")
 
     # ---------- 4) Transmissibility (H1 + coherence) ----------
     if res.active_mode == "sine" and res.f_drive and all(s is not None for s in signals):

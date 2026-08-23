@@ -86,6 +86,61 @@ def peak_frequency(fw, psd, fs=None, lo=C.SEARCH_LO, hi=C.SEARCH_HI):
     return _parabolic(fw, psd, idx), sharp
 
 
+def top_peaks(fw, psd, fs=None, n=3, lo=C.SEARCH_LO, hi=C.SEARCH_HI, min_sep=1.0):
+    """หาพีคเด่น n อันดับแรกที่ห่างกันอย่างน้อย min_sep Hz
+
+    ใช้ตรวจว่าสัญญาณมีฮาร์มอนิกปนหรือไม่ — ถ้าลำโพงเล่นความถี่ต่ำไม่ไหว
+    จะเห็นพีคที่ f, 2f, 3f พร้อมกัน ซึ่ง peak_frequency() ที่คืนพีคเดียว
+    จะมองไม่เห็นและอาจหยิบฮาร์มอนิกมาเป็นความถี่อ้างอิงโดยไม่รู้ตัว
+
+    คืน list ของ (ความถี่, ความคม) เรียงจากแรงไปเบา
+    """
+    if fs is not None:
+        hi = min(hi, fs * 0.45)
+    m = (fw >= lo) & (fw <= hi)
+    if not m.any():
+        return []
+    idxs = np.where(m)[0]
+    med = float(np.median(psd[idxs])) + 1e-20
+    out = []
+    for i in idxs[np.argsort(psd[idxs])[::-1]]:
+        f = _parabolic(fw, psd, int(i))
+        if all(abs(f - g) >= min_sep for g, _ in out):
+            out.append((f, float(psd[i] / med)))
+        if len(out) >= n:
+            break
+    return out
+
+
+def fundamental_of(freqs, tol=0.10):
+    """เลือกความถี่กระตุ้นจากพีคของแต่ละชั้น โดยพับฮาร์มอนิกกลับลงมาก่อน
+
+    🐛 ปัญหาที่แก้: ลำโพงเล่นความถี่ต่ำ (เช่น 7 Hz) ไม่ไหว จึงเกิดฮาร์มอนิกที่ 2f, 3f
+       ชั้นที่บังเอิญมีเรโซแนนซ์ใกล้ 2f จะรายงานพีคที่ 2f แทนที่จะเป็น f
+       ถ้าเอา median ตรง ๆ แล้วชั้นส่วนใหญ่จับฮาร์มอนิก ความถี่อ้างอิงจะผิดทันที
+       และค่า Health ทั้งหมดจะเทียบกับ baseline คนละความถี่โดยไม่มีใครรู้
+
+    ✅ วิธีแก้: ถ้าค่าไหนเป็นทวีคูณ (×2 หรือ ×3) ของค่าต่ำสุด ให้หารกลับก่อนหา median
+
+    คืน (ความถี่มูลฐาน, รายชื่อ index ของชั้นที่จับฮาร์มอนิกมา)
+    """
+    vals = [(i, f) for i, f in enumerate(freqs) if f]
+    if not vals:
+        return None, []
+    base = min(f for _, f in vals)
+    folded, harmonic = [], []
+    for i, f in vals:
+        for k in (1, 2, 3):
+            if abs(f / k - base) <= tol * base:
+                folded.append(f / k)
+                if k > 1:
+                    harmonic.append(i)
+                break
+        else:
+            folded.append(f)
+    return float(np.median(folded)), harmonic
+
+
 def tracked_peak(fw, psd, center, half=C.TRACK_HALF):
     """ตามล่าพีคใหม่ในหน้าต่าง ±half รอบ center
 
