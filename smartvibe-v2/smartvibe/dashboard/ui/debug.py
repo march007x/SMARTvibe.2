@@ -39,6 +39,8 @@ def render(result, df, t0, client, stuck):
                     "ไซน์คงที่" if result.active_mode == "sine" else "ติดตาม fn")
             + _item("ตรวจพบสัญญาณไซน์", "ใช่" if result.sine_detected else "ไม่")
             + _item("ความคมของพีค", sharp_txt)
+            + _item("ความถี่กระตุ้นที่ใช้อ้างอิง",
+                    f"{result.f_drive:.2f} Hz" if result.f_drive else "—")
             + _item("fn ชั้น 1/2/3 (Hz)", fn_txt)
             + _item("แอมพลิจูด 1/2/3", amp_txt)
             + _item("T21 · coherence",
@@ -50,6 +52,18 @@ def render(result, df, t0, client, stuck):
             + _item("คีย์ล่าสุดที่ดึงได้", f"{client.last_key or '—'}")
         )
         st.markdown(f'<div class="sv-dbg">{items}</div>', unsafe_allow_html=True)
+
+        # พีคเด่น 3 อันดับของแต่ละชั้น — ใช้ดูว่ามีฮาร์มอนิกปนหรือไม่
+        # (ถ้าเห็น f กับ 2f พร้อมกัน = ลำโพงเล่นความถี่นั้นได้ไม่สะอาด)
+        st.markdown('<div class="sv-dbg-k" style="margin:14px 0 6px">'
+                    'พีคเด่น 3 อันดับของแต่ละชั้น (ความถี่ · ความคม)</div>',
+                    unsafe_allow_html=True)
+        rows = ""
+        for i, fr in enumerate(result.floors):
+            txt = (" · ".join(f"{f:.2f} Hz ({s:.0f})" for f, s in fr.peaks)
+                   if fr.peaks else "—")
+            rows += _item(f"ชั้น {i+1}", txt)
+        st.markdown(f'<div class="sv-dbg">{rows}</div>', unsafe_allow_html=True)
         st.markdown(
             f'<div class="sv-dbg-url">แหล่งข้อมูล: '
             f'{C.FIREBASE_DOMAIN or "—ยังไม่ตั้งค่า—"}/{C.DB_PATH}.json</div>',
