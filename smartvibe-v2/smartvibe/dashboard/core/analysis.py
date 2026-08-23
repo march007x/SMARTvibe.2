@@ -113,8 +113,15 @@ def analyze(df: pd.DataFrame, ss, mode_choice: str, th) -> AnalysisResult:
     else:
         res.active_mode = "sine"
 
-    # เลือกความถี่อ้างอิงแบบพับฮาร์มอนิกกลับลงมาก่อน (ดู dsp.fundamental_of)
-    res.f_drive, res.harmonic_floors = dsp.fundamental_of(fns)
+    # ความถี่อ้างอิง = median ของพีคที่แต่ละชั้นหาได้
+    #
+    # 🐛 เคยลองใช้วิธี "พับฮาร์มอนิกกลับลงมา" (dsp.fundamental_of) แล้วพบว่าอันตรายกว่า:
+    #    ถ้าชั้นใดชั้นหนึ่งจับพีคหลอกที่ความถี่ต่ำ (เช่น 5.12 Hz จากสัญญาณรบกวน)
+    #    ตัวพับจะลากความถี่อ้างอิงของทั้งระบบลงไปหาค่าหลอกนั้นทันที
+    #    ส่วน median ทนกว่า เพราะต้องมีอย่างน้อย 2 ใน 3 ชั้นที่เห็นตรงกันจึงจะเปลี่ยนค่า
+    valid_fns = [f for f in fns if f]
+    res.f_drive = float(np.median(valid_fns)) if valid_fns else None
+    res.harmonic_floors = []
     res.excitation_ok = all(f.rms >= th.rms_min for f in res.floors)
 
     # ---------- 3) แอมพลิจูด ----------
