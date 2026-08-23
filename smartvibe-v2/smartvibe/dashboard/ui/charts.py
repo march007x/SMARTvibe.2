@@ -24,8 +24,7 @@ def amplitude_bar(result, ss):
     rows = ""
     for i, a in enumerate(amps):
         status = ss.get(f"status{i}", "green")
-        has_health = result.floors[i].health is not None
-        color = T.STATUS_COLOR.get(status, T.OK) if has_health else T.ACCENT
+        color = T.bar_color(status, result.floors[i].health is not None)
         pct = (a / mx * 100) if a else 0.0
         val = f"{a:.4f}" if a else "—"
         rows += (
@@ -35,10 +34,15 @@ def amplitude_bar(result, ss):
             f'style="width:{pct:.1f}%;background:{color}"></div></div>'
             f'<div class="sv-amp-val" style="color:{color}">{val}</div>'
             f'</div>')
-    st.markdown(rows, unsafe_allow_html=True)
 
-    st.caption("ปกติชั้นบนจะแกว่งแรงกว่าชั้นล่าง — แท่งเปลี่ยนเป็นสีเหลือง/แดง "
-               "เมื่อชั้นนั้นเข้าเกณฑ์เฝ้าระวังหรืออันตราย")
+    # คำอธิบายสี — ให้ผู้ใช้อ่านสีออกโดยไม่ต้องเดา
+    legend = "".join(
+        f'<span class="sv-key"><i style="background:{c}"></i>{t}</span>'
+        for c, t in [(T.ACCENT, "ปกติ"), (T.WARN, "เฝ้าระวัง"), (T.DANGER, "อันตราย")])
+    st.markdown(rows + f'<div class="sv-legend">{legend}</div>', unsafe_allow_html=True)
+
+    st.caption("ปกติชั้นบนจะแกว่งแรงกว่าชั้นล่าง — ทุกแท่งเป็นสีฟ้าเมื่อไม่มีอะไรผิดปกติ "
+               "และจะเปลี่ยนเป็นสีเหลืองหรือแดงเฉพาะชั้นที่เข้าเกณฑ์เท่านั้น")
 
 
 def spectrum(result):

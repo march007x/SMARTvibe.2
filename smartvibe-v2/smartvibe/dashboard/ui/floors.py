@@ -43,7 +43,21 @@ def render(result, ss, th):
                 telegram.on_health_sample(i, pct)
                 judged = True
 
-        color = T.STATUS_COLOR.get(status, T.OK) if pct is not None else T.ACCENT
+        color = T.bar_color(status, pct is not None)
+
+        # เหตุผลที่ยังไม่มีค่า Health — ต้องแยกให้ชัด ไม่งั้นขึ้น "รอล็อก Baseline"
+        # ทั้งที่ล็อกไปแล้ว (ชั้นอ้างอิงในโหมดไซน์จะไม่มีค่า Health ตลอดไป)
+        if pct is not None:
+            reason = None
+        elif result.active_mode == "sine" and i == 0:
+            reason = ("ชั้นอ้างอิง", "โหมดไซน์ใช้ชั้นนี้เป็นตัวหาร จึงไม่มีค่า Health ของตัวเอง")
+        elif fr.fn is None:
+            reason = ("ไม่มีสัญญาณ", "หาพีคไม่เจอ หรือเซ็นเซอร์ช่องนี้ไม่ส่งข้อมูล")
+        elif result.active_mode == "sine" and (
+                (i == 1 and result.T21 is None) or (i == 2 and result.T32 is None)):
+            reason = ("ข้อมูลยังเชื่อไม่ได้", "coherence ต่ำกว่าเกณฑ์ ระบบพักการตัดสิน")
+        else:
+            reason = ("รอล็อก Baseline", "กดล็อก Baseline ขณะโครงสร้างสมบูรณ์")
 
         # ---------- 2) แถวแอมพลิจูด ----------
         if fr.amp is not None:
@@ -86,7 +100,7 @@ def render(result, ss, th):
 
         # ---------- 4) แถว Health ----------
         if pct is None:
-            h_value, h_pct, h_sub = "—", None, "กดล็อก Baseline ขณะโครงสร้างสมบูรณ์"
+            h_value, h_pct, h_sub = "—", None, reason[1]
         else:
             h_value, h_pct = f"{pct:.1f}%", pct
             h_sub = (f"ยืนยัน {cnt}/{C.MIN_CONSEC} รอบ" if judged and cnt
@@ -96,7 +110,7 @@ def render(result, ss, th):
         # ---------- 5) ป้ายสถานะ ----------
         if pct is None:
             pill = ('<div class="sv-pill" style="color:#8b93a7;'
-                    'background:rgba(255,255,255,.045)">รอล็อก Baseline</div>')
+                    f'background:rgba(255,255,255,.045)">{reason[0]}</div>')
         else:
             sc = T.STATUS_COLOR[status]
             note = "" if result.excitation_ok else " <small>· พักการตัดสิน</small>"

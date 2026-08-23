@@ -21,6 +21,21 @@ STATUS_COLOR = {"green": OK, "yellow": WARN, "red": DANGER}
 STATUS_TEXT  = {"green": "ปกติ", "yellow": "เฝ้าระวัง", "red": "อันตราย"}
 STATUS_ICON  = {"green": "●", "yellow": "▲", "red": "■"}
 
+
+def bar_color(status: str, has_health: bool) -> str:
+    """สีของหลอด/แท่งกราฟ
+
+    🎨 กติกา: ปกติทุกหลอดเป็น "สีฟ้า" เหมือนกันหมด
+       จะเปลี่ยนสีก็ต่อเมื่อชั้นนั้นมีปัญหาจริงเท่านั้น (เหลือง = เฝ้าระวัง, แดง = อันตราย)
+
+    🐛 ปัญหาเดิม: ชั้นที่ผ่านเกณฑ์เป็นสีเขียว ส่วนชั้นที่ยังไม่มีค่า Health เป็นสีฟ้า
+       ทำให้หน้าจอมีสามสีปนกันโดยที่ไม่มีชั้นไหนผิดปกติเลย ดูแล้วสับสนว่าสีไหนแปลว่าอะไร
+       ส่วนสีเขียวยังคงใช้อยู่ที่ "ป้ายสถานะ" ท้ายการ์ด ซึ่งมีตัวหนังสือกำกับชัดเจน
+    """
+    if not has_health or status == "green":
+        return ACCENT
+    return STATUS_COLOR.get(status, ACCENT)
+
 CSS = f"""
 <style>
 /* ============ โครงหน้า ============ */
@@ -99,6 +114,11 @@ hr {{ margin: 1.6rem 0 !important; border-color: rgba(255,255,255,.07) !importan
   width: 74px; text-align:right; font-size:13.5px; font-weight:650;
   font-variant-numeric: tabular-nums; color:#e6eaf2; flex:none;
 }}
+
+/* ============ คำอธิบายสี ============ */
+.sv-legend {{ display:flex; gap:18px; margin:2px 0 4px; }}
+.sv-key {{ display:flex; align-items:center; gap:7px; font-size:12px; color:{MUTED}; }}
+.sv-key i {{ width:13px; height:6px; border-radius:3px; display:inline-block; }}
 
 /* ============ แผง debug ============ */
 .sv-dbg {{ display:grid; grid-template-columns: repeat(auto-fit,minmax(196px,1fr)); gap:10px; }}
