@@ -36,6 +36,19 @@ def bar_color(status: str, has_health: bool) -> str:
         return ACCENT
     return STATUS_COLOR.get(status, ACCENT)
 
+#  ระดับความรุนแรงของข้อสรุป → (สี, ป้ายข้อความ, ไอคอน)
+LEVEL = {
+    "ok":     (OK,     "ปกติ",      "●"),
+    "info":   (ACCENT, "ข้อมูล",     "i"),
+    "warn":   (WARN,   "เฝ้าระวัง",  "▲"),
+    "danger": (DANGER, "ต้องตรวจสอบ", "■"),
+}
+
+
+def level_color(level: str) -> str:
+    return LEVEL.get(level, LEVEL["info"])[0]
+
+
 CSS = f"""
 <style>
 /* ============ โครงหน้า ============ */
@@ -119,6 +132,63 @@ hr {{ margin: 1.6rem 0 !important; border-color: rgba(255,255,255,.07) !importan
 .sv-legend {{ display:flex; gap:18px; margin:2px 0 4px; }}
 .sv-key {{ display:flex; align-items:center; gap:7px; font-size:12px; color:{MUTED}; }}
 .sv-key i {{ width:13px; height:6px; border-radius:3px; display:inline-block; }}
+
+/* ============ การ์ดสรุปผล (วิเคราะห์ข้อมูลจากความถี่) ============ */
+.sv-ins {{
+  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.012));
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 16px; padding: 18px 20px 16px;
+}}
+.sv-ins-top {{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:14px; margin-bottom: 14px;
+}}
+.sv-ins-tag {{
+  display:inline-flex; align-items:center; gap:7px;
+  font-size:11.5px; font-weight:700; letter-spacing:.04em;
+  padding:5px 11px; border-radius:99px; border:1px solid;
+}}
+.sv-conf {{ text-align:right; flex:none; min-width:132px; }}
+.sv-conf-k {{ font-size:10.5px; letter-spacing:.05em; color:{MUTED}; margin-bottom:4px; }}
+.sv-conf-v {{
+  font-size:15px; font-weight:700; color:#eaeef6;
+  font-variant-numeric: tabular-nums; line-height:1;
+}}
+.sv-conf-track {{
+  height:5px; border-radius:99px; background:rgba(255,255,255,.08);
+  overflow:hidden; margin-top:6px;
+}}
+.sv-conf-fill {{ height:100%; border-radius:99px; transition:width .35s ease; }}
+
+.sv-ins-head {{
+  font-size: 19px; font-weight: 700; letter-spacing:-.015em;
+  line-height:1.35; margin-bottom: 7px;
+}}
+.sv-ins-sum {{ font-size:13.5px; line-height:1.65; color:#c3cad8; }}
+
+.sv-sec {{
+  font-size:10.5px; letter-spacing:.07em; font-weight:700; color:{MUTED};
+  margin: 18px 0 9px; padding-top:14px; border-top:1px solid rgba(255,255,255,.07);
+}}
+.sv-find {{ display:flex; gap:10px; margin-bottom:11px; }}
+.sv-find i {{
+  width:7px; height:7px; border-radius:99px; flex:none; margin-top:6px;
+  display:inline-block;
+}}
+.sv-find-t {{ font-size:13px; font-weight:650; color:#e8ecf4; line-height:1.45;
+              font-variant-numeric: tabular-nums; }}
+.sv-find-d {{ font-size:12px; color:#8f98ab; line-height:1.6; margin-top:2px; }}
+
+.sv-act {{ display:flex; gap:10px; margin-bottom:9px; align-items:flex-start; }}
+.sv-act b {{
+  flex:none; width:19px; height:19px; border-radius:6px; margin-top:1px;
+  background:rgba(96,165,250,.15); color:{ACCENT};
+  font-size:11px; font-weight:700; display:flex;
+  align-items:center; justify-content:center;
+}}
+.sv-act span {{ font-size:12.5px; color:#c3cad8; line-height:1.55; }}
+
+.sv-note {{ font-size:11.5px; color:#7c8598; margin-top:14px; line-height:1.55; }}
 
 /* ============ แผง debug ============ */
 .sv-dbg {{ display:grid; grid-template-columns: repeat(auto-fit,minmax(196px,1fr)); gap:10px; }}
