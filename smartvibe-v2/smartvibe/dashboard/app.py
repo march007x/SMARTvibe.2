@@ -21,12 +21,12 @@ import streamlit as st
 from streamlit_autorefresh import st_autorefresh
 
 import config as C
-from core import state
+from core import rules, state
 from core.analysis import analyze
 from core.buffer import RollingBuffer
 from core.firebase_client import FirebaseClient
 from services import ai_assistant, telegram
-from ui import charts, debug, floors, sidebar
+from ui import charts, debug, floors, insight, sidebar
 from ui import theme
 
 st.set_page_config(page_title="SmartVibe", layout="wide")
@@ -40,6 +40,55 @@ state.init(ss)
 if "client" not in ss:
     ss.client = FirebaseClient()
     ss.buffer = RollingBuffer()
+
+
+def run_ai_job() -> bool:
+    """ทำงาน AI ที่ค้างคิวอยู่ — ต้องทำ "ก่อน" อย่างอื่นทั้งหมดในสคริปต์
+
+    🐛 บั๊กที่แก้: กดปุ่ม AI แล้วไม่มีอะไรขึ้นเลย
+    ------------------------------------------------------------------
+    ต้นเหตุอยู่ในตัว streamlit-autorefresh เอง โค้ดฝั่งเบราว์เซอร์ของมันคือ
+
+        window.setInterval(() => Streamlit.setComponentValue(n), interval)
+
+    สังเกตว่าเป็น **setInterval (ยิงซ้ำ)** ไม่ใช่ setTimeout (ยิงครั้งเดียว)
+    และมันจะถูก clear ก็ต่อเมื่อสคริปต์ฝั่ง Python วาดหน้าเสร็จรอบใหม่เท่านั้น
+    แปลว่า "ระหว่างที่ Python ยังทำงานอยู่ นาฬิกาตัวนี้ก็ยังเดินและยิงซ้ำได้"
+
+    ทีนี้ Streamlit มีกติกาว่า ถ้ามีคำขอ rerun ค้างอยู่ พอสคริปต์เรียกคำสั่ง
+    st.* ตัวถัดไป (ซึ่งต้องส่งข้อมูลไปวาดหน้า) มันจะโยน RerunException ทิ้ง
+    งานที่ทำค้างอยู่ทันที
+
+    ลำดับเหตุการณ์ของเดิมจึงเป็นแบบนี้ทุกครั้ง:
+        t=0 ms      เริ่มรอบใหม่
+        t≈1245 ms   วิเคราะห์สัญญาณเสร็จ (ค่าที่วัดได้จริงในแผง debug)
+        t≈1300 ms   ไหลมาถึงปุ่ม AI → ปุ่มคืน True → เข้า with st.spinner(...)
+        t=1500 ms   ⏰ setInterval ยิง → มีคำขอ rerun ค้าง
+        →           st.spinner ต้องส่งข้อมูลไปวาดหน้า → RerunException เด้ง
+                    → **ยังไม่ทันได้เรียก Groq เลยด้วยซ้ำ** ss.ai_result จึงว่างตลอด
+        →           รอบใหม่เริ่ม ปุ่มกลับเป็น False → เหมือนไม่เคยกด
+
+    ✅ วิธีแก้: แยก "กดปุ่ม" ออกจาก "เรียก AI" คนละรอบ
+       - ตอนกดปุ่ม: แค่จดคิวลง session_state (เป็น Python ล้วน ไม่ส่งอะไรไปวาดหน้า
+         จึงไม่มีทางโดน RerunException ตัด) แล้วปล่อยให้รอบนั้นจบไป
+       - รอบถัดไป: ฟังก์ชันนี้ทำงานตั้งแต่ต้นสคริปต์ ตอนที่ยังไม่มีคำขอ rerun ค้าง
+         และตลอดช่วงที่รอ Groq ตอบก็ไม่เรียก st.* เลยสักคำสั่ง → ตัดไม่ได้
+    """
+    job = ss.pop("ai_job", None)
+    if not job:
+        return False
+    kind, provider, payload = job
+    slot = "ai_result" if kind == "now" else "ai_trend"
+    try:
+        if kind == "now":
+            ss[slot] = ai_assistant.analyze_cached(
+                provider, ai_assistant.hash_of(payload), payload)
+        else:
+            ss[slot] = ai_assistant.analyze_trend_cached(
+                provider, ai_assistant.hash_of(payload), payload)
+    except Exception as e:
+        ss[slot] = f"⚠️ เรียก AI ไม่สำเร็จ: {type(e).__name__}: {e}"
+    return True
 
 
 def main():
@@ -101,15 +150,22 @@ def main():
     # เก็บทุก 30 วินาที (ไม่ใช่ทุก refresh) — ดู core/state.log_health()
     state.log_health(ss, result)
 
-    # ---------- 7) ผู้ช่วย AI ----------
+    # ---------- 7) สรุปผล — วางคู่กัน ซ้าย: กฎวิศวกรรม / ขวา: AI ----------
     st.markdown("---")
-    st.markdown('<div class="sv-h">AI วิเคราะห์เบื้องต้น</div>', unsafe_allow_html=True)
+    col_rule, col_ai = st.columns([1.15, 1], gap="large")
 
-    providers = ai_assistant.available_providers()
+    # ซ้าย: สรุปจากกฎวิศวกรรมล้วน ๆ ไม่ใช้อินเทอร์เน็ต ไม่มีโควตา
+    # ทำงานได้เสมอแม้ AI ล่ม → เป็นตัวหลักที่ใช้ตัดสินใจ
+    with col_rule:
+        st.markdown('<div class="sv-h">วิเคราะห์ข้อมูลจากความถี่</div>',
+                    unsafe_allow_html=True)
+        insight.render(rules.evaluate(result, ss, th))
 
-    # จัดทุกอย่างของส่วน AI ให้อยู่กลางจอ อ่านง่าย ไม่กวาดสายตาไปมา
-    _, mid, _ = st.columns([1, 3, 1])
-    with mid:
+    # ขวา: AI ภายนอก เป็นส่วนเสริมสำหรับเรียบเรียงคำอธิบาย
+    with col_ai:
+        st.markdown('<div class="sv-h">AI วิเคราะห์เบื้องต้น</div>',
+                    unsafe_allow_html=True)
+        providers = ai_assistant.available_providers()
         provider = st.selectbox("ผู้ให้บริการ", providers, index=0)
 
         level, msg = ai_assistant.status_line(provider)
@@ -119,21 +175,27 @@ def main():
         n_log = len(ss.get("health_log", []))
         ready = ai_assistant.is_ready(provider)
 
+        pending = ss.get("ai_job")
+
         b1, b2 = st.columns(2, gap="medium")
         with b1:
-            # ✅ on-demand เท่านั้น ไม่ผูกกับ auto-refresh
+            # ✅ กดปุ่ม = "จดคิว" อย่างเดียว ไม่เรียก API ในรอบนี้
+            #    (เหตุผลเต็ม ๆ อยู่ใน docstring ของ run_ai_job() ด้านบน)
             if st.button("🔍  วิเคราะห์สถานะตอนนี้", key="btn_ai_now",
-                         use_container_width=True, disabled=not ready):
-                with st.spinner("กำลังวิเคราะห์..."):
-                    ss.ai_result = ai_assistant.analyze_cached(
-                        provider, ai_assistant.hash_of(snap), snap)
+                         use_container_width=True,
+                         disabled=not ready or bool(pending)):
+                ss.ai_job = ("now", provider, snap)
+                pending = ss.ai_job
         with b2:
             if st.button(f"📈  วิเคราะห์แนวโน้ม ({n_log} จุด)", key="btn_ai_trend",
-                         use_container_width=True, disabled=not ready):
-                with st.spinner("กำลังประเมินแนวโน้ม..."):
-                    hist_json = json.dumps(ss["health_log"], ensure_ascii=False)
-                    ss.ai_trend = ai_assistant.analyze_trend_cached(
-                        provider, ai_assistant.hash_of(hist_json), hist_json)
+                         use_container_width=True,
+                         disabled=not ready or bool(pending)):
+                ss.ai_job = ("trend", provider,
+                             json.dumps(ss["health_log"], ensure_ascii=False))
+                pending = ss.ai_job
+
+        if pending:
+            theme.banner("info", "กำลังส่งคำถามให้ AI… คำตอบจะขึ้นภายในไม่กี่วินาที")
 
         if ss.get("ai_result"):
             st.info("**สถานะตอนนี้**\n\n" + ss.ai_result)
@@ -143,6 +205,14 @@ def main():
     st.markdown("---")
     debug.render(result, df, t0, ss.client, stuck)
 
+    # จำเวลาที่ใช้จริงรอบนี้ไว้ตั้งจังหวะ auto-refresh ให้ยาวกว่าเสมอ (ดูท้ายไฟล์)
+    ss["last_elapsed_ms"] = (time.perf_counter() - t0) * 1000
+
+
+# ---------- ทำงาน AI ที่ค้างคิวก่อนเป็นอันดับแรก ----------
+# ต้องอยู่ "ก่อน" main() เพราะช่วงต้นสคริปต์ยังไม่มีคำขอ rerun ค้างอยู่
+if run_ai_job():
+    st.rerun()          # ได้คำตอบแล้ว วาดหน้าใหม่ทั้งหน้าให้เห็นผลทันที
 
 try:
     main()
@@ -154,4 +224,13 @@ except Exception as e:
     # ไม่ raise ซ้ำ เพื่อให้ st_autorefresh ด้านล่างยังทำงาน
     # → หน้าเว็บพยายามใหม่เองในรอบถัดไป ไม่ค้างตายถาวร
 
-st_autorefresh(interval=C.REFRESH_MS, limit=None, key="smartvibe_autorefresh")
+# ---------- ตั้งจังหวะ auto-refresh แบบปรับตัวเอง ----------
+# กติกา: คาบรีเฟรชต้อง "ยาวกว่าเวลาประมวลผลจริง" เสมอ
+# ถ้าสั้นกว่า นาฬิกาของ streamlit-autorefresh (setInterval) จะยิงทับขณะที่
+# Python ยังทำงานไม่เสร็จ → สคริปต์ถูกตัดกลางคัน → ปุ่มที่กดไว้หายไปเฉย ๆ
+# (เดิมตั้งไว้ 1500 ms แต่วัดเวลาประมวลผลจริงได้ ~1245 ms เหลือระยะเผื่อแค่ 255 ms)
+if ss.get("ai_job"):
+    _interval = 300                      # มีคิว AI ค้าง → รีบเข้ารอบใหม่ไปทำงาน
+else:
+    _interval = max(C.REFRESH_MS, int(ss.get("last_elapsed_ms", 0) * 2))
+st_autorefresh(interval=_interval, limit=None, key="smartvibe_autorefresh")
