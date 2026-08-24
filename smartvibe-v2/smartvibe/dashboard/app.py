@@ -159,7 +159,13 @@ def main():
     with col_rule:
         st.markdown('<div class="sv-h">วิเคราะห์ข้อมูลจากความถี่</div>',
                     unsafe_allow_html=True)
-        insight.render(rules.evaluate(result, ss, th))
+        # กันไว้: ถ้าตัวสรุปผลมีบั๊ก ให้พังอยู่ในกรอบนี้กรอบเดียว
+        # ไม่ใช่ลากทั้งหน้าจอ (กราฟ/สถานะรายชั้น) ตายไปด้วย
+        try:
+            insight.render(rules.evaluate(result, ss, th))
+        except Exception as e:
+            theme.banner("error", f"สรุปผลรอบนี้ไม่สำเร็จ ({type(e).__name__}) "
+                                  "ส่วนอื่นของหน้าจอยังใช้งานได้ตามปกติ")
 
     # ขวา: AI ภายนอก เป็นส่วนเสริมสำหรับเรียบเรียงคำอธิบาย
     with col_ai:
