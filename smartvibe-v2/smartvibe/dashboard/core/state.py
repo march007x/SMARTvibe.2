@@ -59,6 +59,7 @@ def reset_all(ss):
     ss["last_log_time"] = 0.0
     ss.pop("ai_result", None)
     ss.pop("ai_trend", None)
+    ss.pop("ai_job", None)
 
 
 def log_health(ss, result) -> bool:
