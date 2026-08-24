@@ -212,12 +212,39 @@ def locate_by_transmissibility(result, ss) -> tuple:
                 "ชั้นบนขยับน้อยลงเมื่อเทียบกับชั้นล่าง ซึ่งเกิดได้ทั้งจากจุดต่อที่ "
                 "แข็งขึ้นและจากมวลที่เพิ่มขึ้น")))
 
-    if d21 is not None:
-        found.append(_line("ช่วงชั้น 2", d21, result.T21, ss["base_T21"]))
-    if d32 is not None:
-        found.append(_line("ช่วงชั้น 3", d32, result.T32, ss["base_T32"]))
+    def _unreadable(name):
+        return Finding("info", f"{name}: อ่านค่าไม่ได้รอบนี้",
+                       f"coherence ต่ำกว่าเกณฑ์ {C.COH_MIN:.2f} ระบบจึงไม่นำค่านี้"
+                       "มาคำนวณ ดีกว่าเอาตัวเลขที่เชื่อไม่ได้มาสรุป")
 
-    # --- ตัดสินตำแหน่ง ---
+    found.append(_line("ช่วงชั้น 2", d21, result.T21, ss["base_T21"])
+                 if d21 is not None else _unreadable("ช่วงชั้น 2"))
+    found.append(_line("ช่วงชั้น 3", d32, result.T32, ss["base_T32"])
+                 if d32 is not None else _unreadable("ช่วงชั้น 3"))
+
+    # --- 🐛 กรณีอ่านได้ข้างเดียว ---
+    # เกิดจริงบ่อยมาก: เซ็นเซอร์ตัวเดียวหลวม → coherence ของช่วงนั้นตก
+    # dsp.transmissibility_h1() คืน None เฉพาะช่วงนั้น อีกช่วงยังได้ตัวเลขปกติ
+    # เดิมโค้ดไหลไปเข้าเงื่อนไขที่เอา None ไปใส่ f-string "{d21:+.1f}" แล้วพังทั้งหน้า
+    if d21 is None or d32 is None:
+        span = 3 if d21 is None else 2
+        other = 2 if span == 3 else 3
+        d = d32 if d21 is None else d21
+        a = abs(d)
+        if a < T_NOTABLE:
+            return ("warn", "ตรวจได้ไม่ครบทุกช่วงชั้น",
+                    f"รอบนี้อ่านค่าได้เฉพาะช่วงชั้น {span} ซึ่งเปลี่ยนไป {d:+.1f}% "
+                    f"(ยังไม่ถึงเกณฑ์ {T_NOTABLE:.0f}%) ส่วนช่วงชั้น {other} "
+                    "มี coherence ต่ำจนใช้ไม่ได้ จึงยังสรุปว่าทั้งตึกปกติไม่ได้ "
+                    "เพราะยังไม่ได้ตรวจครบทุกช่วง", found)
+        lvl = "danger" if a >= T_STRONG else "warn"
+        return (lvl, f"พบความผิดปกติที่ {SPAN_NAMES[span]}",
+                f"ช่วงชั้น {span} เปลี่ยนไป {d:+.1f}% จากค่าอ้างอิง "
+                f"แต่รอบนี้อ่านค่าช่วงชั้น {other} ไม่ได้ (coherence ต่ำ) "
+                f"จึงยังตัดความเป็นไปได้ที่ช่วงชั้น {other} จะเสียหายด้วยไม่ได้ "
+                "ควรแก้เรื่องสัญญาณให้ครบก่อนแล้ววัดซ้ำ", found)
+
+    # --- ตัดสินตำแหน่ง (อ่านได้ครบทั้งสองช่วง) ---
     if a21 < T_NOTABLE and a32 < T_NOTABLE:
         return ("ok", "ไม่พบความผิดปกติ",
                 f"สัดส่วนการสั่นระหว่างชั้นยังเท่าเดิมทุกช่วง "
