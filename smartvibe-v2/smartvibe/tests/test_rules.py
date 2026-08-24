@@ -149,3 +149,45 @@ def test_no_transmissibility_does_not_claim_healthy():
     v = rules.evaluate(make_result(T21=None, T32=None, coh=0.30), base_ss(), TH)
     assert "ปกติ" not in v.headline
     assert v.level != "ok"
+
+
+# ------------------------------------------------------------------
+#  🐛 บั๊กที่เจอหน้างาน: coherence ต่ำแค่ "ช่วงเดียว"
+#     → T ของช่วงนั้นเป็น None แต่อีกช่วงยังมีค่า
+#     โค้ดเดิมเอา None ไปใส่ f-string "{d21:+.1f}" แล้วหน้าเว็บพังทั้งหน้า
+# ------------------------------------------------------------------
+def test_only_span2_unreadable_does_not_crash():
+    v = rules.evaluate(make_result(T21=None), base_ss(), TH)
+    assert v.headline and v.level != "ok"
+
+
+def test_only_span3_unreadable_does_not_crash():
+    v = rules.evaluate(make_result(T32=None), base_ss(), TH)
+    assert v.headline and v.level != "ok"
+
+
+def test_partial_read_with_damage_still_localises():
+    v = rules.evaluate(make_result(T21=None, T32=1.38 * 1.30), base_ss(), TH)
+    assert "ช่วงชั้น 3" in v.headline
+    assert "ช่วงชั้น 2" in v.summary     # ต้องบอกด้วยว่าอีกช่วงอ่านไม่ได้
+
+
+def test_partial_read_without_change_is_not_declared_healthy():
+    v = rules.evaluate(make_result(T21=None), base_ss(), TH)
+    assert "ไม่พบความผิดปกติ" not in v.headline
+
+
+def test_every_none_combination_never_raises():
+    """กวาดทุกการผสมของค่าที่หายไป — หน้าเว็บต้องไม่พังไม่ว่ากรณีไหน"""
+    import itertools
+    ss_variants = [base_ss(),
+                   base_ss(base_T21=None), base_ss(base_T32=None),
+                   base_ss(base_T21=None, base_T32=None)]
+    for T21, T32, fn0, mode, ss in itertools.product(
+            (1.70, 2.10, None), (1.38, 1.80, None), (11.0, None),
+            ("sine", "fn"), ss_variants):
+        r = make_result(mode=mode, T21=T21, T32=T32,
+                        fns=(fn0, 11.0, 11.0), healths=(88.0, None, 65.0))
+        v = rules.evaluate(r, ss, TH)
+        assert v.headline, f"พาดหัวว่าง: {T21=} {T32=} {fn0=} {mode=}"
+        assert 5 <= v.confidence <= 99
