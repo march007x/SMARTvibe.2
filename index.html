@@ -1,0 +1,2722 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SmartVibe — ระบบตรวจสุขภาพโครงสร้างอาคารรายชั้นด้วยความถี่ธรรมชาติและไอโอที</title>
+<meta name="description" content="SmartVibe ฟังเสียงประจำตัวของอาคารด้วยเซ็นเซอร์ราคาหลักร้อย แล้วบอกว่าโครงสร้างเปลี่ยนไปกี่เปอร์เซ็นต์ และความเสียหายอยู่ช่วงชั้นไหน">
+<meta name="theme-color" content="#fbfaf8">
+<meta property="og:title" content="SmartVibe — ตึกทุกหลังมีเสียงประจำตัว">
+<meta property="og:description" content="ระบบเฝ้าระวังความเสียหายโครงสร้างจากการเปลี่ยนแปลงความถี่ธรรมชาติและอัตราส่วนการสั่นระหว่างชั้น">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ══════════ HEADER ══════════ -->
+<header class="header">
+  <div class="header-inner">
+    <a class="brand" href="#top">
+      SmartVibe
+      <span class="brand-sub">ตรวจสุขภาพโครงสร้างรายชั้น</span>
+    </a>
+    <button class="btn btn-accent" id="btn-essentials" aria-haspopup="dialog">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M9 1 3 9h4l-1 6 6-8H8l1-6Z" fill="currentColor"/></svg>
+      เนื้อล้วน
+    </button>
+    <button class="btn" id="btn-menu" aria-haspopup="dialog">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span class="btn-label-sm">หัวข้อ</span>
+    </button>
+    <button class="btn btn-icon" id="btn-theme" aria-label="สลับโหมดสว่าง/มืด" title="สลับโหมดสว่าง/มืด">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="wrap">
+    <span class="hero-tag">Structural Health Monitoring · IoT</span>
+    <h1>ตึกทุกหลังมีเสียงประจำตัว</h1>
+    <p class="hero-quote">
+      เหมือนคนมีเสียงพูดเฉพาะตัว ถ้าข้างในตึกเสียหาย เสียงนั้นจะเปลี่ยน
+      เราจึงสร้างระบบที่คอยฟังเสียงของตึกตลอดเวลา
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-solid btn-lg" href="#what">เริ่มอ่าน</a>
+      <button class="btn btn-lg" id="btn-essentials-2">ดูสรุป 1 นาที</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-num">3 <small>ชั้น</small></div><div class="stat-label">ตึกจำลอง เซ็นเซอร์ชั้นละตัว</div></div>
+      <div class="stat"><div class="stat-num">50 <small>Hz</small></div><div class="stat-label">อัตราสุ่มต่อเซ็นเซอร์</div></div>
+      <div class="stat"><div class="stat-num">11.00 <small>Hz</small></div><div class="stat-label">ความถี่ธรรมชาติที่วัดได้</div></div>
+      <div class="stat"><div class="stat-num">35 <small>เคส</small></div><div class="stat-label">แบบทดสอบอัตโนมัติ</div></div>
+      <div class="stat"><div class="stat-num">43 <small>ไฟล์</small></div><div class="stat-label">ซอร์สโค้ดทั้งโปรเจกต์</div></div>
+      <div class="stat"><div class="stat-num">1,890 <small>บาท</small></div><div class="stat-label">ค่าอุปกรณ์ทั้งระบบ</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 1 ══════════ -->
+<section class="section" id="what">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">01 — เริ่มต้นที่นี่</span>
+      <h2>โปรเจกต์นี้คืออะไร</h2>
+      <div class="asks"><span class="asks-label">คำถามที่ส่วนนี้ตอบ</span><p>เราแก้ปัญหาอะไร และทำไมวิธีเดิมยังไม่พอ</p></div>
+    </div>
+
+    <div class="stack-lg">
+
+      <div class="block prose reveal">
+        <h3>ตึกถล่มไม่ได้ถล่มแบบไม่มีสัญญาณเตือน</h3>
+        <p>มันค่อย ๆ อ่อนแอลงก่อนเสมอ — เหล็กเป็นสนิม คอนกรีตร้าวข้างใน จุดต่อคลายตัว ฐานรากทรุด
+        ปัญหาคือความเสียหายพวกนี้ส่วนใหญ่อยู่ <strong>ข้างใน</strong> มองด้วยตาไม่เห็น
+        กว่าจะเห็นรอยร้าวโผล่ที่ผิวปูน มันก็ลามไปเยอะแล้ว</p>
+      </div>
+
+      <div class="block reveal">
+        <h3>วิธีตรวจแบบเดิมและข้อจำกัด</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>วิธีตรวจ</th><th>ข้อดี</th><th>ข้อจำกัด</th></tr></thead>
+            <tbody>
+              <tr><th>ตรวจด้วยสายตา</th><td>ทำได้ทันที ไม่ต้องใช้เครื่องมือ</td><td>เห็นแค่ผิว และต้องมีคนปีนไปดูทุกจุด</td></tr>
+              <tr><th>เจาะเก็บตัวอย่างคอนกรีต</th><td>แม่นมาก</td><td>เป็นการทำลายโครงสร้าง และรู้ผลแค่จุดที่เจาะ</td></tr>
+              <tr><th>X-ray / อัลตราซาวด์</th><td>เห็นข้างในได้จริง</td><td>แพงมาก ต้องใช้ผู้เชี่ยวชาญ ทำได้ทีละจุดเล็ก ๆ</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">ทั้งสามวิธีมีจุดร่วมกันคือ <strong>ตรวจเป็นครั้ง ๆ</strong> ปีละครั้งหรือสองปีครั้ง
+        ถ้าเกิดความเสียหายหลังตรวจเสร็จวันเดียว ก็ต้องรออีกปี</p>
+      </div>
+
+      <blockquote class="pull reveal">ตึกทุกหลังมีเสียงประจำตัวของมันเอง เหมือนคนมีเสียงพูดเฉพาะตัว
+      ถ้าข้างในตึกเสียหาย เสียงนั้นจะเปลี่ยน เราจึงสร้างระบบที่คอยฟังเสียงของตึกตลอดเวลา</blockquote>
+
+      <div class="card card-accent reveal">
+        <span class="kicker">ประโยคหลักที่ต้องจำ</span>
+        <div class="bigline">โครงสร้างอ่อนแอลง → สั่นช้าลง → ความถี่ลดลง</div>
+        <p style="margin:10px 0 0">ถ้าจำได้แค่ประโยคเดียวจากทั้งเว็บนี้ ให้จำประโยคนี้ ทุกอย่างที่เหลือคือการทำให้ประโยคนี้วัดได้เป็นตัวเลข</p>
+      </div>
+
+      <div class="block reveal">
+        <h3>ระบบตอบอะไรได้ และตอบอะไรไม่ได้</h3>
+        <p class="lede">การรู้ขอบเขตของตัวเองสำคัญมาก ทีมที่อ้างว่าทำได้ทุกอย่างจะถูกจับได้ทันทีว่าไม่เข้าใจปัญหา</p>
+        <div class="grid-2">
+          <div class="card card-ok">
+            <h4 style="color:var(--ok);margin-bottom:12px">ตอบได้</h4>
+            <ul class="ticks ticks-ok">
+              <li><strong>ตอนนี้โครงสร้างเปลี่ยนไปจากตอนสมบูรณ์ไหม</strong><br><span class="mini">ดูจากความถี่ธรรมชาติ (f<sub>n</sub>) เทียบกับค่าอ้างอิง</span></li>
+              <li><strong>เปลี่ยนไปกี่เปอร์เซ็นต์</strong><br><span class="mini">ดูจากค่า Health</span></li>
+              <li><strong>ความเสียหายอยู่ช่วงชั้นไหน</strong><br><span class="mini">ดูจากอัตราส่วนการสั่นของแต่ละช่วงชั้น</span></li>
+              <li><strong>ข้อมูลรอบนี้เชื่อถือได้แค่ไหน</strong><br><span class="mini">ดูจาก coherence และคะแนนความเชื่อมั่น</span></li>
+            </ul>
+          </div>
+          <div class="card card-danger">
+            <h4 style="color:var(--danger);margin-bottom:12px">ตอบไม่ได้</h4>
+            <ul class="ticks ticks-no">
+              <li><strong>รอยร้าวยาวกี่เซนติเมตร</strong><br><span class="mini">เราวัดผลรวมของความแข็งเกร็ง ไม่ได้วัดรูปร่างรอยร้าว</span></li>
+              <li><strong>เสียหายที่เสาต้นไหนใน 4 ต้น</strong><br><span class="mini">มีเซ็นเซอร์ชั้นละตัว จึงแยกได้แค่ระดับช่วงชั้น</span></li>
+              <li><strong>ตึกจะถล่มเมื่อไร</strong><br><span class="mini">ต้องใช้แบบจำลองความล้าและข้อมูลวัสดุ ซึ่งเกินขอบเขตงานนี้</span></li>
+              <li><strong>เสียหายเพราะอะไร</strong><br><span class="mini">บอกได้แค่ว่ามีบางอย่างเปลี่ยน สาเหตุต้องให้คนไปดูหน้างาน</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="block reveal">
+        <h3>ทำไมต้องทำเป็นตึกจำลอง ไม่ทดลองกับตึกจริง</h3>
+        <ol class="steps">
+          <li><b>ต้องทำให้ตึกเสียหายจริง ๆ เพื่อพิสูจน์ว่าระบบตรวจเจอ</b><span>จะไปคลายน็อตตึกเรียนไม่ได้</span></li>
+          <li><b>ต้องทำซ้ำได้</b><span>ตึกจำลองคลายน็อตแล้วขันกลับได้ ทดลอง 20 รอบก็ได้ ตึกจริงทำครั้งเดียวก็จบ</span></li>
+          <li><b>ต้องควบคุมตัวแปรได้</b><span>ตึกจริงมีลม มีรถวิ่งผ่าน มีคนเดิน แยกไม่ออกว่าอะไรทำให้ค่าเปลี่ยน</span></li>
+          <li><b>หลักการเดียวกันเป๊ะ</b><span>สมการที่ใช้กับตึกจำลองกับตึกจริงคือสมการเดียวกัน ต่างแค่ตัวเลข — ตึกจริงสั่นช้ากว่า ประมาณ 1–5 ครั้งต่อวินาที ส่วนตึกจำลองสูงกว่า 10–20 ครั้งต่อวินาที เพราะเล็กและเบากว่า</span></li>
+        </ol>
+        <div class="callout" style="margin-top:24px">
+          <p>การใช้แบบจำลองย่อส่วนเป็นวิธีมาตรฐานในงานวิศวกรรมแผ่นดินไหว มหาวิทยาลัยทั่วโลกใช้โต๊ะเขย่า (shake table)
+          ทดสอบตึกจำลองก่อนเสมอ เราทำแบบเดียวกันในสเกลที่เล็กลง</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 2 ══════════ -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">02 — เริ่มต้นที่นี่</span>
+      <h2>ระบบทำงานยังไง</h2>
+      <div class="asks"><span class="asks-label">คำถามที่ส่วนนี้ตอบ</span><p>ข้อมูลเดินทางจากตึกไปถึงหน้าจอได้ยังไง</p></div>
+    </div>
+
+    <div class="stack-lg">
+
+      <div class="block reveal">
+        <h3>ภาพรวม 6 ขั้น</h3>
+        <ol class="steps">
+          <li><b>ลำโพงเขย่าตึก</b><span>ตึกจำลอง 3 ชั้นสั่นไปมาด้วยความถี่ที่เรากำหนด</span></li>
+          <li><b>เซ็นเซอร์ 3 ตัววัดการสั่น</b><span>ชั้นละตัว วัด 50 ครั้งต่อวินาที</span></li>
+          <li><b>บอร์ด ESP32-S3</b><span>รวบรวมค่า ประทับเวลา แล้วส่งขึ้นอินเทอร์เน็ต</span></li>
+          <li><b>Firebase (ฐานข้อมูลคลาวด์)</b><span>เก็บข้อมูลไว้บนอินเทอร์เน็ต เข้าถึงได้จากทุกที่</span></li>
+          <li><b>เว็บแดชบอร์ด Streamlit</b><span>ดึงข้อมูลมาคำนวณหาความถี่ธรรมชาติ</span></li>
+          <li><b>สรุปผลและแจ้งเตือน</b><span>บอกว่าปกติ / เฝ้าระวัง / ต้องตรวจสอบ พร้อมส่งข้อความเข้า Telegram</span></li>
+        </ol>
+      </div>
+
+      <div class="callout reveal">
+        <div class="callout-title">ทำไมต้องผ่านคลาวด์ ไม่ต่อสายตรงเข้าคอมเลย</div>
+        <p>เพราะของจริงเซ็นเซอร์อยู่บนตึก แต่วิศวกรอยู่ที่ออฟฟิศคนละจังหวัด การส่งขึ้นอินเทอร์เน็ตทำให้ดูจากที่ไหนก็ได้ในโลก
+        และดูพร้อมกันหลายคนได้ นี่คือเหตุผลเชิงระบบ ไม่ใช่แค่ทำให้ดูล้ำ</p>
+      </div>
+
+      <div class="block reveal">
+        <h3>แบ่งงานตามความถนัดของอุปกรณ์</h3>
+        <p class="lede">เราไม่ยัดงานทั้งหมดลงบอร์ดเดียว — บอร์ดทำงานที่ต้องการความตรงเวลา ส่วนคลาวด์ทำงานที่ต้องการการคำนวณหนัก</p>
+        <div class="grid-2">
+          <div class="card">
+            <span class="kicker">ฝั่งบอร์ด</span>
+            <h4 style="margin-bottom:12px">งานที่ต้องตรงเวลาระดับมิลลิวินาที</h4>
+            <p class="mini" style="margin-bottom:14px">อ่านเซ็นเซอร์ทุก 20 ms · ประทับเวลาจาก NTP · ส่งขึ้นคลาวด์ · ลบข้อมูลเก่า · ส่งสัญญาณชีพ</p>
+            <dl class="dl">
+              <div><dt>รวมข้อมูลเป็นชุดก่อนส่ง</dt><dd>สะสม 25 ตัวอย่าง (ครึ่งวินาที) แล้วส่งครั้งเดียว ลดจำนวนครั้งที่ต้องคุยกับเน็ตลง 25 เท่า</dd></div>
+              <div><dt>ส่งเฉพาะข้อมูลที่ใช้จริง</dt><dd>เดิมส่งความเร่งครบ 3 แกน (X, Y, Z) แต่ใช้จริงแค่แกน X จึงปิดการส่งแกนที่เหลือ</dd></div>
+              <div><dt>ลบข้อมูลเก่าอัตโนมัติ</dt><dd>เก็บย้อนหลังเพียง 60 วินาที ที่เหลือลบทิ้ง ขนาดฐานข้อมูลจึงคงที่ตลอดอายุการใช้งาน</dd></div>
+            </dl>
+          </div>
+          <div class="card">
+            <span class="kicker">ฝั่งคลาวด์</span>
+            <h4 style="margin-bottom:12px">งานที่ต้องการไลบรารีคณิตศาสตร์</h4>
+            <p class="mini" style="margin-bottom:14px">แปลงสัญญาณเป็นความถี่ · คำนวณ Health · ระบุตำแหน่ง · ตัดสินสถานะ · วาดหน้าจอ</p>
+            <dl class="dl">
+              <div><dt>ทำไมใช้คนละภาษา</dt><dd>ฝั่งบอร์ดต้องการภาษาที่คอมไพล์เป็นภาษาเครื่องเพื่อคุมจังหวะเวลาให้แม่น ส่วนฝั่งวิเคราะห์ต้องการไลบรารีคณิตศาสตร์ที่ครบซึ่งอยู่ใน Python</dd></div>
+              <div><dt>เชื่อมกันด้วยฐานข้อมูล</dt><dd>สองฝั่งไม่คุยกันตรง ๆ แต่ผ่าน Firebase ทำให้ฝั่งไหนล่มอีกฝั่งก็ยังทำงานต่อได้</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <div class="block reveal">
+        <h3>สายท่อวิเคราะห์บนคลาวด์ 6 ขั้น</h3>
+        <p class="lede">ทำซ้ำทุกรอบรีเฟรช โดยคาบรีเฟรชขั้นต่ำตั้งไว้ที่ 2,200 ms และปรับอัตโนมัติเป็น 2 เท่าของเวลาประมวลผลรอบก่อนหน้า
+        (วัดได้ราว 1,250 ms) เพื่อไม่ให้นาฬิการีเฟรชยิงทับตอนที่สคริปต์ยังทำงานไม่เสร็จ</p>
+        <ol class="steps">
+          <li><b>ดึงข้อมูล</b><span>ขอเฉพาะข้อมูลที่ใหม่กว่าครั้งที่แล้ว ไม่ดึงซ้ำทั้งก้อน — ประหยัดแบนด์วิดท์ราว 30 เท่า</span></li>
+          <li><b>จัดระเบียบเวลา</b><span>วัดอัตราการสุ่มจริงจากข้อมูล แล้วเกลี่ยช่วงเวลาให้ห่างเท่ากัน เพราะเน็ตทำให้เวลาไม่สม่ำเสมอ</span></li>
+          <li><b>แปลงเป็นความถี่</b><span>ใช้วิธีของ Welch หาว่าพลังงานการสั่นอยู่ที่ความถี่ใด</span></li>
+          <li><b>หาความถี่ธรรมชาติ</b><span>ค้นยอดกราฟ แล้วกรองค่าผิดปกติด้วยค่ามัธยฐาน 7 จุด</span></li>
+          <li><b>คำนวณ Health</b><span>เทียบกับค่าอ้างอิงที่ล็อกไว้ตอนโครงสร้างสมบูรณ์</span></li>
+          <li><b>ตัดสินสถานะ</b><span>เขียว / เหลือง / แดง แล้วแสดงผลและแจ้งเตือน</span></li>
+        </ol>
+      </div>
+
+      <div class="block reveal">
+        <h3>การแจ้งเตือนที่ออกแบบมาไม่ให้กวน</h3>
+        <p class="prose">ระบบเตือนภัยที่เตือนพร่ำเพรื่อจะถูกผู้ใช้ปิดทิ้งในที่สุด เราจึงใส่ด่านป้องกัน 3 ชั้นก่อนจะยิงข้อความออกไป</p>
+        <div class="grid-3" style="margin-top:20px">
+          <div class="card"><span class="kicker">ด่าน 1</span><h4>แรงสั่นพอไหม</h4><p class="mini" style="margin:8px 0 0">ถ้าค่าความแรงรวมต่ำกว่า 0.010 g ถือว่ายังไม่มีแรงกระตุ้นพอ — พักการตัดสิน คงสถานะเดิมไว้</p></div>
+          <div class="card"><span class="kicker">ด่าน 2</span><h4>เข้าเงื่อนไขติดกัน 3 รอบหรือยัง</h4><p class="mini" style="margin:8px 0 0">ต้องเห็นความผิดปกติต่อเนื่องกัน 3 รอบจึงเปลี่ยนสถานะจริง กันการกระพริบจากเหตุการณ์ชั่วครู่</p></div>
+          <div class="card"><span class="kicker">ด่าน 3</span><h4>เพิ่งเตือนไปหรือเปล่า</h4><p class="mini" style="margin:8px 0 0">มีช่วงพัก 5 นาทีก่อนจะแจ้งเรื่องเดิมซ้ำ และแจ้งเฉพาะตอนสถานะเปลี่ยนจริงเท่านั้น</p></div>
+        </div>
+        <div class="callout" style="margin-top:22px">
+          <p>สถานะถูกจำไว้ที่ตัวระบบ ไม่ใช่ที่หน้าจอของแต่ละคน ดังนั้นต่อให้มีผู้ดูแล 5 คนเปิดหน้าเว็บพร้อมกัน
+          ทุกคนก็ได้รับข้อความเพียงชุดเดียว ไม่โดนสแปม</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 3 ══════════ -->
+<section class="section" id="simple">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">03 — เริ่มต้นที่นี่</span>
+      <h2>อธิบายแบบไม่ใช้ศัพท์เทคนิค</h2>
+      <div class="asks"><span class="asks-label">คำถามที่ส่วนนี้ตอบ</span><p>ถ้าไม่มีพื้นฐานฟิสิกส์เลย จะเข้าใจงานนี้ได้ยังไง</p></div>
+    </div>
+
+    <div class="stack-lg">
+
+      <blockquote class="pull reveal">เป็นระบบตรวจสุขภาพตึกครับ ตึกทุกหลังมีเสียงประจำตัวเหมือนคนมีเสียงพูดเฉพาะตัว
+      ถ้าข้างในตึกเสียหาย เสียงนั้นจะเปลี่ยน เราเลยเอาเซ็นเซอร์ไปติดเพื่อคอยฟังเสียงของตึกตลอดเวลา
+      แล้วบอกได้ว่าตึกเริ่มมีปัญหาหรือยัง และปัญหาอยู่ชั้นไหน</blockquote>
+
+      <div class="block reveal">
+        <h3>ทำไมฟังเสียงตึกแล้วรู้ว่าเสียหาย</h3>
+        <div class="grid-2">
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · ความเสียหายเปลี่ยนความถี่</span>
+            <h4>แก้วร้าว</h4>
+            <p style="margin:10px 0 0">เคาะแก้วปกติจะดัง “ติ๊ง~” เป็นเสียงใส ๆ ยาว ๆ แต่ถ้าแก้วใบนั้นมีรอยร้าวเล็ก ๆ ที่ตามองแทบไม่เห็น
+            เคาะแล้วเสียงจะทึบลงและสั้นลงทันที <strong>คุณรู้ว่าแก้วร้าวโดยไม่ต้องเห็นรอยร้าวเลย แค่ฟัง</strong>
+            ตึกก็เหมือนกันเป๊ะ แค่เสียงของตึกต่ำมากจนหูคนไม่ได้ยิน เราจึงต้องใช้เซ็นเซอร์ฟังแทน</p>
+          </div>
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · ความแข็งแรงคือความตึง</span>
+            <h4>สายกีตาร์</h4>
+            <p style="margin:10px 0 0">สายที่ขึงตึงให้เสียงสูง พอคลายลูกบิดให้สายหย่อน เสียงจะต่ำลงทันที
+            <strong>“ความตึง” ของสาย = “ความแข็งแรง” ของตึก</strong>
+            ตึกที่จุดต่อคลายหรือเสาร้าว ก็เหมือนสายกีตาร์ที่หย่อนลง มันจะสั่นช้าลง = เสียงต่ำลง</p>
+          </div>
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · ยิ่งแข็ง ยิ่งสั่นเร็ว</span>
+            <h4>ไม้บรรทัดบนขอบโต๊ะ</h4>
+            <p style="margin:10px 0 0">เอาไม้บรรทัดวางบนขอบโต๊ะให้ยื่นออกมาสัก 20 ซม. กดปลายแล้วปล่อย มันจะสั่นด้วยจังหวะหนึ่ง
+            ทีนี้เลื่อนให้ยื่นออกมาเหลือ 10 ซม. แล้วดีดใหม่ — <strong>สั่นเร็วขึ้นชัดเจน</strong>
+            เพราะยื่นน้อย = แข็งขึ้น = สั่นเร็วขึ้น นี่คือหลักการทั้งหมดของงานนี้ในการทดลองเดียวที่ทำเองได้ตรงนี้เลย</p>
+          </div>
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · ความถี่ไม่ขึ้นกับแรงกระตุ้น</span>
+            <h4>ชิงช้า</h4>
+            <p style="margin:10px 0 0">ผลักชิงช้าแรงหรือเบา มันก็แกว่งด้วยจังหวะเดิม เปลี่ยนแค่ความสูง
+            <strong>จังหวะการแกว่งเป็นสมบัติของตัวชิงช้าเอง ไม่ใช่ของคนผลัก</strong>
+            นี่คือเหตุผลที่ความถี่ธรรมชาติใช้เป็นตัวชี้วัดความเสียหายได้ ต่างจากการวัด “ความแรงของการสั่น”
+            ซึ่งเปลี่ยนไปตามแรงภายนอกและไม่ได้บอกสภาพโครงสร้างเลย</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="block reveal">
+        <h3>ทำไมความถี่อย่างเดียวไม่พอ</h3>
+        <div class="card card-accent">
+          <span class="kicker">อธิบายเรื่อง · ความถี่บอกตำแหน่งไม่ได้</span>
+          <h4>การวัดไข้</h4>
+          <p style="margin:10px 0 0">ไข้ 39 องศาบอกว่า “ป่วยแน่” แต่บอกไม่ได้ว่าติดเชื้อที่ปอด ที่ลำไส้ หรือที่ไหน ต้องมีการตรวจอย่างอื่นเพิ่ม
+          <strong>ความถี่ธรรมชาติเป็นสมบัติของทั้งตึก</strong> ถ้าเสาชั้น 2 เสียหาย ความถี่ของทั้งตึกลดลงเหมือนกันหมดทั้ง 3 ชั้น
+          เราจึงต้องมีตัวชี้วัดตัวที่สองคือ <strong>อัตราส่วนการสั่นระหว่างชั้น</strong> ซึ่งเป็นค่าเฉพาะที่ และบอกได้ว่าปัญหาอยู่ช่วงไหน</p>
+        </div>
+      </div>
+
+      <div class="block reveal">
+        <h3>ตึกจำลองกับอุปกรณ์ทำงานยังไง</h3>
+        <div class="grid-2">
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · แบบจำลอง shear building</span>
+            <h4>ชั้นวางหนังสือขาโลหะ</h4>
+            <p style="margin:10px 0 0">ชั้นวางที่ทำจากแผ่นไม้หนา ๆ วางบนขาโลหะบาง ๆ เวลาผลักด้านข้าง แผ่นไม้ไม่งอเลย แต่ขาโลหะเอนไปมา
+            ทั้งชั้นเลยเอียงเป็นรูปสี่เหลี่ยมด้านขนาน <strong>ตึกของเราสั่นแบบเดียวกันเป๊ะ</strong>
+            เพราะเราจงใจออกแบบให้แผ่นพื้นแข็งมากจนถือว่าไม่งอ และเสาอ่อนกว่ามากจนงอได้ง่าย</p>
+          </div>
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · เซ็นเซอร์วัดความเร่ง</span>
+            <h4>ลูกตุ้มในกล่อง</h4>
+            <p style="margin:10px 0 0">นึกถึงกล่องที่มีลูกตุ้มแขวนด้วยสปริงอยู่ข้างใน เขย่ากล่องไปทางซ้าย ลูกตุ้มจะเหวี่ยงไปทางขวาเพราะความเฉื่อย
+            ถ้าวัดได้ว่าลูกตุ้มเบนไปเท่าไร ก็รู้ว่ากล่องถูกเขย่าแรงแค่ไหน ข้างเซ็นเซอร์มีระบบแบบนี้จริง ๆ
+            แต่เล็กระดับไมโครเมตร <strong>เป็นตัวเดียวกับที่อยู่ในมือถือคุณ ตัวที่ทำให้จอหมุนตามตอนตะแคงเครื่อง</strong></p>
+          </div>
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · ปัญหา I2C address ซ้ำ</span>
+            <h4>ครูเรียกเลขที่</h4>
+            <p style="margin:10px 0 0">ครูตะโกนว่า “เลขที่ 12 ตอบหน่อย” แล้วเลขที่ 12 ตอบ คนอื่นเงียบ ระบบนี้ใช้ได้เพราะทุกคนมีเลขที่ไม่ซ้ำกัน
+            ปัญหาคือเซ็นเซอร์ทุกตัวจากโรงงาน <strong>มีเลขที่เดียวกันหมด</strong> พอต่อ 3 ตัวเข้าสายเดียวกัน มันตอบพร้อมกันหมด ข้อมูลชนกันมั่ว</p>
+          </div>
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · มัลติเพล็กเซอร์</span>
+            <h4>รีโมททีวี</h4>
+            <p style="margin:10px 0 0">ทีวีที่ต่อทั้งกล่องดาวเทียม เครื่องเล่นเกม และ Netflix ไว้พร้อมกัน แต่ดูได้ทีละช่อง กดปุ่มเปลี่ยนช่องคือเลือกว่าจะดูอันไหน
+            ชิปสลับช่องของเราทำงานแบบนี้เป๊ะ — <strong>เปิดช่อง 0 อ่านเซ็นเซอร์ตัวที่ 1 → เปิดช่อง 1 อ่านตัวที่ 2 → เปิดช่อง 2 อ่านตัวที่ 3
+            แล้ววนซ้ำ 50 รอบต่อวินาที</strong> เร็วจนถือว่าอ่านพร้อมกัน</p>
+          </div>
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · แยกสองคอร์ + คิว</span>
+            <h4>ครัวร้านอาหาร</h4>
+            <p style="margin:10px 0 0">เชฟทำอาหารเสร็จก็วางบนเคาน์เตอร์แล้วทำจานต่อไปทันที ไม่ต้องรอเด็กเสิร์ฟ ส่วนเด็กเสิร์ฟมาหยิบไปตามจังหวะของตัวเอง
+            ถ้าเด็กเสิร์ฟช้าเพราะร้านคนเยอะ เชฟก็ยังทำอาหารต่อได้ไม่หยุดชะงัก
+            <strong>เชฟ = คอร์ที่อ่านเซ็นเซอร์ · เด็กเสิร์ฟ = คอร์ที่ส่งข้อมูลขึ้นเน็ต · เคาน์เตอร์ = คิวพักข้อมูล</strong></p>
+          </div>
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · API</span>
+            <h4>พนักงานเสิร์ฟ</h4>
+            <p style="margin:10px 0 0">ลูกค้าไม่ต้องเดินเข้าครัวเอง แค่บอกพนักงานเสิร์ฟว่าจะสั่งอะไร พนักงานเดินเข้าไปจัดการอะไรก็ไม่รู้ในนั้น
+            แล้วเดินกลับมาพร้อมจานอาหาร <strong>API คือช่องทางมาตรฐานให้โปรแกรมคุยกับโปรแกรม</strong>
+            ในงานเราใช้ 4 จุด — บอร์ดส่งข้อมูลขึ้นฐานข้อมูล เว็บดึงข้อมูลลงมา เว็บถาม AI และเว็บสั่งส่งแจ้งเตือน</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="block reveal">
+        <h3>ทำไมบางทีระบบถึงไม่ยอมสรุป</h3>
+        <div class="grid-3">
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · coherence</span>
+            <h4>คุยโทรศัพท์</h4>
+            <p class="mini" style="margin:10px 0 0">สายชัดแจ๋วได้ยินทุกคำ → เชื่อสิ่งที่ได้ยินได้ · สายมีเสียงซ่าฟังไม่ค่อยออก → อย่าเพิ่งเชื่อว่าอีกฝ่ายพูดว่าอะไร
+            ระบบเราวัดความชัดของสายเป็นตัวเลข 0–1 ถ้าต่ำกว่า 0.75 จะไม่รายงานค่ารอบนั้นเลย</p>
+          </div>
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · hysteresis</span>
+            <h4>เทอร์โมสตัทของแอร์</h4>
+            <p class="mini" style="margin:10px 0 0">ถ้าแอร์เปิด-ปิดที่ 25 องศาพอดีเป๊ะ คอมเพรสเซอร์จะกระตุกตลอด แอร์จริงจึงตัดที่ 25 แต่กลับมาทำงานที่ 26
+            ระบบเราใช้หลักเดียวกัน — เกณฑ์ขาลงกับขาขึ้นไม่เท่ากัน เพื่อไม่ให้สีกระพริบไปมาตรงเส้นแบ่ง</p>
+          </div>
+          <div class="card">
+            <span class="kicker">อธิบายเรื่อง · aliasing</span>
+            <h4>ล้อรถในหนัง</h4>
+            <p class="mini" style="margin:10px 0 0">ล้อรถในหนังบางทีดูเหมือนหมุนถอยหลัง ทั้งที่รถวิ่งไปข้างหน้า เพราะกล้องถ่ายไม่ถี่พอเทียบกับความเร็วล้อ
+            ถ้าเราสุ่มข้อมูลไม่ถี่พอ ความถี่สูงจะพับลงมาปลอมตัวเป็นความถี่ต่ำ และแยกจากของจริงไม่ออกเลย</p>
+          </div>
+        </div>
+        <div class="callout callout-ok" style="margin-top:22px">
+          <div class="callout-title">การเงียบไม่เท่ากับการผ่าน</div>
+          <p>ถ้าคุณภาพข้อมูลไม่ถึงเกณฑ์ ระบบจะบอกว่า <strong>“ยังยืนยันไม่ได้ในรอบนี้”</strong> ไม่ใช่ “ปกติ”
+          เพราะการวัดที่ไม่แม่นทำให้ <em>มองไม่เห็นความเสียหายที่มีอยู่จริง</em> ได้ด้วย ไม่ใช่แค่ทำให้เห็นความเสียหายปลอม</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 4 ══════════ -->
+<section class="section" id="theory">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">04 — เจาะลึก</span>
+      <h2>ทฤษฎีการสั่นสะเทือน</h2>
+      <div class="asks"><span class="asks-label">คำถามที่ส่วนนี้ตอบ</span><p>ทำไมความเสียหายทำให้ความถี่ลด และทำไมความถี่บอกตำแหน่งไม่ได้</p></div>
+    </div>
+
+    <div class="stack-lg">
+
+      <!-- 4.1 ความถี่ธรรมชาติ -->
+      <div class="block reveal">
+        <h3>ความถี่ธรรมชาติ</h3>
+        <p class="lede">ทุกวัตถุมีความเร็วในการสั่นที่มัน “ชอบ” ที่สุดของตัวเอง เรียกว่า <strong>ความถี่ธรรมชาติ</strong>
+        เขียนย่อว่า f<sub>n</sub> หน่วยเป็นเฮิรตซ์ (Hz) = จำนวนรอบต่อวินาที</p>
+
+        <div class="formula">
+          <div class="formula-eq">
+            <span><i>f</i><sub>n</sub></span>
+            <span>=</span>
+            <span class="frac"><span class="num-part">1</span><span class="den-part">2&pi;</span></span>
+            <span class="sqrt"><span><span class="frac"><span class="num-part"><i>k</i></span><span class="den-part"><i>m</i></span></span></span></span>
+          </div>
+          <p class="formula-cap"><i>k</i> = ความแข็งเกร็ง — ต้านการดัดงอได้แค่ไหน · <i>m</i> = มวล — หนักแค่ไหน</p>
+        </div>
+
+        <div class="grid-2" style="margin-top:22px">
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>ถ้า…</th><th>f<sub>n</sub> จะ…</th><th>ตัวอย่าง</th></tr></thead>
+              <tbody>
+                <tr><th><i>k</i> เพิ่ม (แข็งขึ้น)</th><td class="t-ok">สูงขึ้น</td><td>ขึงสายกีตาร์ให้ตึงขึ้น → เสียงสูงขึ้น</td></tr>
+                <tr><th><i>k</i> ลด (อ่อนลง)</th><td class="t-danger">ต่ำลง</td><td>คลายสายกีตาร์ → เสียงต่ำลง</td></tr>
+                <tr><th><i>m</i> เพิ่ม (หนักขึ้น)</th><td class="t-danger">ต่ำลง</td><td>สายเส้นใหญ่ → เสียงต่ำกว่า</td></tr>
+                <tr><th><i>m</i> ลด (เบาลง)</th><td class="t-ok">สูงขึ้น</td><td>สายเส้นเล็ก → เสียงสูง</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="callout-title">f<sub>n</sub> ไม่ขึ้นกับแรงที่กระตุ้น</div>
+            <p style="margin:0">ผลักชิงช้าแรงหรือเบา มันก็แกว่งด้วยจังหวะเดิม เปลี่ยนแค่ความสูง
+            นี่คือเหตุผลที่ f<sub>n</sub> ใช้เป็นตัวชี้วัดความเสียหายได้ — เพราะมันเป็นสมบัติของตัวโครงสร้างเอง ไม่ใช่ของสิ่งที่มากระทำ
+            ต่างจากระบบเตือนภัยทั่วไปที่วัดเพียง “ความแรงของการสั่น” ซึ่งเปลี่ยนไปตามแรงกระตุ้นภายนอกและไม่ได้บอกสภาพของโครงสร้างเลย</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4.2 ทำไม fn ลด -->
+      <div class="block reveal">
+        <h3>ทำไมความเสียหายทำให้ f<sub>n</sub> ลดลง</h3>
+        <ol class="steps">
+          <li><b>เกิดความเสียหาย — ร้าว สนิม หรือน็อตหลวม</b><span>โครงสร้างต้านการโยกได้น้อยลง ค่า <i>k</i> ลดลง</span></li>
+          <li><b>มวลไม่เปลี่ยน</b><span>ตึกที่ร้าวยังหนักเท่าเดิม เศษปูนไม่ได้หายไปไหน ดังนั้น <i>m</i> คงที่</span></li>
+          <li><b>จากสูตร f<sub>n</sub> &prop; &radic;(k/m) — f<sub>n</sub> จึงลดลง</b><span>การที่ f<sub>n</sub> ลดต้องมาจาก <i>k</i> ลดอย่างเดียว เราจึงสรุปย้อนกลับจาก f<sub>n</sub> ไปหา <i>k</i> ได้</span></li>
+        </ol>
+        <div class="callout callout-danger" style="margin-top:24px">
+          <div class="callout-title">ข้อควรระวังที่สำคัญที่สุดของการทดลอง</div>
+          <p>ถ้าวางของหนักเพิ่มบนตึก <i>m</i> จะเพิ่ม แล้ว f<sub>n</sub> จะลดลง <strong>เหมือนกับตอนตึกเสียหายเป๊ะ</strong>
+          น้ำหนักบนตึกจึงเป็นตัวแปรควบคุมที่ห้ามพลาดเด็ดขาด ถ้าลืมข้อนี้ ผลการทดลองจะตีความไม่ได้เลย</p>
+        </div>
+      </div>
+
+      <!-- 4.3 Health -->
+      <div class="block reveal">
+        <h3>ดัชนี Health — เปอร์เซ็นต์ความแข็งเกร็งที่เหลืออยู่</h3>
+        <p class="lede">Health ไม่ใช่คะแนนที่เราตั้งขึ้นเอง แต่มาจากการจัดรูปสมการโดยตรง 4 บรรทัด</p>
+
+        <div class="table-scroll" style="margin-bottom:22px">
+          <table>
+            <thead><tr><th style="width:70px">ขั้น</th><th>สมการ</th><th>เหตุผล</th></tr></thead>
+            <tbody>
+              <tr><th class="num">1</th><td class="mono">f<sub>n</sub> &prop; &radic;(k/m)</td><td>สมการพื้นฐาน</td></tr>
+              <tr><th class="num">2</th><td class="mono">f<sub>n</sub> &prop; &radic;k</td><td>มวลไม่เปลี่ยนตอนโครงสร้างเสียหาย จึงตัดทิ้ง</td></tr>
+              <tr><th class="num">3</th><td class="mono">f<sub>n</sub> / f<sub>n0</sub> = &radic;(k / k<sub>0</sub>)</td><td>เทียบกับสภาพอ้างอิง</td></tr>
+              <tr><th class="num">4</th><td class="mono">(f<sub>n</sub> / f<sub>n0</sub>)² = k / k<sub>0</sub></td><td>ยกกำลังสองทั้งสองข้าง</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="formula">
+          <div class="formula-eq">
+            <span>Health</span><span>=</span>
+            <span>(</span>
+            <span class="frac"><span class="num-part"><i>f</i><sub>n</sub></span><span class="den-part"><i>f</i><sub>n0</sub></span></span>
+            <span>)<sup>2</sup></span>
+            <span>&times;</span><span>100</span>
+          </div>
+          <p class="formula-cap">= เปอร์เซ็นต์ของความแข็งเกร็งที่ยังเหลืออยู่ ไม่ใช่คะแนนที่ตั้งขึ้นเอง</p>
+        </div>
+
+        <div class="grid-2" style="margin-top:22px">
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>f<sub>n</sub> ตอนนี้</th><th>f<sub>n</sub> อ้างอิง</th><th>Health</th><th>แปลว่า</th></tr></thead>
+              <tbody>
+                <tr><td class="num">11.00 Hz</td><td class="num">11.00 Hz</td><td class="num t-ok">100%</td><td>ปกติสมบูรณ์</td></tr>
+                <tr><td class="num">10.45 Hz</td><td class="num">11.00 Hz</td><td class="num t-ok">90.3%</td><td>ความแข็งเกร็งหายไป ~10%</td></tr>
+                <tr><td class="num">9.90 Hz</td><td class="num">11.00 Hz</td><td class="num t-warn">81.0%</td><td>หายไป ~19%</td></tr>
+                <tr><td class="num">9.20 Hz</td><td class="num">11.00 Hz</td><td class="num t-danger">70.0%</td><td>หายไป 30% — ถึงเกณฑ์อันตราย</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card">
+            <div class="callout-title">ทำไมต้องยกกำลังสอง</div>
+            <p>เพราะ f<sub>n</sub> เป็นสัดส่วนกับ<em>รากที่สอง</em>ของ <i>k</i> ถ้าอยากได้อัตราส่วนของ <i>k</i> ต้องยกกำลังสองอัตราส่วนของ f<sub>n</sub>
+            ผลข้างเคียงที่ดีคือมันขยายสัญญาณความเสียหายให้เห็นชัดขึ้นเท่าตัว — <strong>f<sub>n</sub> ลด 5% ทำให้ Health ลดราว 10%</strong></p>
+            <p style="margin-bottom:0"><span class="mini">ในโค้ดจำกัดเพดานไว้ที่ 130% เพื่อไม่ให้ตัวเลขหลุดโลกเวลาความถี่วัดได้สูงกว่าตอนล็อกค่าอ้างอิงเล็กน้อย
+            ซึ่งเกิดได้จากการแกว่งของการวัดหรือจากการที่จุดต่อถูกขันแน่นขึ้น</span></p>
+          </div>
+        </div>
+
+        <div class="block" style="margin-top:32px">
+          <h4 style="margin-bottom:14px">ข้อจำกัด 4 ข้อของ Health ที่เรายอมรับ</h4>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>ข้อจำกัด</th><th>อธิบาย</th></tr></thead>
+              <tbody>
+                <tr><th>สมมติว่ามวลคงที่</th><td>ถ้าวางของหนักเพิ่ม f<sub>n</sub> จะลดเหมือนกัน โดยที่ไม่มีความเสียหายเลย</td></tr>
+                <tr><th>เป็นค่าเฉลี่ยของทั้งระบบ</th><td>บอกไม่ได้ว่า <i>k</i> ของช่วงไหนลด — ต้องใช้ Transmissibility ช่วย</td></tr>
+                <tr><th>ไม่เชิงเส้นกับความเสียหายจริง</th><td><i>k</i> ลด 30% ที่ช่วงชั้น 3 ทำให้ Health ลดแค่ 4.6% ไม่ใช่ 30%</td></tr>
+                <tr><th>ไวต่ออุณหภูมิ</th><td>อุณหภูมิเปลี่ยนทำให้โมดูลัสยืดหยุ่นเปลี่ยน f<sub>n</sub> เลื่อนได้โดยไม่มีความเสียหาย</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4.4 shear building -->
+      <div class="block reveal">
+        <h3>แบบจำลอง Shear Building — หัวใจทางทฤษฎีของงาน</h3>
+        <p class="lede">เราจงใจออกแบบให้แผ่นพื้นแข็งมากจนถือว่าไม่งอ และเสาอ่อนกว่ามากจนงอได้ง่าย
+        ตึก 3 ชั้นจึงกลายเป็นระบบ 3 องศาอิสระ (3-DOF) ที่แก้ด้วยพีชคณิตเชิงเส้นได้ตรง ๆ ตรวจสอบด้วยมือได้ ไม่ต้องใช้โปรแกรมจำลองราคาแพง</p>
+        <div class="grid-3">
+          <div class="card"><span class="kicker">สมมติฐานที่ 1</span><h4>แผ่นพื้นแข็งอนันต์</h4><p class="mini" style="margin:8px 0 0">ไม่งอเลย มวลทั้งหมดรวมอยู่ที่พื้นแต่ละชั้น</p></div>
+          <div class="card"><span class="kicker">สมมติฐานที่ 2</span><h4>เสาไม่มีมวล</h4><p class="mini" style="margin:8px 0 0">ทำหน้าที่เป็นสปริงอย่างเดียว</p></div>
+          <div class="card"><span class="kicker">สมมติฐานที่ 3</span><h4>เคลื่อนที่แนวราบทิศเดียว</h4><p class="mini" style="margin:8px 0 0">ไม่บิด ไม่ยุบตัวแนวดิ่ง</p></div>
+        </div>
+        <div class="callout" style="margin-top:22px">
+          <p>ในเมทริกซ์ความแข็งเกร็ง แต่ละแถวมีแค่ 3 ช่องที่ไม่เป็นศูนย์ เพราะ <strong>ชั้นหนึ่งเชื่อมกับชั้นที่อยู่ติดกันเท่านั้น</strong>
+          ชั้น 1 ไม่ได้เชื่อมตรงกับชั้น 3 นี่คือเหตุผลเชิงคณิตศาสตร์ว่าทำไมความเสียหายที่ช่วงชั้นหนึ่ง
+          จึงกระทบอัตราส่วนการสั่นของช่วงนั้นมากที่สุด</p>
+        </div>
+      </div>
+
+      <!-- 4.5 โหมด -->
+      <div class="block reveal">
+        <h3>โหมดการสั่น — ตึกสั่นได้ 3 รูปแบบ</h3>
+        <p class="lede">แก้สมการค่าลักษณะเฉพาะของแบบจำลอง 3-DOF (มวลเท่ากันทุกชั้น ความแข็งเกร็งเท่ากันทุกช่วง) ได้ผลดังนี้</p>
+        <div id="fig-modes" class="fig-slot">
+          <div class="fig">
+            <div class="svg-scroll" style="--minw:700px">
+<svg viewBox="0 0 760 330" role="img" aria-label="รูปทรงการสั่น 3 โหมดของตึก 3 ชั้น โหมด 1 เอนไปทางเดียวกันทั้งตึก โหมด 2 บิดกลับทิศ 1 ครั้ง โหมด 3 บิดกลับทิศ 2 ครั้ง">
+              <!-- โหมด 1 -->
+              <g transform="translate(120,0)">
+                <text class="d-title" x="0" y="24" text-anchor="middle">โหมด 1</text>
+                <text class="d-muted" x="0" y="44" text-anchor="middle">1.000× · ใช้โหมดนี้</text>
+                <line class="d-grid" x1="0" y1="85" x2="0" y2="250" stroke-dasharray="3 4"/>
+                <line class="d-axis" x1="-80" y1="250" x2="80" y2="250"/>
+                <path class="d-col" d="M0 250 C 0 232, 23.1 213, 23.1 195 C 23.1 177, 41.7 158, 41.7 140 C 41.7 122, 52 103, 52 85"/>
+                <g class="d-slab">
+                  <line x1="-2.9" y1="195" x2="49.1" y2="195"/>
+                  <line x1="15.7" y1="140" x2="67.7" y2="140"/>
+                  <line x1="26"   y1="85"  x2="78"   y2="85"/>
+                </g>
+                <g class="d-muted" text-anchor="end">
+                  <text x="-14" y="199">ชั้น 1</text>
+                  <text x="-14" y="144">ชั้น 2</text>
+                  <text x="-14" y="89">ชั้น 3</text>
+                </g>
+                <text class="d-muted" x="0" y="272" text-anchor="middle">0.445 / 0.802 / 1.000</text>
+                <text class="d-muted" x="0" y="292" text-anchor="middle" style="fill:var(--accent)">เอนไปทางเดียวกันทั้งตึก</text>
+              </g>
+
+              <!-- โหมด 2 -->
+              <g transform="translate(380,0)">
+                <text class="d-title" x="0" y="24" text-anchor="middle">โหมด 2</text>
+                <text class="d-muted" x="0" y="44" text-anchor="middle">2.802×</text>
+                <line class="d-grid" x1="0" y1="85" x2="0" y2="250" stroke-dasharray="3 4"/>
+                <line class="d-axis" x1="-80" y1="250" x2="80" y2="250"/>
+                <path class="d-col" d="M0 250 C 0 232, -52 213, -52 195 C -52 177, -23.1 158, -23.1 140 C -23.1 122, 41.7 103, 41.7 85"/>
+                <g class="d-slab">
+                  <line x1="-78"   y1="195" x2="-26"   y2="195"/>
+                  <line x1="-49.1" y1="140" x2="2.9"   y2="140"/>
+                  <line x1="15.7"  y1="85"  x2="67.7"  y2="85"/>
+                </g>
+                <text class="d-muted" x="0" y="272" text-anchor="middle">−1.000 / −0.445 / 0.802</text>
+                <text class="d-muted" x="0" y="292" text-anchor="middle">บิดกลับทิศ 1 ครั้ง</text>
+              </g>
+
+              <!-- โหมด 3 -->
+              <g transform="translate(640,0)">
+                <text class="d-title" x="0" y="24" text-anchor="middle">โหมด 3</text>
+                <text class="d-muted" x="0" y="44" text-anchor="middle">4.049×</text>
+                <line class="d-grid" x1="0" y1="85" x2="0" y2="250" stroke-dasharray="3 4"/>
+                <line class="d-axis" x1="-80" y1="250" x2="80" y2="250"/>
+                <path class="d-col" d="M0 250 C 0 232, 41.7 213, 41.7 195 C 41.7 177, -52 158, -52 140 C -52 122, 23.1 103, 23.1 85"/>
+                <g class="d-slab">
+                  <line x1="15.7" y1="195" x2="67.7" y2="195"/>
+                  <line x1="-78"  y1="140" x2="-26"  y2="140"/>
+                  <line x1="-2.9" y1="85"  x2="49.1" y2="85"/>
+                </g>
+                <text class="d-muted" x="0" y="272" text-anchor="middle">0.802 / −1.000 / 0.445</text>
+                <text class="d-muted" x="0" y="292" text-anchor="middle">บิดกลับทิศ 2 ครั้ง</text>
+              </g>
+            </svg>
+</div>
+            <p class="fig-cap">เส้นประคือตำแหน่งเดิมที่ยังไม่โยก · ตัวเลขคืออัตราส่วนการแกว่งของชั้น 1 / 2 / 3 ในโหมดนั้น</p>
+          </div>
+        </div>
+        <div class="table-scroll" style="margin-top:22px">
+          <table>
+            <thead><tr><th>โหมด</th><th>ความถี่เทียบโหมด 1</th><th>ชั้น 1</th><th>ชั้น 2</th><th>ชั้น 3</th><th>รูปร่าง</th></tr></thead>
+            <tbody>
+              <tr class="row-hl"><th>โหมด 1</th><td class="num">1.000</td><td class="num">0.445</td><td class="num">0.802</td><td class="num">1.000</td><td>เอนไปทางเดียวกันทั้งตึก</td></tr>
+              <tr><th>โหมด 2</th><td class="num">2.802</td><td class="num">−1.000</td><td class="num">−0.445</td><td class="num">0.802</td><td>บิดกลับทิศ 1 ครั้ง</td></tr>
+              <tr><th>โหมด 3</th><td class="num">4.049</td><td class="num">0.802</td><td class="num">−1.000</td><td class="num">0.445</td><td>บิดกลับทิศ 2 ครั้ง</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid-2" style="margin-top:22px">
+          <div class="card">
+            <h4 style="margin-bottom:12px">ทำไมใช้โหมด 1</h4>
+            <ul class="ticks">
+              <li>ความถี่ต่ำที่สุด จึงตรวจจับง่ายที่สุด และอยู่ในช่วงที่เซ็นเซอร์เราวัดได้</li>
+              <li>ไวต่อความเสียหายมากที่สุด เพราะเป็นโหมดที่ทั้งตึกร่วมมือกันขยับ</li>
+              <li>ตึกจริงในแผ่นดินไหวสั่นด้วยโหมดนี้เป็นหลัก เพราะพลังงานส่วนใหญ่ของแผ่นดินไหวอยู่ที่ความถี่ต่ำ</li>
+            </ul>
+          </div>
+          <div class="card card-accent">
+            <h4 style="margin-bottom:12px">วิธีเช็คว่าจับโหมด 1 อยู่จริง</h4>
+            <p>แอมพลิจูดต้องเรียงเพิ่มขึ้นตามความสูงเสมอ — ชั้น 1 &lt; ชั้น 2 &lt; ชั้น 3</p>
+            <div class="chips" style="margin:14px 0">
+              <span class="chip">ชั้น 1 = 0.0918</span>
+              <span class="chip">ชั้น 2 = 0.1568</span>
+              <span class="chip">ชั้น 3 = 0.2175</span>
+            </div>
+            <p style="margin-bottom:0"><span class="mini">ถ้าชั้นกลางแกว่งน้อยกว่าทั้งชั้นบนและชั้นล่าง แปลว่าไปโดนโหมดสูงเข้าแล้ว
+            ระบบมีตัวตรวจจับกรณีนี้และหักคะแนนความเชื่อมั่นอัตโนมัติ</span></p>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:22px">
+          <div class="callout-title">จุดโหนดคือกับดักที่ต้องเลี่ยง</div>
+          <p>จุดโหนดคือตำแหน่งที่ไม่ขยับเลยในโหมดนั้น โหมด 2 และ 3 มีจุดโหนดอยู่
+          ถ้าบังเอิญวางเซ็นเซอร์ตรงจุดโหนดพอดี มันจะอ่านได้เกือบศูนย์ทั้งที่ตึกสั่นแรงมาก — เป็นกับดักที่ทำให้ตีความผลผิดทั้งหมด</p>
+        </div>
+      </div>
+
+      <!-- 4.6 Transmissibility -->
+      <div class="block reveal">
+        <h3>Transmissibility — ตัวชี้ตำแหน่ง</h3>
+        <p class="lede">นิยาม: อัตราส่วนระหว่างการตอบสนองที่จุดสองจุดในโครงสร้างเดียวกัน ที่ความถี่เดียวกัน</p>
+
+        <div class="grid-2">
+          <div class="formula">
+            <div class="formula-eq">
+              <span><i>T</i><sub>21</sub></span><span>=</span>
+              <span class="frac"><span class="num-part">การสั่นชั้น 2</span><span class="den-part">การสั่นชั้น 1</span></span>
+            </div>
+            <p class="formula-cap">แทนช่วงชั้น 2 — เสาระหว่างชั้น 1 กับชั้น 2</p>
+          </div>
+          <div class="formula">
+            <div class="formula-eq">
+              <span><i>T</i><sub>32</sub></span><span>=</span>
+              <span class="frac"><span class="num-part">การสั่นชั้น 3</span><span class="den-part">การสั่นชั้น 2</span></span>
+            </div>
+            <p class="formula-cap">แทนช่วงชั้น 3 — เสาระหว่างชั้น 2 กับชั้น 3</p>
+          </div>
+        </div>
+
+        <p class="prose" style="margin-top:22px">หลักการ: ถ้าเสาช่วงไหนอ่อนลง ชั้นบนของช่วงนั้นจะขยับมากขึ้นเมื่อเทียบกับชั้นล่าง
+        อัตราส่วนของช่วงนั้นจึงเปลี่ยน ส่วนช่วงอื่นแทบไม่เปลี่ยน</p>
+
+        <div class="grid-3" style="margin-top:22px">
+          <div class="card"><span class="kicker">คุณสมบัติที่ 1</span><h4>ไม่ต้องรู้แรงที่กระทำ</h4><p class="mini" style="margin:8px 0 0">แรงถูกหักล้างไปในการหาร — ในตึกจริงเราวัดแรงลมหรือแรงจราจรไม่ได้อยู่แล้ว</p></div>
+          <div class="card"><span class="kicker">คุณสมบัติที่ 2</span><h4>ไวต่อการเปลี่ยนแปลงเฉพาะที่</h4><p class="mini" style="margin:8px 0 0">ต่างจาก f<sub>n</sub> ที่เป็นค่าเฉลี่ยของทั้งระบบ</p></div>
+          <div class="card"><span class="kicker">คุณสมบัติที่ 3</span><h4>บอกทิศทางได้</h4><p class="mini" style="margin:8px 0 0">เครื่องหมายบวกลบมีความหมาย ใช้แยกได้ว่าความเสียหายอยู่ช่วงล่างหรือช่วงบน</p></div>
+        </div>
+
+        <div class="grid-2" style="margin-top:26px">
+          <div class="formula">
+            <div class="formula-eq">
+              <span><i>T</i></span><span>=</span><span>|</span>
+              <span class="frac"><span class="num-part"><i>S</i><sub>xy</sub>(&omega;)</span><span class="den-part"><i>S</i><sub>xx</sub>(&omega;)</span></span>
+              <span>|</span>
+            </div>
+            <p class="formula-cap">ตัวประมาณ H1 — สเปกตรัมไขว้ระหว่างสองชั้น หารด้วยสเปกตรัมกำลังของชั้นล่าง</p>
+          </div>
+          <div class="card">
+            <h4 style="margin-bottom:10px">ทำไมไม่หารแอมพลิจูดตรง ๆ</h4>
+            <p style="margin-bottom:0">เพราะสเปกตรัมไขว้ <strong>ตัดสัญญาณรบกวนที่ไม่สัมพันธ์กันระหว่างสองช่องทิ้งไปเอง</strong>
+            นอยส์ที่เกิดเฉพาะที่เซ็นเซอร์ตัวใดตัวหนึ่งจึงไม่มีผลต่อค่า T
+            เหมือนถามคำถามเดียวกันกับคน 2 คน แล้วสนใจเฉพาะส่วนที่ทั้งคู่ตอบตรงกัน</p>
+          </div>
+        </div>
+
+        <div class="block" style="margin-top:32px">
+          <h4 style="margin-bottom:14px">ค่าที่วัดได้จริง เทียบกับที่ทฤษฎีทำนายไว้</h4>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th></th><th>ทฤษฎี (shear building 3 ชั้น)</th><th>วัดได้จริง</th><th>ต่างกัน</th></tr></thead>
+              <tbody>
+                <tr><th>T<sub>21</sub></th><td class="num">1.802</td><td class="num">1.708</td><td class="num t-ok">5.2%</td></tr>
+                <tr><th>T<sub>32</sub></th><td class="num">1.247</td><td class="num">1.382</td><td class="num t-warn">10.8%</td></tr>
+                <tr><th>แอมพลิจูด 1 : 2 : 3</th><td class="num">0.445 : 0.802 : 1.000</td><td class="num">0.42 : 0.72 : 1.00</td><td>ใกล้เคียง</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-note">coherence ที่วัดได้จริงคือ 0.99 ทั้งสองช่วง ซึ่งถือว่าสูงมาก</p>
+          <blockquote class="pull" style="margin-top:26px">เราไม่ได้วัดค่ามาแล้วเชื่อเลย เราแก้สมการค่าลักษณะเฉพาะของแบบจำลอง 3 องศาอิสระไว้ก่อน
+          ว่าอัตราส่วนการสั่นควรเป็น 1.802 กับ 1.247 แล้วค่าที่วัดได้จริงคือ 1.708 กับ 1.382 ต่างจากทฤษฎีไม่เกิน 11%</blockquote>
+        </div>
+      </div>
+
+      <!-- 4.7 ลายนิ้วมือ -->
+      <div class="block reveal">
+        <h3>ตารางลายนิ้วมือความเสียหาย</h3>
+        <p class="lede">คำนวณล่วงหน้าจากแบบจำลอง 3-DOF ว่า ถ้าลดความแข็งเกร็งลง 30% ทีละช่วงชั้น ค่าที่เราวัดจะเปลี่ยนไปยังไง
+        นี่คือ “ลายนิ้วมือ” ที่ใช้แยกแยะว่าความเสียหายอยู่ตรงไหน</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>ความเสียหายอยู่ที่</th><th>&Delta;f<sub>n</sub></th><th>Health</th><th>&Delta;T<sub>21</sub></th><th>&Delta;T<sub>32</sub></th><th>ระบบสรุปว่า</th></tr></thead>
+            <tbody>
+              <tr><th>ไม่มีความเสียหาย</th><td class="num">0%</td><td class="num t-ok">100%</td><td class="num">0%</td><td class="num">0%</td><td>ปกติ</td></tr>
+              <tr><th>ช่วงชั้น 1 <span class="mini">(ฐาน↔ชั้น 1)</span></th><td class="num">−10.1%</td><td class="num t-warn">80.8%</td><td class="num t-danger">−14.5%</td><td class="num">−4.5%</td><td>ผิดปกติ แต่ T<sub>21</sub> เป็นลบ = สัญญาณของฐาน</td></tr>
+              <tr><th>ช่วงชั้น 2 <span class="mini">(ชั้น 1↔ชั้น 2)</span></th><td class="num">−6.9%</td><td class="num t-warn">86.8%</td><td class="num t-danger">+21.2%</td><td class="num">−3.2%</td><td>ชี้ช่วงชั้น 2 ชัดเจน</td></tr>
+              <tr><th>ช่วงชั้น 3 <span class="mini">(ชั้น 2↔ชั้น 3)</span></th><td class="num">−2.3%</td><td class="num t-ok">95.4%</td><td class="num">+0.5%</td><td class="num t-warn">+9.8%</td><td>ชี้ช่วงชั้น 3</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid-3" style="margin-top:22px">
+          <div class="card"><h4>1. f<sub>n</sub> เปลี่ยนทุกกรณี</h4><p class="mini" style="margin:8px 0 0">ลดลงหมดทั้ง 3 กรณี ต่างกันแค่มากน้อย — จึงบอกตำแหน่งไม่ได้</p></div>
+          <div class="card"><h4>2. T ชี้ตำแหน่งได้ชัด</h4><p class="mini" style="margin:8px 0 0">ความเสียหายที่ช่วงชั้น 2 ทำให้ T<sub>21</sub> พุ่ง +21.2% ขณะที่ T<sub>32</sub> แทบไม่ขยับ รูปแบบนี้เกิดได้จากช่วงชั้น 2 เท่านั้น</p></div>
+          <div class="card"><h4>3. ทิศทางมีความหมาย</h4><p class="mini" style="margin:8px 0 0">ความเสียหายที่ช่วงชั้น 1 ทำให้ T<sub>21</sub> <em>ลด</em> ส่วนช่วงชั้น 2 ทำให้ T<sub>21</sub> <em>เพิ่ม</em> เครื่องหมายจึงแยกสองกรณีนี้ออกจากกัน</p></div>
+        </div>
+      </div>
+
+      <!-- 4.8 HERO MOMENT -->
+      <div class="block reveal">
+        <span class="eyebrow">ข้อค้นพบสำคัญที่สุดของงาน</span>
+        <h3>ที่ความเสียหาย 20% ความถี่ยังบอกว่าปกติ แต่อัตราส่วนการสั่นจับได้แล้ว</h3>
+        <p class="lede">ตารางความไว — ทำให้ช่วงชั้น 2 เสียหายหนักขึ้นทีละขั้น แล้วดูว่าตัวชี้วัดสองตัวตอบสนองต่างกันแค่ไหน</p>
+
+        <div id="fig-sensitivity" class="fig-slot">
+          <div class="fig">
+            <div class="legend">
+              <span><i style="background:var(--s1)"></i> อัตราส่วนการสั่น T<sub>21</sub></span>
+              <span><i style="background:var(--s2)"></i> ความถี่ธรรมชาติ f<sub>n</sub></span>
+              <span><i style="background:transparent;height:0;border-top:2px dashed var(--text-3)"></i> เกณฑ์แจ้งเตือน 10%</span>
+            </div>
+            <div class="chart-wrap">
+              <div class="svg-scroll" style="--minw:640px">
+<svg id="chart-sens" viewBox="0 0 800 380" role="img"
+                   aria-label="กราฟเปรียบเทียบความไว: ที่ความเสียหาย 20% อัตราส่วนการสั่นเปลี่ยน 12.2% ซึ่งเกินเกณฑ์ 10% แล้ว ขณะที่ความถี่ธรรมชาติเปลี่ยนเพียง 4.1%">
+                <!-- เส้นกริดแนวนอน -->
+                <g class="d-grid">
+                  <line x1="56" y1="334" x2="630" y2="334"/>
+                  <line x1="56" y1="278" x2="630" y2="278"/>
+                  <line x1="56" y1="222" x2="630" y2="222"/>
+                  <line x1="56" y1="166" x2="630" y2="166"/>
+                  <line x1="56" y1="110" x2="630" y2="110"/>
+                  <line x1="56" y1="54"  x2="630" y2="54"/>
+                </g>
+                <!-- ป้ายแกน y -->
+                <g class="d-tick" text-anchor="end">
+                  <text x="44" y="338">0%</text>
+                  <text x="44" y="282">10%</text>
+                  <text x="44" y="226">20%</text>
+                  <text x="44" y="170">30%</text>
+                  <text x="44" y="114">40%</text>
+                  <text x="44" y="58">50%</text>
+                </g>
+                <!-- เกณฑ์ 10% -->
+                <line class="d-thr" x1="56" y1="278" x2="630" y2="278"/>
+                <!-- เส้นชี้จุด 20% -->
+                <line class="d-guide" x1="200" y1="30" x2="200" y2="334"/>
+
+                <!-- แกน x -->
+                <line class="d-axis" x1="56" y1="334" x2="630" y2="334"/>
+                <g class="d-tick" text-anchor="middle">
+                  <text x="56"  y="358">10%</text>
+                  <text x="200" y="358" style="fill:var(--accent);font-weight:600">20%</text>
+                  <text x="343" y="358">30%</text>
+                  <text x="487" y="358">40%</text>
+                  <text x="630" y="358">50%</text>
+                </g>
+                <text class="d-muted" x="343" y="376" text-anchor="middle">ความแข็งเกร็งที่หายไปจากช่วงชั้น 2</text>
+
+                <!-- เส้น fn -->
+                <polyline class="d-line d-s2" points="56,323.4 200,311 343,295.4 487,276.9 630,253.9"/>
+                <!-- เส้น T21 -->
+                <polyline class="d-line d-s1" points="56,303.8 200,265.7 343,215.3 487,148.1 630,51.8"/>
+
+                <!-- จุด -->
+                <g class="d-dot d-f2">
+                  <circle cx="56" cy="323.4" r="5"/><circle cx="200" cy="311" r="5"/>
+                  <circle cx="343" cy="295.4" r="5"/><circle cx="487" cy="276.9" r="5"/>
+                  <circle cx="630" cy="253.9" r="5"/>
+                </g>
+                <g class="d-dot d-f1">
+                  <circle cx="56" cy="303.8" r="5"/><circle cx="200" cy="265.7" r="6.5"/>
+                  <circle cx="343" cy="215.3" r="5"/><circle cx="487" cy="148.1" r="5"/>
+                  <circle cx="630" cy="51.8" r="5"/>
+                </g>
+
+                <!-- ป้ายชี้ปลายเส้น -->
+                <text class="d-label d-f1" x="646" y="48" style="font-weight:600">+50.4%</text>
+                <text class="d-muted d-f1" x="646" y="66">อัตราส่วนการสั่น</text>
+                <text class="d-label d-f2" x="646" y="250" style="font-weight:600">14.3%</text>
+                <text class="d-muted d-f2" x="646" y="268">ความถี่ธรรมชาติ</text>
+
+                <!-- ป้ายชี้จุด 20% -->
+                <text class="d-label d-f1" x="212" y="262" style="font-weight:600">+12.2%</text>
+                <text class="d-label d-f2" x="212" y="330">4.1%</text>
+
+                <!-- พื้นที่รับเมาส์ -->
+                <g id="sens-hit">
+                  <rect x="0"   y="20" width="128" height="314" fill="transparent" data-i="0"/>
+                  <rect x="128" y="20" width="143" height="314" fill="transparent" data-i="1"/>
+                  <rect x="271" y="20" width="144" height="314" fill="transparent" data-i="2"/>
+                  <rect x="415" y="20" width="144" height="314" fill="transparent" data-i="3"/>
+                  <rect x="559" y="20" width="141" height="314" fill="transparent" data-i="4"/>
+                </g>
+              </svg>
+</div>
+              <div class="chart-tip" id="sens-tip" role="status" aria-live="polite"></div>
+            </div>
+            <p class="fig-cap">เส้นทั้งสองออกจากจุดเดียวกัน แต่พอความเสียหายเพิ่มขึ้น
+            อัตราส่วนการสั่นไต่ขึ้นเร็วกว่ามาก — ตัดผ่านเกณฑ์ 10% ตั้งแต่ความเสียหาย 20%
+            ในขณะที่ความถี่ธรรมชาติยังต้องรอถึงราว 40% จึงจะข้ามเกณฑ์เดียวกัน</p>
+          </div>
+        </div>
+
+        <div class="table-scroll" style="margin-top:22px">
+          <table>
+            <thead><tr><th><i>k</i> หายไป</th><th>&Delta;f<sub>n</sub></th><th>Health</th><th>สถานะจาก f<sub>n</sub></th><th>&Delta;T<sub>21</sub></th><th>สถานะจาก T</th></tr></thead>
+            <tbody>
+              <tr><th class="num">10%</th><td class="num">−1.9%</td><td class="num">96.2%</td><td class="t-ok">ปกติ</td><td class="num">+5.4%</td><td class="t-ok">ปกติ</td></tr>
+              <tr class="row-hl"><th class="num">20%</th><td class="num">−4.1%</td><td class="num">91.9%</td><td class="t-ok">ยังบอกว่าปกติ</td><td class="num">+12.2%</td><td class="t-warn">จับได้แล้ว</td></tr>
+              <tr><th class="num">30%</th><td class="num">−6.9%</td><td class="num">86.8%</td><td class="t-warn">เฝ้าระวัง</td><td class="num">+21.2%</td><td class="t-danger">อันตราย</td></tr>
+              <tr><th class="num">40%</th><td class="num">−10.2%</td><td class="num">80.7%</td><td class="t-warn">เฝ้าระวัง</td><td class="num">+33.2%</td><td class="t-danger">อันตราย</td></tr>
+              <tr><th class="num">50%</th><td class="num">−14.3%</td><td class="num">73.4%</td><td class="t-warn">เฝ้าระวัง</td><td class="num">+50.4%</td><td class="t-danger">อันตราย</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card card-accent" style="margin-top:26px">
+          <div class="bigline">ความถี่ธรรมชาติเป็นค่าเฉลี่ยของทั้งระบบ ความเสียหายเฉพาะจุดจึงถูกกลบ
+          ส่วนอัตราส่วนการสั่นระหว่างสองชั้นไวต่อการเปลี่ยนแปลงเฉพาะที่มากกว่า</div>
+          <p style="margin:12px 0 0">นี่คือเหตุผลที่โปรเจกต์นี้ใช้ <strong>สองตัวชี้วัดคู่กัน</strong> ไม่ใช่ใช้ความถี่อย่างเดียวเหมือนงานทั่วไป
+          — f<sub>n</sub> ตอบว่า “มีปัญหาไหม” ส่วน T ตอบว่า “ปัญหาอยู่ตรงไหน”</p>
+        </div>
+
+        <div class="callout" style="margin-top:22px">
+          <p>ข้อค้นพบนี้สอดคล้องกับงานวิจัยระดับนานาชาติ — Salawu (1997) ทบทวนงานวิจัยเรื่องการใช้ความถี่ตรวจความเสียหาย
+          และสรุปว่าการเปลี่ยนแปลงความถี่มักเล็กเกินกว่าจะใช้ตรวจความเสียหายเบา ๆ ได้อย่างมั่นใจ
+          โดยทั่วไปต้องเห็นความถี่เปลี่ยนอย่างน้อยราว 5% จึงจะสรุปได้ว่ามีความเสียหายจริง</p>
+        </div>
+      </div>
+
+      <!-- ข้อจำกัด -->
+      <div class="block reveal">
+        <h3>ข้อจำกัดที่เรายอมรับ</h3>
+        <div class="grid-2">
+          <div class="card card-danger"><h4>ระบุตำแหน่งได้แค่ระดับช่วงชั้น</h4><p class="mini" style="margin:8px 0 0">บอกได้ว่าอยู่ระหว่างชั้นไหนกับชั้นไหน แต่บอกไม่ได้ว่าเป็นเสาต้นไหนใน 4 ต้น เพราะมีเซ็นเซอร์ชั้นละตัว</p></div>
+          <div class="card card-danger"><h4>ไม่มีเซ็นเซอร์ที่ฐาน</h4><p class="mini" style="margin:8px 0 0">ทำให้ตรวจช่วงชั้น 1 ตรง ๆ ไม่ได้ ต้องอนุมานทางอ้อมจากทิศทางการเปลี่ยนแปลง การเพิ่มเซ็นเซอร์ตัวที่ 4 ที่ฐานเป็นแผนขยายลำดับแรก</p></div>
+          <div class="card card-danger"><h4>ยังไม่ชดเชยอุณหภูมิ</h4><p class="mini" style="margin:8px 0 0">Peeters &amp; De Roeck ติดตามสะพาน Z24 หนึ่งปีแล้วพบว่าความถี่แกว่งตามอุณหภูมิในระดับที่อาจใหญ่กว่าสัญญาณของความเสียหายจริง</p></div>
+          <div class="card card-danger"><h4>ความเสียหายเบาที่ช่วงชั้นบนอาจตรวจไม่เจอ</h4><p class="mini" style="margin:8px 0 0">ความเสียหาย 30% ที่ช่วงชั้น 3 ทำให้ T<sub>32</sub> เปลี่ยนแค่ +9.8% ซึ่งเฉียดเกณฑ์ 10% พอดี ถ้าเบากว่านั้นอาจตรวจไม่พบ</p></div>
+        </div>
+        <p class="table-note">ทางแก้คือลดเกณฑ์ลงแลกกับการแจ้งเตือนผิดพลาดที่มากขึ้น หรือเพิ่มเซ็นเซอร์ เราเลือกตั้งเกณฑ์แบบระมัดระวังไว้ก่อน</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 5 ══════════ -->
+<section class="section" id="dsp">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">05 — เจาะลึก</span>
+      <h2>การประมวลผลสัญญาณ</h2>
+      <div class="asks"><span class="asks-label">คำถามที่ส่วนนี้ตอบ</span><p>เปลี่ยนเส้นกราฟยุ่ง ๆ ให้เป็นตัวเลข 11.00 Hz ได้ยังไง</p></div>
+    </div>
+
+    <div class="stack-lg">
+
+      <div class="block prose reveal">
+        <h3>ปัญหาตั้งต้น</h3>
+        <p>สัญญาณความเร่งที่เซ็นเซอร์อ่านได้เป็นเส้นกราฟที่ดูยุ่งเหยิงและมองไม่ออกว่าสั่นที่ความถี่เท่าไร
+        เราจึงใช้หลักการของฟูริเยร์แปลงข้อมูลจาก “กราฟตามเวลา” ให้เป็น “กราฟตามความถี่”
+        ซึ่งจะเห็นเป็นยอดแหลมชี้ว่าพลังงานการสั่นอยู่ที่ความถี่ไหนมากที่สุด</p>
+        <p>แต่ระบบเราไม่ได้แค่ FFT แล้วจบ — มี <strong>8 ขั้นตอน</strong> ที่ทำงานต่อกัน แต่ละขั้นแก้ปัญหาคนละอย่างที่เราเจอจริงระหว่างพัฒนา</p>
+      </div>
+
+      <!-- Nyquist -->
+      <div class="block reveal">
+        <h3>ทฤษฎีบทไนควิสต์ — ทำไมต้อง 50 ครั้งต่อวินาที</h3>
+        <div class="formula">
+          <div class="formula-eq">
+            <span><i>f</i><sub>Nyquist</sub></span><span>=</span>
+            <span class="frac"><span class="num-part"><i>f</i><sub>s</sub></span><span class="den-part">2</span></span>
+          </div>
+          <p class="formula-cap">ของเรา: f<sub>s</sub> = 50 Hz → วัดได้สูงสุด 25 Hz → ตึกสั่นที่ 11 Hz จึงปลอดภัย มีเผื่อกว่าสองเท่า</p>
+        </div>
+        <div class="grid-2" style="margin-top:22px">
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>ความถี่จริง</th><th>ระบบจะเห็นเป็น</th><th>สรุป</th></tr></thead>
+              <tbody>
+                <tr><td class="num">11 Hz</td><td class="num">11 Hz</td><td class="t-ok">ถูกต้อง</td></tr>
+                <tr><td class="num">24 Hz</td><td class="num">24 Hz</td><td class="t-warn">ถูกต้อง แต่ใกล้ขีดจำกัด</td></tr>
+                <tr><td class="num">30 Hz</td><td class="num">20 Hz</td><td class="t-danger">ปลอม แยกจาก 20 Hz จริงไม่ได้</td></tr>
+                <tr><td class="num">45 Hz</td><td class="num">5 Hz</td><td class="t-danger">ปลอม ดูเหมือนความถี่ต่ำมาก</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card card-danger">
+            <h4 style="margin-bottom:10px">Aliasing คือกับดักที่อันตรายที่สุด</h4>
+            <p>ความถี่ที่สูงกว่าไนควิสต์จะ “พับ” ลงมาปรากฏเป็นความถี่ต่ำที่ไม่มีอยู่จริง และ
+            <strong>แยกออกจากสัญญาณจริงไม่ได้เลย</strong> ไม่ว่าจะประมวลผลเก่งแค่ไหน เพราะข้อมูลที่จำเป็นหายไปตั้งแต่ตอนวัดแล้ว</p>
+            <p style="margin-bottom:0">นี่คือเหตุผลเชิงลึกที่ตึกจำลองต้องไม่แข็งเกินไป ถ้าเสาหนาจน f<sub>n</sub> เกิน 25 Hz
+            ระบบจะรายงานความถี่ปลอมโดยไม่มีทางรู้ตัว โค้ดจึงจำกัดช่วงค้นหายอดแหลมไม่ให้เกิน <code>0.45 × fs</code> เสมอ (เผื่อขอบไว้ 10%)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Welch -->
+      <div class="block reveal">
+        <h3>วิธีของ Welch — ลดสัญญาณรบกวนด้วยการเฉลี่ย</h3>
+        <p class="lede">ปัญหาของ FFT ครั้งเดียวคือความแปรปรวนของผลลัพธ์ไม่ลดลงแม้จะเก็บข้อมูลนานขึ้น
+        ยอดแหลมจะกระโดดขึ้นลงทุกครั้งที่คำนวณใหม่ ทั้งที่โครงสร้างไม่ได้เปลี่ยนอะไร</p>
+        <ol class="steps">
+          <li><b>หั่นข้อมูลเป็นท่อน</b><span>ท่อนละ 512 จุด</span></li>
+          <li><b>ให้ท่อนซ้อนทับกันครึ่งหนึ่ง</b><span>overlap 50% เพื่อไม่ให้ข้อมูลตรงรอยต่อถูกทิ้ง</span></li>
+          <li><b>คูณด้วยหน้าต่าง Hann</b><span>ลดการรั่วไหลของสเปกตรัม</span></li>
+          <li><b>FFT แต่ละท่อน</b><span></span></li>
+          <li><b>เฉลี่ยผลของทุกท่อน</b><span>สัญญาณรบกวนหักล้างกันเพราะสุ่ม แต่ยอดจริงอยู่ที่เดิมทุกท่อน — ถ้าเฉลี่ย K ท่อน ความแปรปรวนลดลงราว 1/K เท่า</span></li>
+        </ol>
+        <div class="formula" style="margin-top:24px">
+          <div class="formula-eq">
+            <span>&Delta;<i>f</i></span><span>=</span>
+            <span class="frac"><span class="num-part"><i>f</i><sub>s</sub></span><span class="den-part"><i>N</i></span></span>
+            <span>=</span>
+            <span class="frac"><span class="num-part">50</span><span class="den-part">512</span></span>
+            <span>=</span><span>0.098 Hz</span>
+          </div>
+          <p class="formula-cap">ความละเอียดขึ้นกับ<em>จำนวนจุดในหน้าต่าง</em> ไม่ใช่จำนวนข้อมูลทั้งหมด</p>
+        </div>
+        <div class="callout callout-danger" style="margin-top:22px">
+          <div class="callout-title">ทำไม nperseg ต้องตรึงไว้ที่ 512</div>
+          <p>ถ้าปล่อยให้ขนาดหน้าต่างแปรผันตามจำนวนข้อมูลที่ดึงมาได้ ความละเอียดจะแกว่ง
+          แล้วค่าที่วัดได้จะเปลี่ยน <strong>เพราะพารามิเตอร์ของการประมวลผลเอง ไม่ใช่เพราะโครงสร้างเปลี่ยน</strong> — เป็นบั๊กที่ผลลัพธ์ดูเหมือนถูกแต่ผิด</p>
+        </div>
+        <div class="callout" style="margin-top:16px">
+          <p>ค่าที่ได้เรียกว่า PSD (Power Spectral Density) มีหน่วยเป็น g²/Hz คือความหนาแน่นของพลังงานต่อหนึ่งหน่วยความถี่
+          <strong>ถ้าอยากได้พลังงานรวมในช่วงความถี่หนึ่ง ต้องอินทิเกรตเทียบแกนความถี่ ไม่ใช่บวกกันเฉย ๆ</strong></p>
+        </div>
+      </div>
+
+      <!-- Hann -->
+      <div class="block reveal">
+        <h3>หน้าต่าง Hann และการรั่วไหลของสเปกตรัม</h3>
+        <p class="lede">FFT สมมติว่าสัญญาณในท่อนนั้นซ้ำเป็นคาบไปเรื่อย ๆ ถ้าปลายท่อนไม่ต่อเนื่องกับต้นท่อน จะเกิดการกระโดดกะทันหันเสมือน
+        ซึ่งคอมพิวเตอร์มองว่าเป็นองค์ประกอบความถี่สูงมาก ทำให้เกิดยอดปลอมกระจายไปทั่วสเปกตรัม</p>
+        <div class="formula">
+          <div class="formula-eq">
+            <span><i>w</i>[<i>n</i>]</span><span>=</span><span>0.5</span><span>&middot;</span>
+            <span>( 1 − cos(</span>
+            <span class="frac"><span class="num-part">2&pi;<i>n</i></span><span class="den-part"><i>N</i> − 1</span></span>
+            <span>) )</span>
+          </div>
+          <p class="formula-cap">ฟังก์ชันรูประฆัง — ค่าเป็นศูนย์ที่ปลายทั้งสองข้าง สูงสุดตรงกลาง ทำให้หัวและท้ายของท่อนค่อย ๆ ลดลงเป็นศูนย์</p>
+        </div>
+        <p class="table-note">ผลข้างเคียงที่ต้องรู้: หน้าต่างทำให้ยอดแหลมกว้างขึ้นเล็กน้อย แลกกับการที่ยอดปลอมข้างเคียงลดลงมาก — เป็นการแลกที่คุ้มสำหรับงานที่ต้องแยกยอดออกจากพื้นหลังสัญญาณรบกวน</p>
+      </div>
+
+      <!-- 8 ขั้นตอน -->
+      <div class="block reveal">
+        <h3>ขั้นตอนกรองสัญญาณทั้ง 8 ขั้น</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th style="width:52px">#</th><th>ขั้นตอน</th><th>แก้ปัญหาอะไร</th><th>ทำอะไร</th></tr></thead>
+            <tbody>
+              <tr><th class="num">1</th><td><strong>Resample</strong></td><td>เวลาที่ข้อมูลมาถึงไม่เท่ากันเป๊ะ</td><td>เกลี่ยข้อมูลให้ห่างเท่ากันทุกจุด เพราะ FFT ต้องการแบบนั้น</td></tr>
+              <tr><th class="num">2</th><td><strong>Detrend เชิงเส้น</strong></td><td>ค่าเซ็นเซอร์ค่อย ๆ ไหลจากความร้อน</td><td>ลากเส้นตรงผ่านข้อมูลแล้วลบออก เหลือแต่การสั่นล้วน ๆ</td></tr>
+              <tr><th class="num">3</th><td><strong>หน้าต่าง Hann</strong></td><td>รอยตัดหัวท้ายท่อนทำให้เกิดยอดปลอม</td><td>ทำให้หัวท้ายค่อย ๆ ลดลงเป็นศูนย์</td></tr>
+              <tr><th class="num">4</th><td><strong>Welch</strong></td><td>ผล FFT ครั้งเดียวมีนอยส์สูง</td><td>เฉลี่ยหลายท่อนให้นอยส์หักล้างกัน</td></tr>
+              <tr><th class="num">5</th><td><strong>จำกัดช่วงค้นหา</strong></td><td>เจอยอดปลอมจาก aliasing</td><td>ค้นเฉพาะ 2–22.5 Hz ที่เชื่อได้ (ตั้งไว้ 2–24 Hz แล้วบังคับไม่ให้เกิน 0.45 × fs อีกชั้น)</td></tr>
+              <tr><th class="num">6</th><td><strong>Log-parabolic interpolation</strong></td><td>ยอดจริงอาจอยู่ระหว่างขีด</td><td>ลากเส้นโค้งผ่าน 3 จุดรอบยอดเพื่อหาตำแหน่งจริง ละเอียดขึ้นราว 10 เท่า</td></tr>
+              <tr><th class="num">7</th><td><strong>Median filter 7 จุด</strong></td><td>ค่ากระโดดเป็นครั้งคราว</td><td>เอาค่า 7 รอบล่าสุดมาเรียงแล้วหยิบตัวกลาง</td></tr>
+              <tr><th class="num">8</th><td><strong>Coherence gate</strong></td><td>บางรอบข้อมูลเชื่อไม่ได้เลย</td><td>ถ้าคะแนนความน่าเชื่อถือต่ำกว่า 0.75 ให้ปฏิเสธรอบนั้น</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ขั้น 6 และ 7 เจาะลึก -->
+      <div class="block reveal">
+        <div class="grid-2">
+          <div>
+            <h4 style="margin-bottom:12px">ขั้นที่ 6 — ทำไมต้องใช้ลอการิทึม</h4>
+            <div class="formula">
+              <div class="formula-eq">
+                <span>&delta;</span><span>=</span>
+                <span class="frac"><span class="num-part">1</span><span class="den-part">2</span></span>
+                <span>&middot;</span>
+                <span class="frac"><span class="num-part"><i>y</i><sub>−1</sub> − <i>y</i><sub>+1</sub></span><span class="den-part"><i>y</i><sub>−1</sub> − 2<i>y</i><sub>0</sub> + <i>y</i><sub>+1</sub></span></span>
+              </div>
+              <p class="formula-cap">&delta; = ส่วนย่อยของขีดที่ต้องเลื่อน · <i>y</i> = ค่าลอการิทึมของ PSD ที่ 3 ขีดรอบยอด</p>
+            </div>
+            <p class="table-note">เพราะยอดในสเปกตรัมมีรูปร่างใกล้เคียงเกาส์เซียนเมื่อใช้หน้าต่าง Hann และ
+            <strong>ลอการิทึมของเกาส์เซียนคือพาราโบลาพอดี</strong> การประมาณจึงแม่นกว่าการใช้ค่าดิบ</p>
+          </div>
+          <div>
+            <h4 style="margin-bottom:12px">ขั้นที่ 7 — ทำไมใช้ค่ามัธยฐานไม่ใช่ค่าเฉลี่ย</h4>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ชุดข้อมูล</th><th>ค่าเฉลี่ย</th><th>ค่ามัธยฐาน</th></tr></thead>
+                <tbody>
+                  <tr><td class="num">11, 11, 11, 11, 11</td><td class="num">11.0</td><td class="num">11.0</td></tr>
+                  <tr><td class="num">11, 11, 11, 50, 11</td><td class="num t-danger">18.8</td><td class="num t-ok">11.0</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="table-note">ค่ามัธยฐานมีจุดแตกหักที่ 50% — ต้องมีข้อมูลผิดปกติเกินครึ่งจึงจะทำให้ผลเพี้ยน
+            ในขณะที่ค่าเฉลี่ยมีจุดแตกหักที่ 0% ข้อมูลผิดปกติเพียงจุดเดียวก็ลากค่าไปได้ไม่จำกัด
+            หน้าต่าง 7 จุดของเราทนค่าผิดปกติได้ถึง 3 จุดพร้อมกัน</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coherence -->
+      <div class="block reveal">
+        <h3>Coherence — เกณฑ์ความน่าเชื่อถือ</h3>
+        <div class="formula">
+          <div class="formula-eq">
+            <span>&gamma;<sup>2</sup>(&omega;)</span><span>=</span>
+            <span class="frac"><span class="num-part">| <i>S</i><sub>xy</sub>(&omega;) |<sup>2</sup></span><span class="den-part"><i>S</i><sub>xx</sub>(&omega;) &middot; <i>S</i><sub>yy</sub>(&omega;)</span></span>
+          </div>
+          <p class="formula-cap">มีค่าระหว่าง 0 ถึง 1 — บอกว่าสัญญาณสองช่องสัมพันธ์กันเชิงเส้นแค่ไหนที่ความถี่นั้น</p>
+        </div>
+        <div class="table-scroll" style="margin-top:22px">
+          <table>
+            <thead><tr><th>ค่า</th><th>หมายความว่า</th><th>สาเหตุที่พบบ่อย</th></tr></thead>
+            <tbody>
+              <tr><th class="num t-ok">&gt; 0.9</th><td>สัญญาณสองช่องมาจากแหล่งเดียวกันเกือบทั้งหมด</td><td>สภาพการวัดที่ดี</td></tr>
+              <tr><th class="num t-warn">0.75 – 0.9</th><td>ยังใช้ได้ แต่เริ่มมีสิ่งรบกวน</td><td>สัญญาณอ่อนลง</td></tr>
+              <tr><th class="num t-danger">&lt; 0.75</th><td>เชื่อไม่ได้ — ระบบจะไม่รายงานค่า</td><td>เซ็นเซอร์หลวม สายไฟดึงรั้ง มีแรงอื่นมารบกวน หรือระบบตอบสนองแบบไม่เชิงเส้น</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <blockquote class="pull" style="margin-top:26px">ระบบเรามีเกณฑ์ปฏิเสธข้อมูลของตัวเอง การรายงานค่าที่เชื่อไม่ได้อันตรายกว่าการไม่รายงาน
+        เพราะผู้ใช้จะตัดสินใจผิดจากตัวเลขที่ดูน่าเชื่อถือ</blockquote>
+      </div>
+
+      <!-- คะแนนความเชื่อมั่น -->
+      <div class="block reveal">
+        <h3>คะแนนความเชื่อมั่น — ประเมินคุณภาพข้อมูลอย่างเป็นระบบ</h3>
+        <p class="lede">แทนที่จะรายงานผลอย่างเดียว ระบบให้คะแนนว่ารอบนี้ข้อมูลน่าเชื่อแค่ไหน โดยหักคะแนนจาก 100 ตามเงื่อนไขที่วัดได้จริง ไม่ได้เดา</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>เงื่อนไขที่ตรวจ</th><th style="width:80px">หัก</th><th>เหตุผลเชิงทฤษฎี</th></tr></thead>
+            <tbody>
+              <tr><th>แรงสั่นต่ำกว่าเกณฑ์</th><td class="num t-danger">−40</td><td>อัตราส่วนสัญญาณต่อสัญญาณรบกวนต่ำ</td></tr>
+              <tr><th>ข้อมูลในบัฟเฟอร์ &lt; 300 จุด</th><td class="num t-danger">−35</td><td>Welch เฉลี่ยได้ไม่กี่ท่อน ความแปรปรวนสูง</td></tr>
+              <tr><th>coherence &lt; 0.75</th><td class="num t-danger">−30</td><td>ความสัมพันธ์เชิงเส้นต่ำ</td></tr>
+              <tr><th>ความถี่กระตุ้นเข้าใกล้ขีดจำกัด Nyquist</th><td class="num t-warn">−20</td><td>เสี่ยง aliasing</td></tr>
+              <tr><th>รูปทรงการแกว่งผิดจากโหมด 1</th><td class="num t-warn">−20</td><td>อาจกำลังจับโหมดสูง</td></tr>
+              <tr><th>อัตราสุ่มจริงหลุดจากค่าออกแบบเกิน 20%</th><td class="num t-warn">−15</td><td>แกนความถี่คลาดเคลื่อน</td></tr>
+              <tr><th>ยอดในสเปกตรัมไม่คม</th><td class="num t-warn">−15</td><td>แยกจากพื้นหลังยาก</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-ok" style="margin-top:22px">
+          <div class="callout-title">กฎเหล็ก</div>
+          <p>ถ้าคุณภาพข้อมูลมีข้อสังเกต ระบบ<strong>ห้าม</strong>ประกาศว่า “ปกติ” จะเปลี่ยนเป็น “ยังยืนยันไม่ได้ในรอบนี้” แทน
+          เพราะการวัดที่ไม่แม่นทำให้มองไม่เห็นความเสียหายที่มีอยู่จริงได้ด้วย ไม่ใช่แค่ทำให้เห็นความเสียหายปลอม</p>
+        </div>
+      </div>
+
+      <!-- สรุป -->
+      <div class="block reveal">
+        <h3>สรุปการประมวลผลในหน้าเดียว</h3>
+        <ol class="steps">
+          <li><b>ข้อมูลดิบ 900 จุด</b><span>18 วินาที ที่ 50 ครั้งต่อวินาที</span></li>
+          <li><b>เกลี่ยเวลาให้ห่างเท่ากันทุกจุด</b><span>resample</span></li>
+          <li><b>หั่นเป็นท่อนละ 512 จุด ซ้อนทับกันครึ่งหนึ่ง</b><span>ได้ราว 2–3 ท่อนต่อการคำนวณหนึ่งครั้ง</span></li>
+          <li><b>ลบแนวโน้มการไหล แล้วใส่หน้าต่าง Hann</b><span></span></li>
+          <li><b>FFT ทุกท่อนแล้วเฉลี่ยกัน</b><span>ได้กราฟ PSD</span></li>
+          <li><b>หายอดสูงสุดเฉพาะในช่วง 2–22.5 Hz</b><span></span></li>
+          <li><b>ปรับตำแหน่งยอดให้ละเอียดขึ้นด้วยเส้นโค้งพาราโบลา</b><span></span></li>
+          <li><b>กรองด้วยค่ามัธยฐานของ 7 รอบล่าสุด</b><span></span></li>
+          <li><b>ตรวจว่า coherence ≥ 0.75 จึงจะยอมรับค่า</b><span></span></li>
+        </ol>
+        <div class="card card-accent" style="margin-top:26px">
+          <span class="kicker">ผลลัพธ์</span>
+          <div class="bigline">f<sub>n</sub> = 11.00 Hz</div>
+        </div>
+        <div class="callout" style="margin-top:22px">
+          <div class="callout-title">ของแถมที่ซ่อนอยู่ในโค้ด — ตัวจับฮาร์มอนิก</div>
+          <p>ถ้าชั้นส่วนใหญ่บังเอิญไปจับ <em>ฮาร์มอนิก</em> (ทวีคูณ ×2 หรือ ×3 ของความถี่จริง) แล้วเราหาค่ามัธยฐานตรง ๆ
+          ความถี่อ้างอิงจะผิดทันที โค้ดจึงตรวจก่อนว่าค่าไหนเป็นทวีคูณของค่าต่ำสุด แล้วหารกลับก่อนหาค่ามัธยฐาน</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 6 ══════════ -->
+<section class="section" id="hardware">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">06 — เจาะลึก</span>
+      <h2>โครงสร้างและฮาร์ดแวร์</h2>
+      <div class="asks"><span class="asks-label">คำถามที่ส่วนนี้ตอบ</span><p>ตึกจำลองทำจากอะไร และบอร์ดกับเซ็นเซอร์ทำงานร่วมกันยังไง</p></div>
+    </div>
+
+    <div class="stack-lg">
+
+      <!-- ตึกจำลอง -->
+      <div class="block reveal">
+        <h3>ตึกจำลอง 3 ชั้น</h3>
+        <p class="lede">ประกอบจาก 2 อย่างเท่านั้น — แผ่นพื้นแบนแข็ง ๆ วางเป็นชั้น ๆ และเสาแท่งบาง ๆ ที่ตั้งเชื่อมระหว่างแผ่นพื้นสองแผ่น
+        ไม่มีผนัง ไม่มีหลังคา เพราะเราต้องการให้มันสั่นได้ชัด ๆ</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>ส่วนประกอบ</th><th>รายละเอียด</th><th>เหตุผลที่เลือกแบบนี้</th></tr></thead>
+            <tbody>
+              <tr><th>พื้นแต่ละชั้น</th><td>แผ่นอะคริลิกใส หนา 3 มม.</td><td>มองเห็นอุปกรณ์ภายในได้ทุกจุด และแข็งพอที่จะถือว่าไม่งอ</td></tr>
+              <tr><th>เสา</th><td>เสารองหกเหลี่ยม</td><td>บางพอให้งอได้ง่าย ทำให้ f<sub>n</sub> ต่ำกว่าขีดจำกัดของเซ็นเซอร์</td></tr>
+              <tr><th>ข้อต่อทุกจุด</th><td>น็อตจริง ไม่ใช้กาว</td><td>จำลองการคลายตัวของข้อต่อได้จริงโดยที่มวล <i>m</i> ไม่เปลี่ยน และถอดประกอบกลับเป็นชิ้นส่วนตั้งต้นได้ 100%</td></tr>
+              <tr><th>ฐาน</th><td>วางบนรางสไลด์ลูกปืนเชิงเส้น</td><td>เลื่อนในแนวระนาบเกือบไร้แรงเสียดทาน ทำให้กำหนดความถี่กระตุ้นได้แม่นยำและทำซ้ำได้</td></tr>
+              <tr><th>ตัวกระตุ้น</th><td>ลำโพงส่งกำลัง + โมดูลขยายเสียง สั่งผ่านแอป Frequency Generator บนสมาร์ทโฟน</td><td>ไม่ใช้การเขย่าด้วยมือเพราะควบคุมความถี่ไม่ได้ — การทดลองที่เชื่อถือได้ต้องทำซ้ำได้ทุกครั้ง</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-danger" style="margin-top:22px">
+          <div class="callout-title">จุดที่พลาดกันบ่อย</div>
+          <p>ถ้าเสาหนาเกินไป ตึกจะแข็งจนสั่นด้วยความถี่สูงเกิน 25 ครั้งต่อวินาที ซึ่ง<strong>เกินขีดจำกัดที่เซ็นเซอร์เราวัดได้</strong>
+          แล้วระบบจะอ่านค่าผิดโดยไม่มีใครรู้ตัว — เหตุผลเชิงลึกอยู่ในหัวข้อไนควิสต์</p>
+        </div>
+      </div>
+
+      <!-- ชั้น vs ช่วงชั้น -->
+      <div class="block reveal">
+        <h3>“ชั้น” กับ “ช่วงชั้น” ต่างกันยังไง</h3>
+        <p class="lede">นี่คือจุดที่ทีมส่วนใหญ่โดนกรรมการสายโยธาเจาะ สองคำนี้ห้ามใช้สลับกัน</p>
+        <div id="fig-floors" class="fig-slot">
+          <div class="fig">
+            <div class="svg-scroll" style="--minw:470px">
+<svg viewBox="90 20 490 335" style="max-width:640px;margin:0 auto" role="img" aria-label="ผังตึก 3 ชั้น แสดงว่าเซ็นเซอร์อยู่ที่พื้นแต่ละชั้น ส่วนความเสียหายเกิดที่เสาระหว่างชั้น และไม่มีเซ็นเซอร์ที่ฐาน">
+              <!-- เสา -->
+              <g class="d-col">
+                <line x1="285" y1="300" x2="285" y2="70"/>
+                <line x1="365" y1="300" x2="365" y2="70"/>
+              </g>
+              <!-- แผ่นพื้น -->
+              <g class="d-slab">
+                <line x1="255" y1="240" x2="395" y2="240"/>
+                <line x1="255" y1="170" x2="395" y2="170"/>
+                <line x1="255" y1="100" x2="395" y2="100"/>
+              </g>
+              <!-- ฐาน -->
+              <line class="d-axis" x1="235" y1="300" x2="415" y2="300" stroke-width="3"/>
+              <g class="d-grid">
+                <line x1="243" y1="300" x2="233" y2="312"/><line x1="263" y1="300" x2="253" y2="312"/>
+                <line x1="283" y1="300" x2="273" y2="312"/><line x1="303" y1="300" x2="293" y2="312"/>
+                <line x1="323" y1="300" x2="313" y2="312"/><line x1="343" y1="300" x2="333" y2="312"/>
+                <line x1="363" y1="300" x2="353" y2="312"/><line x1="383" y1="300" x2="373" y2="312"/>
+                <line x1="403" y1="300" x2="393" y2="312"/>
+              </g>
+
+              <!-- เซ็นเซอร์ -->
+              <g class="d-f1">
+                <circle cx="325" cy="240" r="7"/><circle cx="325" cy="170" r="7"/><circle cx="325" cy="100" r="7"/>
+              </g>
+
+              <!-- ป้ายขวา : ชั้น -->
+              <g class="d-label">
+                <line class="d-grid" x1="400" y1="240" x2="430" y2="240"/>
+                <line class="d-grid" x1="400" y1="170" x2="430" y2="170"/>
+                <line class="d-grid" x1="400" y1="100" x2="430" y2="100"/>
+                <text x="438" y="236">ชั้น 1</text><text class="d-muted" x="438" y="253">เซ็นเซอร์ตัวที่ 1</text>
+                <text x="438" y="166">ชั้น 2</text><text class="d-muted" x="438" y="183">เซ็นเซอร์ตัวที่ 2</text>
+                <text x="438" y="96">ชั้น 3</text><text class="d-muted" x="438" y="113">เซ็นเซอร์ตัวที่ 3</text>
+              </g>
+
+              <!-- ป้ายซ้าย : ช่วงชั้น -->
+              <g class="d-arrow">
+                <path d="M225 300 L215 300 L215 240 L225 240"/>
+                <path d="M225 240 L215 240 L215 170 L225 170"/>
+                <path d="M225 170 L215 170 L215 100 L225 100"/>
+              </g>
+              <g class="d-label" text-anchor="end">
+                <text x="203" y="266">ช่วงชั้น 1</text><text class="d-muted" x="203" y="283">ฐาน ↔ ชั้น 1</text>
+                <text x="203" y="200">ช่วงชั้น 2</text><text class="d-muted" x="203" y="217">ชั้น 1 ↔ ชั้น 2</text>
+                <text x="203" y="130">ช่วงชั้น 3</text><text class="d-muted" x="203" y="147">ชั้น 2 ↔ ชั้น 3</text>
+              </g>
+
+              <!-- หัวเรื่อง -->
+              <text class="d-title" x="203" y="42" text-anchor="end" style="fill:var(--text-2)">ความเสียหายเกิดที่นี่</text>
+              <text class="d-title" x="438" y="42" style="fill:var(--text-2)">เราวัดที่นี่</text>
+              <text class="d-muted" x="325" y="336" text-anchor="middle">ฐานยึดแน่นกับโต๊ะ · ไม่มีเซ็นเซอร์ที่ฐาน</text>
+            </svg>
+</div>
+            <p class="fig-cap">“พบความผิดปกติที่ช่วงชั้น 2” = เสาระหว่างชั้น 1 กับชั้น 2 มีปัญหา ไม่ใช่พื้นชั้น 2 มีปัญหา</p>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top:22px">
+          <div class="card"><span class="kicker">floor</span><h4>ชั้น = แผ่นพื้น</h4><p style="margin:8px 0 0"><strong>เป็นจุดที่เราวางเซ็นเซอร์</strong> มีเซ็นเซอร์ที่ชั้น 1, 2 และ 3 ชั้นละตัว</p></div>
+          <div class="card"><span class="kicker">storey</span><h4>ช่วงชั้น = ช่วงเสาระหว่างพื้นสองแผ่น</h4><p style="margin:8px 0 0"><strong>เป็นจุดที่ความเสียหายเกิดขึ้นจริง</strong> ช่วงชั้น 2 คือเสาระหว่างชั้น 1 กับชั้น 2</p></div>
+        </div>
+        <div class="callout" style="margin-top:22px">
+          <p>เวลาระบบบอกว่า “พบความผิดปกติที่ช่วงชั้น 2” หมายความว่า <strong>เสาระหว่างชั้น 1 กับชั้น 2 มีปัญหา</strong>
+          ไม่ใช่ “พื้นชั้น 2 มีปัญหา”</p>
+        </div>
+        <div class="callout callout-danger" style="margin-top:16px">
+          <div class="callout-title">ข้อจำกัดที่ต้องยอมรับตรง ๆ</div>
+          <p>เรามีเซ็นเซอร์ 3 ตัวที่ชั้น 1, 2, 3 แต่<strong>ไม่มีเซ็นเซอร์ที่ฐาน</strong> ทำให้ตรวจช่วงชั้น 1
+          (เสาระหว่างฐานกับชั้น 1) ตรง ๆ ไม่ได้ ต้องอนุมานทางอ้อม ถ้าจะให้ครบต้องเพิ่มเซ็นเซอร์ตัวที่ 4 ที่ฐาน</p>
+        </div>
+      </div>
+
+      <!-- จำลองความเสียหาย -->
+      <div class="block reveal">
+        <h3>จำลองความเสียหายยังไงให้สมจริงและทำซ้ำได้</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>วิธี</th><th>ทำยังไง</th><th>ข้อดี</th><th>ข้อเสีย</th></tr></thead>
+            <tbody>
+              <tr class="row-hl"><th>คลายน็อต <span class="mini">(วิธีที่ใช้)</span></th><td>คลายน็อตที่จุดต่อเสากับพื้น 1–3 รอบ</td><td>ย้อนกลับได้ ควบคุมระดับได้ ทำซ้ำได้</td><td>ต้องคลายให้เท่ากันทุกครั้ง</td></tr>
+              <tr><th>ถอดค้ำยัน</th><td>ถ้ามีเหล็กค้ำทแยง ให้ถอดออก 1 ตัว</td><td>เห็นผลชัดมาก</td><td>เปลี่ยนแบบขั้นบันได ปรับละเอียดไม่ได้</td></tr>
+              <tr><th>เปลี่ยนเสาเป็นเส้นบางกว่า</th><td>สลับเสาช่วงหนึ่งเป็นแผ่นที่บางลง</td><td>จำลองการสูญเสียหน้าตัดได้ตรง</td><td>ต้องทำเสาสำรองไว้หลายชุด</td></tr>
+              <tr><th>ตัด/เจาะเสา</th><td>เจาะรูหรือบากเสา</td><td>สมจริงที่สุด</td><td class="t-danger">ย้อนกลับไม่ได้ ใช้เป็นการทดลองสุดท้าย</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout" style="margin-top:22px">
+          <div class="callout-title">ทำไมคลายน็อตถึงเท่ากับ “ความเสียหาย”</div>
+          <p>น็อตที่แน่นทำให้จุดต่อเสา-พื้นเป็นแบบยึดแน่นหมุนไม่ได้ พอคลายออก จุดต่อเริ่มหมุนได้เล็กน้อย
+          เสาจึงต้านการโยกได้น้อยลง = ค่าความแข็งเกร็ง <i>k</i> ลดลง
+          <strong>ซึ่งเป็นผลเดียวกับที่เกิดตอนคอนกรีตร้าวหรือเหล็กเป็นสนิม</strong> ต่างกันที่คลายน็อตย้อนกลับได้และควบคุมระดับได้</p>
+        </div>
+      </div>
+
+      <!-- เช็กลิสต์ -->
+      <div class="block reveal">
+        <h3>เช็กลิสต์ก่อนทดลองทุกครั้ง</h3>
+        <div class="card">
+          <ul class="ticks">
+            <li>ฐานตึกยึดแน่นกับโต๊ะ ไม่ขยับ (ใช้แคลมป์)</li>
+            <li>น็อตทุกตัวขันแน่นเท่ากัน ถ้าไม่ได้กำลังจำลองความเสียหาย</li>
+            <li>เซ็นเซอร์ทั้ง 3 ตัวติดแน่นกับพื้นชั้น ไม่โยกได้</li>
+            <li>สายไฟไม่ตึงจนดึงรั้งตัวเซ็นเซอร์ — ปล่อยหย่อนไว้</li>
+            <li>โต๊ะไม่โยก ไม่มีใครพิงหรือเดินสั่นสะเทือน</li>
+            <li>ลำโพงวางที่เดิมทุกครั้ง ระยะห่างเท่าเดิม</li>
+            <li>น้ำหนักบนตึกเท่าเดิมทุกรอบ</li>
+          </ul>
+        </div>
+        <p class="table-note"><strong>สายไฟดึงรั้งเซ็นเซอร์คือสาเหตุอันดับหนึ่งของข้อมูลเพี้ยน</strong>
+        เพราะสายจะทำตัวเป็นสปริงเพิ่มขึ้นมา อาการที่เห็นบนหน้าจอคือค่า coherence ตก</p>
+      </div>
+
+      <!-- ฮาร์ดแวร์ -->
+      <div class="block reveal">
+        <h3>อุปกรณ์อิเล็กทรอนิกส์</h3>
+        <div id="fig-system" class="fig-slot">
+          <div class="fig">
+            <p class="d-label" style="margin:0 0 14px;color:var(--text-3);font-size:.86rem">กดที่กล่องเพื่อดูรายละเอียด</p>
+            <div class="svg-scroll" style="--minw:470px">
+<svg viewBox="0 0 620 440" style="max-width:620px;margin:0 auto"
+                 role="group" aria-label="แผนผังระบบ: เซ็นเซอร์ ไปมัลติเพล็กเซอร์ ไปบอร์ด ไปฐานข้อมูลคลาวด์ ไปเว็บแดชบอร์ด และไปการแจ้งเตือน">
+              <defs>
+                <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10 z" fill="var(--border-strong)"/>
+                </marker>
+              </defs>
+
+              <!-- ลูกศร -->
+              <g class="d-arrow">
+                <line x1="272" y1="84"  x2="344" y2="84"  marker-end="url(#ar2)"/>
+                <line x1="475" y1="130" x2="475" y2="176" marker-end="url(#ar2)"/>
+                <line x1="348" y1="224" x2="276" y2="224" marker-end="url(#ar2)"/>
+                <line x1="145" y1="270" x2="145" y2="316" marker-end="url(#ar2)"/>
+                <line x1="272" y1="364" x2="344" y2="364" marker-end="url(#ar2)"/>
+              </g>
+
+              <g class="d-hit" role="button" tabindex="0" aria-expanded="false"
+                 data-t="เซ็นเซอร์ MPU-6050 × 3"
+                 data-d="MEMS accelerometer ตัวละไม่ถึง 100 บาท ติดที่พื้นชั้น 1, 2 และ 3 ชั้นละตัว วัดความเร่งในแนวแกน X 50 ครั้งต่อวินาที ค่าที่อ่านได้อยู่ราว 0.05–0.25 g · ข้างในเป็นมวลจิ๋วบนสปริงจิ๋วที่แกะจากแผ่นซิลิคอน">
+                <rect class="d-box" x="20" y="40" width="250" height="88" rx="10"/>
+                <text class="d-boxtitle" x="145" y="80" text-anchor="middle">เซ็นเซอร์ MPU-6050 ×3</text>
+                <text class="d-boxsub" x="145" y="104" text-anchor="middle">50 Hz · แกน X</text>
+              </g>
+
+              <g class="d-hit" role="button" tabindex="0" aria-expanded="false"
+                 data-t="TCA9548A — มัลติเพล็กเซอร์"
+                 data-d="แก้ปัญหาเซ็นเซอร์ทั้ง 3 ตัวมี I2C address ซ้ำกันที่ 0x68 ทำหน้าที่เป็นสวิตช์เลือกช่อง เปิดทีละช่องให้บอร์ดอ่านทีละตัว วนครบ 3 ตัวภายใน 20 มิลลิวินาที · อยู่ที่ address 0x70 บัสความเร็ว 400 kHz">
+                <rect class="d-box" x="350" y="40" width="250" height="88" rx="10"/>
+                <text class="d-boxtitle" x="475" y="80" text-anchor="middle">TCA9548A</text>
+                <text class="d-boxsub" x="475" y="104" text-anchor="middle">@0x70 · I2C 400 kHz</text>
+              </g>
+
+              <g class="d-hit" role="button" tabindex="0" aria-expanded="false"
+                 data-t="ESP32-S3 N16R8 — สมองของระบบ"
+                 data-d="2 คอร์ 240 MHz มี Wi-Fi ในตัว คอร์ 1 อ่านเซ็นเซอร์ทุก 20 ms ด้วย vTaskDelayUntil ส่วนคอร์ 0 ส่งข้อมูลขึ้นคลาวด์ เชื่อมกันด้วยคิวลึก 8 ชุดแบบไม่บล็อก · ประทับเวลาจาก NTP แล้วปัดลงล็อก 20 ms · สะสม 25 จุดแล้วส่งทีเดียว">
+                <rect class="d-box" x="350" y="180" width="250" height="88" rx="10"/>
+                <text class="d-boxtitle" x="475" y="220" text-anchor="middle">ESP32-S3</text>
+                <text class="d-boxsub" x="475" y="244" text-anchor="middle">2 คอร์ · batch 25</text>
+              </g>
+
+              <g class="d-hit" role="button" tabindex="0" aria-expanded="false"
+                 data-t="Firebase — ฐานข้อมูลคลาวด์"
+                 data-d="ทำหน้าที่เป็นจุดนัดพบระหว่างบอร์ดกับเว็บ ทั้งสองฝั่งไม่คุยกันตรง ๆ ฝั่งไหนล่มอีกฝั่งก็ยังทำงานต่อได้ · เก็บย้อนหลัง 60 วินาที ลบเก่าอัตโนมัติทุก 15 วินาที ขนาดฐานข้อมูลจึงคงที่ตลอดอายุการใช้งาน">
+                <rect class="d-box" x="20" y="180" width="250" height="88" rx="10"/>
+                <text class="d-boxtitle" x="145" y="220" text-anchor="middle">Firebase</text>
+                <text class="d-boxsub" x="145" y="244" text-anchor="middle">เก็บย้อนหลัง 60 s</text>
+              </g>
+
+              <g class="d-hit" role="button" tabindex="0" aria-expanded="false"
+                 data-t="เว็บแดชบอร์ด Streamlit"
+                 data-d="ดึงเฉพาะข้อมูลใหม่กว่าครั้งที่แล้ว แล้วประมวลผล 8 ขั้นจนได้ความถี่ธรรมชาติและอัตราส่วนการสั่น ก่อนส่งให้กฎวิศวกรรมตัดสิน · บัฟเฟอร์ 900 จุด nperseg 512 คาบรีเฟรชขั้นต่ำ 2,200 ms">
+                <rect class="d-box" x="20" y="320" width="250" height="88" rx="10"/>
+                <text class="d-boxtitle" x="145" y="360" text-anchor="middle">เว็บแดชบอร์ด</text>
+                <text class="d-boxsub" x="145" y="384" text-anchor="middle">buffer 900 · nperseg 512</text>
+              </g>
+
+              <g class="d-hit" role="button" tabindex="0" aria-expanded="false"
+                 data-t="สรุปผลและแจ้งเตือน"
+                 data-d="สรุปเป็น ปกติ / เฝ้าระวัง / ต้องตรวจสอบ พร้อมระบุช่วงชั้น แล้วส่งข้อความเข้า Telegram เฉพาะตอนสถานะเปลี่ยนจริง มีช่วงพัก 5 นาทีก่อนแจ้งเรื่องเดิมซ้ำ · ปุ่ม AI เป็นตัวเสริม ถอดออกได้โดยระบบยังทำงานครบ">
+                <rect class="d-box" x="350" y="320" width="250" height="88" rx="10"/>
+                <text class="d-boxtitle" x="475" y="360" text-anchor="middle">สรุปผล + แจ้งเตือน</text>
+                <text class="d-boxsub" x="475" y="384" text-anchor="middle">Telegram · AI (เสริม)</text>
+              </g>
+            </svg>
+</div>
+            <div class="fig-note" id="system-note">
+              <b>กดที่กล่องใดก็ได้</b>รายละเอียดของส่วนนั้นจะขึ้นตรงนี้
+            </div>
+          </div>
+        </div>
+        <div class="table-scroll" style="margin-top:22px">
+          <table>
+            <thead><tr><th>ส่วน</th><th>รายละเอียด</th></tr></thead>
+            <tbody>
+              <tr><th>บอร์ด</th><td>ESP32-S3 N16R8 — 2 คอร์ · 240 MHz · Wi-Fi ในตัว · หน่วยความจำโปรแกรม 16 MB + RAM เสริม 8 MB</td></tr>
+              <tr><th>เซ็นเซอร์</th><td>MPU-6050 × 3 ตัว — MEMS accelerometer ตัวละไม่ถึง 100 บาท วัดความเร่งหน่วย g (ใช้จริงราว 0.05–0.25 g)</td></tr>
+              <tr><th>มัลติเพล็กเซอร์</th><td>TCA9548A ที่ address <code>0x70</code> — แก้ปัญหาเซ็นเซอร์ทั้ง 3 ตัวมี I2C address ซ้ำกันที่ <code>0x68</code></td></tr>
+              <tr><th>การเชื่อมต่อ</th><td>I2C · SDA = GPIO 8 · SCL = GPIO 9 · ความเร็ว 400 kHz (Fast Mode)</td></tr>
+              <tr><th>อัตราสุ่ม</th><td>50 Hz — อ่านเซ็นเซอร์ครบ 3 ตัวทุก 20 ms</td></tr>
+              <tr><th>แหล่งจ่ายไฟ</th><td>USB — ไม่ใช้แบตเตอรี่ จึงไม่สร้างขยะแบตเตอรี่ในระยะยาว</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout" style="margin-top:22px">
+          <p>ความเร็ว 400 kHz ไม่ใช่ตัวเลขสวย ๆ — <strong>จำเป็น</strong> เพราะต้องสลับช่องมัลติเพล็กเซอร์และอ่านเซ็นเซอร์ครบ 3 ตัวให้เสร็จภายใน 20 มิลลิวินาที</p>
+        </div>
+      </div>
+
+      <!-- ทำไมไม่ Uno -->
+      <div class="block reveal">
+        <h3>ทำไมไม่ใช้ Arduino Uno</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th></th><th>Arduino Uno</th><th>ESP32-S3</th></tr></thead>
+            <tbody>
+              <tr><th>Wi-Fi</th><td class="t-danger">ไม่มี ต้องซื้อโมดูลเพิ่ม</td><td class="t-ok">มีในตัว</td></tr>
+              <tr><th>ความเร็ว</th><td class="num">16 MHz</td><td class="num t-ok">240 MHz (เร็วกว่า 15 เท่า)</td></tr>
+              <tr><th>RAM</th><td class="num">2 KB</td><td class="num t-ok">512 KB + 8 MB</td></tr>
+              <tr><th>จำนวนแกนประมวลผล</th><td class="num">1</td><td class="num t-ok">2</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">ข้อสุดท้ายสำคัญที่สุด และเป็นหัวใจของการออกแบบเฟิร์มแวร์ทั้งหมด</p>
+      </div>
+
+      <!-- สองคอร์ -->
+      <div class="block reveal">
+        <span class="eyebrow">จุดขายทางวิศวกรรม</span>
+        <h3>การแยกสองคอร์ — ปัญหาที่แก้ยากที่สุดในงานนี้</h3>
+        <div class="grid-2">
+          <div class="card card-danger">
+            <h4 style="margin-bottom:10px">ปัญหา</h4>
+            <p>บอร์ดต้องทำสองอย่างพร้อมกันที่ขัดแย้งกันเอง</p>
+            <ul class="ticks" style="margin-top:12px">
+              <li><strong>อ่านเซ็นเซอร์</strong> — ต้องตรงเวลาทุก 20 ms เป๊ะ ๆ ห้ามคลาด</li>
+              <li><strong>ส่งข้อมูลขึ้นเน็ต</strong> — ใช้เวลา 200–2,000 ms และเดาไม่ได้ว่านานแค่ไหน</li>
+            </ul>
+            <p style="margin:14px 0 0"><span class="mini">ถ้าใช้คอร์เดียว ช่วงที่กำลังส่งข้อมูลจะไม่ได้วัดเลย ข้อมูลหายเป็นช่วง ๆ
+            ทำให้สเปกตรัมเพี้ยนแบบที่มองไม่ออกด้วยตา — จะเห็นความถี่ปลอมโผล่ขึ้นมาโดยไม่รู้ว่าปลอม</span></p>
+          </div>
+          <div class="card card-ok">
+            <h4 style="margin-bottom:10px">วิธีแก้</h4>
+            <p>แยกงานที่มีข้อกำหนดเวลาเข้มงวดออกจากงานที่เวลาไม่แน่นอน ไปคนละคอร์ แล้วเชื่อมด้วยคิวแบบไม่บล็อก</p>
+            <ul class="ticks ticks-ok" style="margin-top:12px">
+              <li><strong>คอร์ 1 — sampler</strong> อ่านเซ็นเซอร์ทุก 20 ms แล้วหย่อนข้อมูลลงคิว ไม่เคยรอใครเลย</li>
+              <li><strong>คอร์ 0 — uploader</strong> หยิบจากคิวไปส่งขึ้น Firebase ช้าได้ ไม่กระทบคนวัด</li>
+            </ul>
+          </div>
+        </div>
+        <div id="fig-cores" class="fig-slot" style="margin-top:22px">
+          <div class="fig">
+            <div class="svg-scroll" style="--minw:680px">
+<svg viewBox="0 0 760 250" role="img" aria-label="ผังการแบ่งงานสองคอร์: คอร์ 1 อ่านเซ็นเซอร์ทุก 20 มิลลิวินาที หย่อนลงคิว 8 ชุด แล้วคอร์ 0 หยิบไปส่งขึ้นคลาวด์">
+              <!-- กรอบบอร์ด -->
+              <rect x="10" y="34" width="740" height="176" rx="14" fill="none" stroke="var(--border)" stroke-dasharray="6 5"/>
+              <text class="d-muted" x="24" y="26">บอร์ด ESP32-S3</text>
+
+              <!-- คอร์ 1 -->
+              <rect class="d-box d-box-accent" x="34" y="58" width="248" height="128" rx="10"/>
+              <text class="d-title" x="158" y="86" text-anchor="middle">คอร์ 1 — คนวัด</text>
+              <g class="d-muted" text-anchor="middle">
+                <text x="158" y="110">อ่านเซ็นเซอร์ 3 ตัว ทุก 20 ms เป๊ะ</text>
+                <text x="158" y="130">หย่อนข้อมูลลงคิวแล้วจบ</text>
+                <text x="158" y="150">ไม่เคยรอใครเลย</text>
+                <text x="158" y="172" class="d-mono">priority 3 · stack 6144</text>
+              </g>
+
+              <!-- คิว -->
+              <rect class="d-box" x="318" y="92" width="124" height="60" rx="8"/>
+              <text class="d-label" x="380" y="118" text-anchor="middle">คิวพักข้อมูล</text>
+              <text class="d-muted d-mono" x="380" y="138" text-anchor="middle">8 ชุด = 200 จุด</text>
+
+              <!-- คอร์ 0 -->
+              <rect class="d-box" x="478" y="58" width="248" height="128" rx="10"/>
+              <text class="d-title" x="602" y="86" text-anchor="middle">คอร์ 0 — คนส่ง</text>
+              <g class="d-muted" text-anchor="middle">
+                <text x="602" y="110">หยิบจากคิวไปส่งขึ้น Firebase</text>
+                <text x="602" y="130">ลบข้อมูลเก่า · ส่งสัญญาณชีพ</text>
+                <text x="602" y="150">ช้าได้ ไม่กระทบคนวัด</text>
+                <text x="602" y="172" class="d-mono">priority 2 · stack 12288</text>
+              </g>
+
+              <!-- ลูกศร -->
+              <defs>
+                <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10 z" fill="var(--border-strong)"/>
+                </marker>
+              </defs>
+              <line class="d-arrow" x1="284" y1="122" x2="314" y2="122" marker-end="url(#ar)"/>
+              <line class="d-arrow" x1="444" y1="122" x2="474" y2="122" marker-end="url(#ar)"/>
+
+              <text class="d-muted" x="380" y="80" text-anchor="middle" style="fill:var(--accent)">xQueueSend แบบไม่รอ</text>
+              <text class="d-muted" x="380" y="176" text-anchor="middle">คิวเต็ม = ทิ้งจุดนั้น</text>
+              <text class="d-muted" x="380" y="234" text-anchor="middle">ผลลัพธ์ — จังหวะการอ่านนิ่งที่ 50.00 ครั้งต่อวินาที แม้เน็ตจะหน่วงก็ไม่กระทบการวัด</text>
+            </svg>
+</div>
+          </div>
+        </div>
+        <div class="table-scroll" style="margin-top:22px">
+          <table>
+            <thead><tr><th>ส่วน</th><th>ค่าที่ตั้งจริงในโค้ด</th><th>เหตุผล</th></tr></thead>
+            <tbody>
+              <tr><th>คนวัด (sampler)</th><td class="mono">core 1 · priority 3 · stack 6144</td><td>ความสำคัญสูงกว่า เพราะห้ามพลาดจังหวะ</td></tr>
+              <tr><th>คนส่ง (uploader)</th><td class="mono">core 0 · priority 2 · stack 12288</td><td>ต้องใช้หน่วยความจำมากกว่าเพราะ Wi-Fi + เข้ารหัส HTTPS</td></tr>
+              <tr><th>คิวพักข้อมูล</th><td class="mono">QUEUE_DEPTH 8</td><td>8 ชุด = 200 ตัวอย่าง กันเน็ตหน่วงชั่วครู่</td></tr>
+              <tr><th>จังหวะการวัด</th><td class="mono">vTaskDelayUntil()</td><td>ต่างจาก <code>delay()</code> — มันนับจาก “เวลาที่ควรจะถึง” ไม่ใช่ “เวลาที่ทำเสร็จ” จึงไม่มีการสะสมความคลาดเคลื่อน</td></tr>
+              <tr><th>การหย่อนลงคิว</th><td class="mono">xQueueSend(..., 0)</td><td>ไม่รอ — ถ้าคิวเต็มให้ทิ้งข้อมูลจุดนั้นไปเลย ดีกว่าปล่อยให้คนวัดหยุดรอ</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout" style="margin-top:22px">
+          <div class="callout-title">ทำไมยอมทิ้งข้อมูลตอนคิวเต็ม</div>
+          <p>เพราะเราเลือกยอมเสียข้อมูลบางชุดดีกว่ายอมให้จังหวะการสุ่มเสีย
+          <strong>ข้อมูลที่หายไปทั้งชุดเราตรวจจับได้จากช่องว่างของเวลา แต่ข้อมูลที่จังหวะเพี้ยนจะทำให้สเปกตรัมผิดโดยที่มองไม่ออกว่าผิด</strong>
+          และเรานับจำนวนที่ทิ้งไว้ในสถิติที่ส่งไปกับสัญญาณชีพ เพื่อให้รู้ว่าเกิดบ่อยแค่ไหน</p>
+        </div>
+      </div>
+
+      <!-- เวลา -->
+      <div class="block reveal">
+        <h3>ปัญหาเรื่องเวลา — จะรู้ได้ไงว่าข้อมูล 3 ชั้นเป็นจังหวะเดียวกัน</h3>
+        <p class="lede">เราต้องเทียบการสั่นของ 3 ชั้น ณ เวลาเดียวกัน ถ้าเวลาเพี้ยนไปแม้แต่นิดเดียว ผลจะผิดหมด</p>
+        <ol class="steps">
+          <li><b>ขอเวลามาตรฐานจากอินเทอร์เน็ต</b><span>บอร์ดใช้โพรโทคอล NTP ถามเซิร์ฟเวอร์เวลา ได้เวลาที่แม่นระดับมิลลิวินาที (มีเซิร์ฟเวอร์สำรอง 2 ตัว timeout 20 วินาที)</span></li>
+          <li><b>ปัดเวลาให้ลงล็อก 20 มิลลิวินาที</b><span>เรียกว่า <code>quantize()</code> เพื่อให้ข้อมูลของ 3 ชั้นในจังหวะเดียวกันได้เลขเวลาตรงกันเป๊ะ</span></li>
+          <li><b>แปลงเป็นชื่อกล่องเก็บข้อมูล 13 หลัก</b><span>เติมศูนย์ข้างหน้าให้ครบ 13 หลักเสมอ</span></li>
+        </ol>
+        <div class="grid-2" style="margin-top:24px">
+          <div class="callout callout-danger">
+            <div class="callout-title">ทำไมต้องเติมศูนย์ให้ครบ 13 หลัก</div>
+            <p>เพราะฐานข้อมูลเรียงชื่อกล่องแบบ <strong>เรียงตามตัวอักษร</strong> ไม่ใช่เรียงตามตัวเลข
+            ถ้าไม่เติมศูนย์ เลข 9 จะถูกจัดว่ามาหลัง 10 ทำให้ข้อมูลเรียงผิดลำดับเวลา — เป็นบั๊กคลาสสิกที่แก้ยากมาก
+            เพราะข้อมูลดูเหมือนถูกต้องทุกอย่าง แค่ลำดับผิด</p>
+          </div>
+          <div class="callout callout-danger">
+            <div class="callout-title">ทำไม quantize() สำคัญ</div>
+            <p>ระบบลบข้อมูลเก่าทำงานโดย “เดาชื่อคีย์ทีละ 20 ms แล้วสั่งลบ” ถ้าเวลาไม่ถูกปัดให้ลงล็อก
+            คีย์จะเป็นเลขที่ตัวลบไม่มีทางเดาตรงสักตัว → <strong>ลบข้อมูลเก่าไม่ได้เลย ฐานข้อมูลโตไม่หยุดจนเต็มโควตา</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- config.h -->
+      <div class="block reveal">
+        <h3>ค่าคงที่ทั้งหมดของฝั่งบอร์ด</h3>
+        <p class="lede">อยู่ในไฟล์เดียวคือ <code>config.h</code> — หลักการ single source of truth แก้ค่าที่นี่ที่เดียว ไม่ต้องไล่แก้กระจายในไฟล์อื่น</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>กลุ่ม</th><th>ค่า</th><th>ความหมาย</th></tr></thead>
+            <tbody>
+              <tr><th>เส้นทางฐานข้อมูล</th><td class="mono">DB_PATH "/History3F"<br>META_PATH "/History3F_meta"</td><td>ต้องตรงกับฝั่ง Python เป๊ะ — บั๊กตัวหลักของเวอร์ชันเก่าคือสองฝั่งชี้คนละที่</td></tr>
+              <tr><th>ขา I2C</th><td class="mono">I2C_SDA 8 · I2C_SCL 9<br>TCA_ADDR 0x70 · I2C_FREQ 400000</td><td>ขาสัญญาณข้อมูล ขาจังหวะ ที่อยู่มัลติเพล็กเซอร์ และความเร็วบัส</td></tr>
+              <tr><th>ช่องเซ็นเซอร์</th><td class="mono">CH_FLOOR1 0 · CH_FLOOR2 1 · CH_FLOOR3 2</td><td>ชั้นไหนเสียบช่องไหนของ TCA9548A</td></tr>
+              <tr><th>จังหวะการวัด</th><td class="mono">SAMPLE_HZ 50 · KEY_STEP_MS 20</td><td>คำนวณจาก 1000 ÷ 50 เป็นทั้งคาบการวัดและระยะห่างของคีย์</td></tr>
+              <tr><th>การส่ง</th><td class="mono">BATCH_SIZE 25 · QUEUE_DEPTH 8<br>SEND_ALL_AXES false</td><td>สะสม 25 จุด (0.5 วินาที) แล้วส่งทีเดียว · ส่งแค่แกน X ประหยัดอินเทอร์เน็ต 3 เท่า</td></tr>
+              <tr><th>การลบข้อมูลเก่า</th><td class="mono">KEEP_SECONDS 60 · CLEANUP_EVERY_MS 15000<br>CLEANUP_CHUNK 200</td><td>เก็บย้อนหลัง 60 วินาที ลบทุก 15 วินาที ครั้งละไม่เกิน 200 คีย์</td></tr>
+              <tr><th>การเฝ้าระวังตัวเอง</th><td class="mono">HEARTBEAT_MS 5000 · WATCHDOG_MS 10000<br>RSSI_MIN −85 · HEAP_MIN 30000</td><td>ส่งสัญญาณชีพทุก 5 วินาที ตรวจสุขภาพตัวเองทุก 10 วินาที และเกณฑ์ที่ถือว่า Wi-Fi อ่อนหรือหน่วยความจำใกล้หมด</td></tr>
+              <tr><th>เวลา</th><td class="mono">GMT_OFFSET_SEC 7×3600<br>NTP_TIMEOUT_MS 20000</td><td>เขตเวลาไทย UTC+7 และเวลารอสูงสุดตอน sync</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout" style="margin-top:22px">
+          <div class="callout-title">ทำไม BATCH_SIZE ต้องเป็น 25</div>
+          <p>เป็นการแลกระหว่างสองอย่าง — ถ้าส่งทีละจุดจะยิงเน็ต 50 ครั้งต่อวินาทีซึ่งกินแบนด์วิดท์มาก
+          ถ้าสะสมนานไปข้อมูลจะมาถึงหน้าจอช้า เราเลือก 25 จุดซึ่งเท่ากับครึ่งวินาที
+          <strong>ทำให้หน้าจออัปเดตทัน แต่ยิงเน็ตแค่ 2 ครั้งต่อวินาที</strong></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 7 ══════════ -->
+<section class="section" id="software">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">07 — เจาะลึก</span>
+      <h2>ซอฟต์แวร์และโค้ด</h2>
+      <div class="asks"><span class="asks-label">คำถามที่ส่วนนี้ตอบ</span><p>โค้ด 43 ไฟล์จัดวางยังไง และใครเป็นคนตัดสินสถานะจริง ๆ</p></div>
+    </div>
+
+    <div class="stack-lg">
+
+      <!-- สองภาษา -->
+      <div class="block reveal">
+        <h3>ทำไมใช้สองภาษา</h3>
+        <div class="grid-2">
+          <div class="card">
+            <span class="kicker">เฟิร์มแวร์ · 12 ไฟล์</span>
+            <h4>C++ / Arduino</h4>
+            <p style="margin:8px 0 0">ฝั่งบอร์ดต้องการภาษาที่คอมไพล์เป็นภาษาเครื่อง เพื่อคุมจังหวะเวลาให้แม่นระดับมิลลิวินาที
+            Python ทำไม่ได้เพราะมีตัวเก็บขยะหน่วยความจำที่หยุดโปรแกรมเป็นช่วง ๆ</p>
+          </div>
+          <div class="card">
+            <span class="kicker">แดชบอร์ด · 20 ไฟล์ + เทสต์ 3 ไฟล์</span>
+            <h4>Python / Streamlit</h4>
+            <p style="margin:8px 0 0">ฝั่งวิเคราะห์ต้องการไลบรารีคณิตศาสตร์ที่ครบ ซึ่งอยู่ใน Python
+            การเลือกภาษาที่เหมาะกับงานแต่ละฝั่งแล้วเชื่อมด้วย API มาตรฐานเป็นแนวทางปกติของระบบ IoT</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- โครงสร้าง -->
+      <div class="block reveal">
+        <h3>สถาปัตยกรรมของโค้ดฝั่งแดชบอร์ด</h3>
+        <p class="lede">หลักการที่ใช้คือ <strong>แยกส่วน “คิด” ออกจากส่วน “แสดง” อย่างเด็ดขาด</strong></p>
+<pre>dashboard/
+├── <b>app.py</b>                  <i>ตัวประกอบร่าง · 242 บรรทัด · ไม่มีสูตรคำนวณสักบรรทัด</i>
+├── <b>config.py</b>               <i>ค่าตั้งต้นทั้งหมด + ตัวอ่านค่าลับ 4 ชั้น</i>
+│
+├── <b>core/</b>                   <i>สมอง — ไม่ import streamlit เลย จึงเทสต์ได้</i>
+│   ├── dsp.py              <i>ประมวลผลสัญญาณล้วน ๆ</i>
+│   ├── damage.py           <i>สูตร Health + เครื่องสถานะ</i>
+│   ├── analysis.py         <i>ท่อประมวลผลหลัก มัดทุกอย่างเข้าด้วยกัน</i>
+│   ├── rules.py            <i>★ ตัวตัดสินหลัก · 405 บรรทัด · ไฟล์ที่ยาวที่สุด</i>
+│   ├── buffer.py           <i>บัฟเฟอร์ rolling 900 จุด เรียงเวลา กำจัดตัวซ้ำ</i>
+│   ├── firebase_client.py  <i>ดึงข้อมูลแบบเพิ่มเฉพาะส่วน</i>
+│   └── state.py            <i>ค่าที่ต้องจำข้ามรอบรีเฟรช</i>
+│
+├── <b>services/</b>               <i>ส่วนเสริม — ถอดออกได้ ระบบยังทำงานครบ</i>
+│   ├── ai_assistant.py     <i>คุยกับ AI</i>
+│   └── telegram.py         <i>ส่งแจ้งเตือนเข้ามือถือ</i>
+│
+└── <b>ui/</b>                     <i>หน้าตา — วาดอย่างเดียว ไม่คำนวณ</i>
+    ├── theme.py            <i>สีและ CSS ชุดเดียวของทั้งเว็บ</i>
+    ├── floors.py           <i>การ์ดรายชั้น</i>
+    ├── charts.py           <i>กราฟ ตัดที่ Nyquist</i>
+    ├── insight.py          <i>การ์ดสรุปผล</i>
+    ├── sidebar.py          <i>แถบตั้งค่า</i>
+    └── debug.py            <i>แผงข้อมูลเทคนิค</i></pre>
+        <div class="grid-3" style="margin-top:24px">
+          <div class="card"><span class="kicker">กฎเหล็กข้อ 1</span><h4><code>core/</code> ห้าม import streamlit</h4><p class="mini" style="margin:8px 0 0">ทำให้ป้อนตัวเลขเข้าไปทดสอบตรง ๆ ได้ เขียน unit test ได้จริง</p></div>
+          <div class="card"><span class="kicker">กฎเหล็กข้อ 2</span><h4><code>ui/</code> ห้ามคำนวณ</h4><p class="mini" style="margin:8px 0 0">อยากเปลี่ยนสี แก้แค่ <code>theme.py</code> ไม่ต้องแตะโค้ดคำนวณเลย</p></div>
+          <div class="card"><span class="kicker">กฎเหล็กข้อ 3</span><h4>ลูกศรการพึ่งพาชี้ทางเดียวเสมอ</h4><p class="mini" style="margin:8px 0 0">ไม่มี circular import และคนละคนทำคนละไฟล์ได้โดยไม่ชนกัน</p></div>
+        </div>
+      </div>
+
+      <!-- สรุปผลสองชั้น -->
+      <div class="block reveal">
+        <span class="eyebrow">จุดที่ต้องอธิบายให้ชัดที่สุด</span>
+        <h3>ระบบสรุปผลสองชั้น</h3>
+        <p class="lede">หน้าจอมีการ์ดสรุปผล 2 ใบวางคู่กัน และมีหน้าที่ต่างกันสิ้นเชิง</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th></th><th>การ์ดซ้าย — “วิเคราะห์ข้อมูลจากความถี่”</th><th>การ์ดขวา — “AI วิเคราะห์เบื้องต้น”</th></tr></thead>
+            <tbody>
+              <tr><th>บทบาท</th><td class="t-ok">ตัวตัดสินหลัก</td><td>ตัวเสริม</td></tr>
+              <tr><th>ใช้อะไรตัดสิน</th><td>กฎวิศวกรรมที่เขียนเอง ไม่ใช่ AI</td><td>โมเดลภาษาขนาดใหญ่ (Groq / Llama 3.3)</td></tr>
+              <tr><th>ต้องใช้อินเทอร์เน็ตไหม</th><td class="t-ok">ไม่ต้อง — ตัดสาย LAN ทิ้งก็ยังทำงาน</td><td class="t-danger">ต้องใช้</td></tr>
+              <tr><th>ผลลัพธ์</th><td class="t-ok">เหมือนเดิมทุกครั้ง พิสูจน์ด้วย unit test</td><td class="t-danger">ตอบไม่เหมือนเดิม</td></tr>
+              <tr><th>ตรวจสอบย้อนกลับ</th><td class="t-ok">เปิดโค้ดชี้บรรทัดให้ดูได้</td><td class="t-danger">กล่องดำ</td></tr>
+              <tr><th>ค่าใช้จ่าย</th><td class="t-ok">ไม่มีโควตา ไม่มีค่าบริการ</td><td>มีโควตาจำกัด</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <blockquote class="pull" style="margin-top:26px">ถ้าถอด AI ออกทั้งหมด ระบบยังทำงานได้ครบ 100%
+        เราออกแบบแบบนี้ตั้งแต่แรก เพราะระบบที่เกี่ยวกับความปลอดภัยไม่ควรพึ่งพาสิ่งที่ให้คำตอบไม่คงที่</blockquote>
+        <div class="callout" style="margin-top:24px">
+          <p>AI ถูกออกแบบให้ทำงาน <strong>เฉพาะเมื่อผู้ใช้กดปุ่ม</strong> ไม่ใช่ทุกรอบที่หน้าเว็บรีเฟรช
+          เพราะเคยลองแบบทำทุกรอบแล้วพบว่าใช้โควตาหมดภายในไม่ถึง 10 นาที และยังเก็บคำตอบไว้ใช้ซ้ำได้ 5 นาที
+          ตามลายนิ้วมือของข้อมูล — เป็นการคิดเรื่อง “ใช้ทรัพยากรเท่าที่จำเป็นจริง” แบบเดียวกับที่ทำกับข้อมูลบนคลาวด์</p>
+        </div>
+      </div>
+
+      <!-- rules.py -->
+      <div class="block reveal">
+        <h3>กฎการตัดสินใน <code>rules.py</code></h3>
+        <p class="lede">เกณฑ์ที่ใช้จริงในโค้ด: <code>T_NOTABLE = 10.0</code> (เริ่มมีนัยสำคัญ) และ <code>T_STRONG = 20.0</code> (ชัดเจน → ยกระดับเป็นสีแดง)</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>เงื่อนไข</th><th>สรุปว่า</th></tr></thead>
+            <tbody>
+              <tr><th>ทั้งสองช่วงเปลี่ยน &lt; 10%</th><td class="t-ok">ไม่พบความผิดปกติ — โครงสร้างยังเหมือนตอนล็อกค่าอ้างอิง</td></tr>
+              <tr><th>เฉพาะ T<sub>21</sub> เปลี่ยน ≥ 10%</th><td>ความเสียหายที่ช่วงชั้น 2 <span class="mini">(เกิน 20% = สีแดง)</span></td></tr>
+              <tr><th>เฉพาะ T<sub>32</sub> เปลี่ยน ≥ 10%</th><td>ความเสียหายที่ช่วงชั้น 3 <span class="mini">(เกิน 20% = สีแดง)</span></td></tr>
+              <tr><th>ทั้งคู่เปลี่ยนไปทางเดียวกัน</th><td>ผิดปกติทั้งโครงสร้าง — อาจเป็นที่ฐานหรือมวลเปลี่ยน</td></tr>
+              <tr><th>ทั้งคู่เปลี่ยนคนละทิศ</th><td>รูปทรงโหมดถูกบิด ต้นตออยู่ที่ช่วงที่เปลี่ยนมากกว่า</td></tr>
+              <tr><th>อ่านได้ข้างเดียว</th><td>ชี้ตำแหน่งจากช่วงที่อ่านได้ แต่เตือนว่ายังตรวจไม่ครบ</td></tr>
+              <tr class="row-hl"><th>อ่านไม่ได้ทั้งคู่</th><td class="t-warn">“รอบนี้ยังอ่านค่าไม่ได้” — <strong>ไม่ใช่ “ปกติ”</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-ok" style="margin-top:24px">
+          <div class="callout-title">หลักการสำคัญ — การเงียบไม่เท่ากับการผ่าน</div>
+          <p>ถ้าคุณภาพข้อมูลไม่ถึงเกณฑ์ ระบบจะบอกว่า “ยังยืนยันไม่ได้ในรอบนี้” พร้อมเหตุผล
+          เพราะ<strong>การวัดที่ไม่แม่นทำให้มองไม่เห็นความเสียหายที่มีอยู่จริงได้ด้วย</strong> ไม่ใช่แค่ทำให้เห็นความเสียหายปลอม</p>
+        </div>
+
+        <p class="lede" style="margin-top:24px">ประตูคุณภาพข้อมูลในฟังก์ชัน <code>evaluate()</code> — เปิดโค้ดชี้บรรทัดให้กรรมการดูได้</p>
+<pre>if any(f.level in ("warn","danger") for f in setup) and v.level in ("ok","warn"):
+    if v.level == "ok":
+        v.headline = "ยังยืนยันไม่ได้ในรอบนี้"   <i># ห้ามประกาศว่าปกติ</i>
+    v.level = "warn"</pre>
+      </div>
+
+      <!-- เกณฑ์ -->
+      <div class="block reveal">
+        <h3>เกณฑ์และค่าคงที่ฝั่งแดชบอร์ด</h3>
+        <div class="grid-2">
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>ค่า</th><th>ตั้งไว้</th><th>เหตุผล</th></tr></thead>
+              <tbody>
+                <tr><th class="mono">BUFFER_SIZE</th><td class="num">900</td><td>18 วินาทีที่ 50 Hz — ยาวพอให้ Welch เฉลี่ยได้หลายท่อน</td></tr>
+                <tr><th class="mono">REFRESH_MS</th><td class="num">2200</td><td>ต้องมากกว่าเวลาประมวลผลจริง (~1,250 ms) ไม่งั้นสคริปต์ถูกตัดกลางคัน</td></tr>
+                <tr><th class="mono">NPERSEG</th><td class="num">512</td><td>ต้องคงที่ ถ้าแปรผันตามจำนวนข้อมูล ความละเอียดความถี่จะแกว่ง</td></tr>
+                <tr><th class="mono">SEARCH_LO / HI</th><td class="num">2.0 / 24.0 Hz</td><td>ช่วงค้นหายอดแหลม บังคับไม่เกิน 0.45 × fs อีกชั้น</td></tr>
+                <tr><th class="mono">COH_MIN</th><td class="num">0.75</td><td>ต่ำกว่านี้ = ไม่นำมาคำนวณ</td></tr>
+                <tr><th class="mono">HISTORY_SIZE</th><td class="num">7</td><td>กรองด้วยค่ามัธยฐานของ 7 รอบล่าสุด</td></tr>
+                <tr><th class="mono">MIN_CONSEC</th><td class="num">3</td><td>ต้องเข้าเงื่อนไขติดกัน 3 รอบจึงเปลี่ยนสถานะ กันกระพริบ</td></tr>
+                <tr><th class="mono">FIRST_FETCH / INCR_LIMIT</th><td class="num">600 / 400</td><td>ดึงครั้งแรก 600 จุด ครั้งต่อไปเอาแค่ของใหม่</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>เกณฑ์สถานะ</th><th>ค่า</th><th></th></tr></thead>
+                <tbody>
+                  <tr><th class="mono">g2y</th><td class="num">90</td><td>🟢 → 🟡 เมื่อ Health ต่ำกว่า</td></tr>
+                  <tr><th class="mono">y2r</th><td class="num">70</td><td>🟡 → 🔴</td></tr>
+                  <tr><th class="mono">y2g</th><td class="num">94</td><td>🟡 → 🟢 ขาฟื้น สูงกว่าขาลง 4%</td></tr>
+                  <tr><th class="mono">r2y</th><td class="num">75</td><td>🔴 → 🟡 ขาฟื้น สูงกว่าขาลง 5%</td></tr>
+                  <tr><th class="mono">rms_min</th><td class="num">0.010</td><td>RMS ขั้นต่ำที่ถือว่ามีแรงกระตุ้นพอ</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout" style="margin-top:20px">
+              <div class="callout-title">ทำไมเกณฑ์ขาขึ้นต้องสูงกว่าขาลง</div>
+              <p>เหมือนแอร์ที่ตั้งไว้ 25 องศา ถ้าเปิด-ปิดที่ 25 พอดีเป๊ะ คอมเพรสเซอร์จะกระตุกตลอด
+              แอร์จริงจึงตัดที่ 25 แต่กลับมาทำงานที่ 26 — เรียกว่า hysteresis
+              ผู้ใช้ปรับเกณฑ์ทั้ง 5 ตัวนี้เองได้จากแถบตั้งค่าด้านซ้าย</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- เทสต์ -->
+      <div class="block reveal">
+        <h3>รู้ได้ยังไงว่าโค้ดถูก</h3>
+        <p class="lede">มีแบบทดสอบอัตโนมัติ 35 เคสใน 3 ไฟล์ รันทั้งชุดด้วย <code>pytest tests/ -q</code> ใช้เวลาไม่ถึง 2 วินาที
+        และ<strong>เคสส่วนใหญ่เขียนขึ้นหลังจากเจอบั๊กจริง</strong> เพื่อไม่ให้บั๊กเดิมกลับมาอีก</p>
+        <div class="grid-3">
+          <div class="card"><div class="stat-num">8</div><div class="stat-label"><code>test_dsp.py</code> — ป้อนคลื่นไซน์ที่รู้ความถี่แน่นอนเข้าไป แล้วเช็คว่าหาเจอไหม</div></div>
+          <div class="card"><div class="stat-num">7</div><div class="stat-label"><code>test_damage.py</code> — สูตร Health และเครื่องสถานะ</div></div>
+          <div class="card"><div class="stat-num">20</div><div class="stat-label"><code>test_rules.py</code> — ตรรกะการสรุปผลและกรณีข้อมูลผิดปกติ</div></div>
+        </div>
+        <div class="table-scroll" style="margin-top:22px">
+          <table>
+            <thead><tr><th>เคสที่น่าสนใจที่สุด</th><th>พิสูจน์อะไร</th></tr></thead>
+            <tbody>
+              <tr><th class="mono">test_same_input_gives_identical_output</th><td>ข้อมูลชุดเดิมให้คำตอบเดิมเป๊ะทุกครั้ง — จุดขายที่ต่างจาก AI</td></tr>
+              <tr><th class="mono">test_ok_headline_never_contradicts_warn_badge</th><td>ป้ายสถานะกับพาดหัวต้องไม่ขัดกันเอง</td></tr>
+              <tr><th class="mono">test_every_none_combination_never_raises</th><td>กวาดทุกการผสมของค่าที่หายไป 144 แบบ — หน้าเว็บต้องไม่พังไม่ว่ากรณีไหน</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- deploy + secrets -->
+      <div class="block reveal">
+        <h3>การนำระบบขึ้นออนไลน์ และการเก็บความลับ</h3>
+        <ol class="steps">
+          <li><b>เขียนและทดสอบโค้ดในเครื่องตัวเอง</b><span></span></li>
+          <li><b>อัปขึ้น GitHub</b><span>เก็บโค้ดพร้อมประวัติการแก้ไขทุกครั้ง ใครแก้ แก้อะไร เมื่อไร ย้อนกลับได้</span></li>
+          <li><b>Streamlit Community Cloud ดึงไปรันเองอัตโนมัติ</b><span>ได้ลิงก์เว็บที่เปิดดูได้จากทุกที่ พออัปโค้ดใหม่ เว็บจะอัปเดตเองภายในไม่กี่นาที</span></li>
+        </ol>
+        <div class="callout callout-danger" style="margin-top:24px">
+          <div class="callout-title">ห้ามใส่รหัสผ่านหรือกุญแจ API ลงในไฟล์โค้ดที่อัปขึ้น GitHub เด็ดขาด</div>
+          <p>เพราะ repo เป็นแบบสาธารณะ ใครก็เห็น วิธีที่ถูกต้องคือใส่ค่าจริงในที่เก็บลับของแพลตฟอร์ม แล้วโค้ดค่อยไปอ่านตอนรัน</p>
+        </div>
+<pre><i>❌ ผิด</i>  GROQ_API_KEY = "gsk_abc123..."         <i>← เขียนในไฟล์ที่อัปขึ้น GitHub</i>
+<i>✅ ถูก</i>  GROQ_API_KEY = _secret("GROQ_API_KEY") <i>← อ่านจากที่เก็บลับตอนรัน</i></pre>
+        <p class="lede" style="margin-top:22px">โค้ดหาค่าลับตามลำดับ 4 ชั้น เพื่อให้รันได้ทั้งบนเครื่องตัวเองและบนคลาวด์โดยไม่ต้องแก้โค้ด</p>
+        <ol class="steps">
+          <li><b><code>st.secrets</code></b><span>ที่เก็บลับของ Streamlit Cloud — ใช้จริงตอน deploy</span></li>
+          <li><b>ไฟล์ <code>secrets.toml</code> ข้าง ๆ ตัวเอง</b><span>เวลารันบนเครื่องตัวเอง</span></li>
+          <li><b>environment variable</b><span>เผื่อ deploy แบบอื่น เช่น Docker</span></li>
+          <li><b>ค่า default</b><span>กันโปรแกรมพัง</span></li>
+        </ol>
+        <p class="table-note">ชั้นที่ 2 มีอยู่เพราะบั๊กจริง — Streamlit หาไฟล์ <code>secrets.toml</code> จาก “โฟลเดอร์ที่สั่งรัน” ไม่ใช่โฟลเดอร์ที่ไฟล์อยู่
+        ถ้าสั่ง <code>streamlit run dashboard/app.py</code> จากรากโปรเจกต์ มันจะหาไม่เจอ แล้วขึ้นว่า “ยังไม่ได้ตั้ง FIREBASE_DOMAIN” ทั้งที่กรอกไปแล้ว</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 8 ══════════ -->
+<section class="section" id="warstories">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">08 — สำหรับวันแข่ง</span>
+      <h2>ปัญหาที่เจอและวิธีแก้</h2>
+      <div class="asks"><span class="asks-label">คำถามที่ส่วนนี้ตอบ</span><p>ระหว่างทางพังตรงไหนบ้าง และแก้ที่ต้นเหตุยังไง</p></div>
+    </div>
+
+    <div class="stack-lg">
+
+      <!-- วิวัฒนาการ 3 รุ่น -->
+      <div class="block reveal">
+        <h3>วิวัฒนาการ 3 รุ่น</h3>
+        <p class="lede">ผลงานชิ้นนี้ไม่ได้สำเร็จในครั้งเดียว แต่ผ่านการทดลอง พบปัญหา และแก้ไขต่อเนื่องมา 3 รุ่นหลัก</p>
+
+        <div class="stack">
+          <div class="card">
+            <span class="kicker">รุ่นที่ 1</span>
+            <h4>ต้นแบบพิสูจน์แนวคิด</h4>
+            <dl class="dl" style="margin-top:12px">
+              <div><dt class="t-ok">ทำได้</dt><dd>วัดความสั่นและส่งขึ้นคลาวด์ได้สำเร็จ</dd></div>
+              <div><dt class="t-danger">ปัญหา</dt><dd>เน็ตหน่วงทำให้จังหวะการวัดเพี้ยน · ข้อมูลหายเมื่อบอร์ดรีสตาร์ต</dd></div>
+            </dl>
+          </div>
+
+          <div class="card">
+            <span class="kicker">รุ่นที่ 2</span>
+            <h4>แก้เรื่องความแม่นยำและความต่อเนื่อง</h4>
+            <dl class="dl" style="margin-top:12px">
+              <div><dt class="t-ok">ทำได้</dt><dd>แยกงานอ่านเซ็นเซอร์กับงานส่งข้อมูลคนละแกน → จังหวะการวัดนิ่งที่ 50 ครั้งต่อวินาที<br>
+              เปลี่ยนมาใช้เวลามาตรฐานจากอินเทอร์เน็ตเป็นรหัสข้อมูล → ข้อมูลไม่หายอีกแม้บอร์ดจะรีสตาร์ต</dd></div>
+              <div><dt class="t-danger">ปัญหา</dt><dd>ใช้ไป 2–3 วันแล้วระบบหยุดเอง โดยไม่มี error อะไรเลย</dd></div>
+            </dl>
+          </div>
+
+          <div class="card card-accent">
+            <span class="kicker">รุ่นที่ 2.4 · ปัจจุบัน</span>
+            <h4>แก้เรื่องความยั่งยืนของทรัพยากร</h4>
+            <dl class="dl" style="margin-top:12px">
+              <div><dt>พบสาเหตุ</dt><dd>ดึงข้อมูลซ้ำทั้งก้อนทุกรอบ = ใช้ข้อมูลราว 4.1 GB ต่อวัน → เต็มโควตาฟรีใน 2.4 วัน</dd></div>
+              <div><dt class="t-ok">แก้</dt><dd>เปลี่ยนเป็นขอเฉพาะข้อมูลใหม่ → ลดลงราว 30 เท่า<br>
+              งดส่งแกน Y และ Z ที่ไม่ได้ใช้ → ลดลงอีกราว 65%<br>
+              ลบข้อมูลเก่าอัตโนมัติ → ฐานข้อมูลขนาดคงที่</dd></div>
+              <div><dt>เพิ่มใหม่</dt><dd>แจ้งเตือน Telegram และผู้ช่วย AI</dd></div>
+              <div><dt>ผลลัพธ์</dt><dd>ระบบทำงานต่อเนื่องได้โดยไม่มีค่าใช้จ่ายรายเดือน</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <blockquote class="pull" style="margin-top:32px">ปัญหาที่ยากที่สุดไม่ใช่การทำให้ระบบทำงานได้
+        แต่คือการทำให้มันทำงานได้ตลอดไปโดยไม่กลายเป็นภาระ และการแก้ปัญหาที่ดีคือการแก้ที่ต้นเหตุ ไม่ใช่แก้ที่ปลายเหตุ</blockquote>
+      </div>
+
+      <!-- ตารางบั๊ก -->
+      <div class="block reveal">
+        <h3>บั๊กใหญ่ที่แก้ไปแล้ว</h3>
+        <p class="lede">ทั้งหมดนี้เป็นบั๊กประเภทที่หายากที่สุด — <strong>ผลลัพธ์ดูเหมือนถูก แต่ผิด</strong> ไม่มี error ให้เห็นสักตัว</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>บั๊ก</th><th>อาการ</th><th>สาเหตุ</th><th>วิธีแก้</th></tr></thead>
+            <tbody>
+              <tr><th>โควตา Firebase หมดใน 2.4 วัน</th><td>อยู่ ๆ ระบบก็ค้างโดยไม่มี error</td><td>ดึงข้อมูลซ้ำทั้งก้อนทุก 1.5 วินาที = 4.1 GB ต่อวัน</td><td>จำคีย์สุดท้ายไว้ แล้วดึงเฉพาะของใหม่ ประหยัดราว 30 เท่า</td></tr>
+              <tr><th>คีย์ย้อนกลับตอนบอร์ดรีบูต</th><td>หน้าจอค้างอยู่ที่ข้อมูลเก่าตลอดกาล ทั้งที่บอร์ดยังส่งข้อมูลอยู่ปกติ</td><td>ใช้ <code>millis()</code> เป็นคีย์ ซึ่งรีเซ็ตเป็น 0 ทุกครั้งที่รีบูต คีย์ใหม่จึงน้อยกว่าคีย์เก่าทั้งหมด</td><td>เปลี่ยนไปใช้เวลา epoch จาก NTP ซึ่งเดินหน้าตลอด ไม่ย้อนกลับ</td></tr>
+              <tr><th>ปุ่ม AI กดแล้วไม่มีอะไรขึ้น</th><td>ไม่มี error ใด ๆ เลย</td><td>ไลบรารีรีเฟรชอัตโนมัติใช้ <code>setInterval</code> ซึ่งยิงซ้ำแม้โปรแกรมฝั่งเซิร์ฟเวอร์ยังทำงานไม่เสร็จ งานที่ใช้เวลา 2–3 วินาทีจึงถูกตัดกลางคันทุกครั้ง</td><td>แยกการกดปุ่มออกจากการเรียก API คนละรอบ + ปรับคาบรีเฟรชอัตโนมัติให้ยาวกว่าเวลาประมวลผลจริงเสมอ</td></tr>
+              <tr><th>แอมพลิจูดกระโดดเอง</th><td>ค่าเปลี่ยนทั้งที่ตึกไม่ได้เปลี่ยนอะไร</td><td><code>nperseg</code> แปรผันตามจำนวนข้อมูล ทำให้ความละเอียดความถี่ <code>df = fs/nperseg</code> แกว่ง</td><td>ตรึงไว้ที่ 512 คงที่</td></tr>
+              <tr><th>สเปกตรัมเพี้ยน</th><td>ยอดความถี่ไม่ตรง ค่าขึ้นกับความละเอียดของสเปกตรัม</td><td><code>band_rms</code> ใช้ <code>sum(PSD)</code> เฉย ๆ ลืมคูณ <code>df</code> — PSD มีหน่วย g²/Hz จึงต้องอินทิเกรต ไม่ใช่บวก</td><td>เปลี่ยนเป็นอินทิเกรตเทียบแกนความถี่</td></tr>
+              <tr><th>หน้าเว็บพังเป็นครั้งคราว</th><td>TypeError โผล่มาแบบสุ่ม</td><td>coherence ต่ำเฉพาะช่วงเดียว ทำให้ตัวแปรของช่วงนั้นเป็น <code>None</code> แล้วโค้ดเอาไปจัดรูปแบบข้อความ</td><td>เพิ่มสาขาสำหรับกรณีอ่านได้ข้างเดียว + เพิ่มเทสต์ที่กวาดทุกการผสมของค่าที่หายไป 144 แบบ</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- เจาะลึก -->
+      <div class="block reveal">
+        <h3>เจาะลึก 3 บั๊กที่เล่าให้กรรมการฟังได้</h3>
+
+        <div class="stack">
+          <div class="card">
+            <span class="kicker">บั๊กที่คำนวณให้ฟังได้ทันที</span>
+            <h4>โควตา Firebase หมดใน 2.4 วัน</h4>
+            <p style="margin:10px 0 14px">เวอร์ชันแรกดึงข้อมูล 450 ระเบียนล่าสุดใหม่ทั้งก้อนทุก 1.5 วินาที ซึ่งแปลว่าดึงข้อมูลชุดเดิมซ้ำทุกรอบ</p>
+<pre>450 ระเบียน × 160 ไบต์ = 72 KB ต่อรอบ
+72 KB ÷ 1.5 วินาที      = 48 KB ต่อวินาที
+                        = <b>4.1 GB ต่อวัน</b>
+โควตาฟรี 10 GB ต่อเดือน  → <b>หมดใน 2.4 วัน</b></pre>
+            <p style="margin:14px 0 0">พอเกินโควตา Firebase หยุดให้บริการ อาการที่ผู้ใช้เห็นคือ “อยู่ ๆ ก็ค้าง” โดยไม่มี error อะไรเลย</p>
+            <p style="margin:10px 0 0"><span class="mini">รายละเอียดที่ทำให้ดูเป็นมืออาชีพ — คำสั่ง <code>startAt</code> ของ Firebase เป็นแบบรวมตัวมันเอง (inclusive)
+            จึงได้คีย์เดิมกลับมา 1 ตัวทุกครั้ง โค้ดจึงต้องมีการกำจัดตัวซ้ำ ซึ่งทำที่ <code>buffer.py</code></span></p>
+          </div>
+
+          <div class="card">
+            <span class="kicker">บั๊กที่ต้องเปิดซอร์สโค้ดไลบรารีอื่นเพื่อหาสาเหตุ</span>
+            <h4>ปุ่ม “วิเคราะห์ด้วย AI” กดแล้วเงียบสนิท</h4>
+            <p style="margin:10px 0 0">เราเปิดซอร์สโค้ดฝั่งเบราว์เซอร์ของไลบรารีรีเฟรชอัตโนมัติดู แล้วพบว่ามันใช้ <code>window.setInterval</code>
+            ซึ่ง<strong>ยิงซ้ำเรื่อย ๆ แม้ขณะที่โปรแกรมฝั่งเซิร์ฟเวอร์ยังทำงานไม่เสร็จ</strong>
+            พอ Streamlit เห็นว่ามีคำขอรีเฟรชค้างอยู่ มันจะทิ้งงานที่ทำค้างทันที — การเรียก AI ที่ใช้เวลา 2–3 วินาทีจึงถูกตัดทุกครั้ง
+            โดยที่ยังไม่ทันได้เรียก API ด้วยซ้ำ</p>
+            <p style="margin:12px 0 0"><strong>แก้ 3 ชั้น:</strong> ① กดปุ่มแค่จดคิว ไม่เรียก API ทันที
+            ② เรียก API ที่ต้นสคริปต์ตอนที่ยังไม่มีคำขอรีเฟรชค้าง
+            ③ ตั้งคาบรีเฟรชให้ยาวกว่าเวลาประมวลผลจริงเสมอ โดยปรับอัตโนมัติเป็น 2 เท่าของรอบที่แล้ว</p>
+          </div>
+
+          <div class="card">
+            <span class="kicker">บั๊กที่ข้อมูลดูถูกทุกอย่าง แค่ลำดับผิด</span>
+            <h4>คีย์ย้อนกลับตอนบอร์ดรีบูต</h4>
+            <p style="margin:10px 0 0">เวอร์ชันแรกใช้ <code>millis()</code> คือเวลาตั้งแต่บอร์ดเปิด เป็นชื่อคีย์
+            พอบอร์ดรีบูต ค่าจะย้อนกลับไปเริ่มที่ 0 ใหม่ ผลคือคีย์ใหม่มีค่าน้อยกว่าคีย์เก่าทั้งหมด
+            ฝั่ง Python ที่ขอ “ข้อมูลล่าสุด” จึงได้แต่ข้อมูลชุดก่อนรีบูตตลอดกาล
+            <strong>หน้าจอค้างอยู่ที่อดีต โดยที่บอร์ดยังส่งข้อมูลอยู่ปกติ</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- บั๊กเล็ก -->
+      <div class="block reveal">
+        <h3>บั๊กเล็กที่แก้ไปแล้วเหมือนกัน</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>บั๊ก</th><th>เกิดอะไรขึ้น</th></tr></thead>
+            <tbody>
+              <tr><th>สองฝั่งชี้คนละฐานข้อมูล</th><td><code>DB_PATH</code> ฝั่งบอร์ดกับฝั่ง Python ไม่ตรงกัน — บั๊กตัวหลักของเวอร์ชันเก่า</td></tr>
+              <tr><th>หน้าเว็บพังแล้วไม่บอกสาเหตุ</th><td>เขียน <code>st.exception(Exception)</code> ซึ่งส่ง “คลาส” ไม่ใช่ตัว error จริง ทำให้ไล่จับปัญหาไม่ได้</td></tr>
+              <tr><th>หา secrets ไม่เจอทั้งที่กรอกแล้ว</th><td>Streamlit หาไฟล์ <code>secrets.toml</code> จากโฟลเดอร์ที่สั่งรัน ไม่ใช่โฟลเดอร์ที่ไฟล์อยู่ — แก้ด้วยตัวอ่านค่าลับ 4 ชั้น</td></tr>
+              <tr><th>ตัวเลือกโมเดลที่ใช้ไม่ได้โผล่ขึ้นมา</th><td>Ollama ซึ่งต้องรันบนเครื่องตัวเอง โผล่ในตัวเลือกตอนรันบนคลาวด์ — เพิ่มฟังก์ชันตรวจว่าผู้ให้บริการไหนใช้ได้จริง</td></tr>
+              <tr><th>ข้อความ “รอล็อก Baseline” ที่ทำให้เข้าใจผิด</th><td>แยกเหตุผลที่ไม่มีค่า Health ออกจากกันให้ชัด ว่าเป็นเพราะยังไม่ล็อกค่าอ้างอิง หรือเพราะข้อมูลเชื่อไม่ได้</td></tr>
+              <tr><th><code>requirements.txt</code> วางผิดที่</th><td>เคยวางไว้ในโฟลเดอร์ย่อย ทำให้ Streamlit Cloud หาไม่เจอแล้วขึ้น ModuleNotFoundError — ต้องอยู่ที่รากของ repo เท่านั้น</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout" style="margin-top:22px">
+          <p>ทุกขั้นตอนที่เพิ่มเข้ามาในระบบแก้ปัญหาที่เราเจอจริงระหว่างพัฒนา และเราเก็บบันทึกไว้ในคอมเมนต์ของโค้ดทุกจุดว่าขั้นตอนนั้นแก้บั๊กอะไร
+          <strong>เคสทดสอบส่วนใหญ่ก็เขียนขึ้นหลังจากเจอบั๊กจริง</strong> เพื่อไม่ให้บั๊กเดิมกลับมาอีก</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 9 ══════════ -->
+<section class="section" id="qa">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">09 — สำหรับวันแข่ง</span>
+      <h2>คำถามที่กรรมการจะถาม</h2>
+      <div class="asks"><span class="asks-label">คำถามที่ส่วนนี้ตอบ</span><p>ถูกถามแบบไหนได้บ้าง และตอบยังไงให้ตรงและซื่อสัตย์</p></div>
+    </div>
+
+    <div class="stack-lg">
+
+      <div class="block reveal">
+        <h3>กติกา 5 ข้อก่อนตอบทุกคำถาม</h3>
+        <ol class="steps">
+          <li><b>ฟังให้จบก่อน</b><span>อย่าตอบทับ กรรมการหลายคนถามยาวและใจความจริงอยู่ท้ายประโยค</span></li>
+          <li><b>ตอบสั้นก่อน แล้วค่อยขยาย</b><span>ให้ประโยคแรกตอบคำถามตรง ๆ ถ้าเขาสนใจจะถามต่อเอง</span></li>
+          <li><b>มีตัวเลขจริงเสมอ</b><span>“ประมาณ 11 เฮิรตซ์” ดีกว่า “ประมาณสิบกว่า ๆ”</span></li>
+          <li><b>ถ้าไม่รู้ ให้บอกว่าไม่รู้ พร้อมบอกว่าจะหาคำตอบยังไง</b><span>ดูสูตรตอบ 3 ขั้นท้ายหัวข้อนี้</span></li>
+          <li><b>ส่งไมค์ให้คนที่รับผิดชอบด้านนั้น ถ้าเป็นคำถามเฉพาะทาง</b><span>แสดงว่าทีมมีการแบ่งงานจริง</span></li>
+        </ol>
+      </div>
+
+      <!-- กลุ่ม A -->
+      <div class="block reveal">
+        <h3>กลุ่ม A — คนทั่วไปที่ไม่มีพื้นฐานเลย</h3>
+        <p class="lede">ต้องตอบโดยไม่ใช้ศัพท์เทคนิคสักคำ ใช้อุปมาเสมอ</p>
+
+        <details class="acc"><summary><span class="q-tag">A1</span>นี่คืออะไร ทำอะไรได้</summary><div class="acc-body">
+        <p>เป็นระบบตรวจสุขภาพตึกครับ ตึกทุกหลังมีเสียงประจำตัวเหมือนคนมีเสียงพูดเฉพาะตัว ถ้าข้างในตึกเสียหาย เสียงนั้นจะเปลี่ยน
+        เราเลยเอาเซ็นเซอร์ไปติดเพื่อคอยฟังเสียงของตึกตลอดเวลา แล้วบอกได้ว่าตึกเริ่มมีปัญหาหรือยัง และปัญหาอยู่ชั้นไหน</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">A2</span>ทำไมต้องตรวจ ดูด้วยตาไม่ได้เหรอ</summary><div class="acc-body">
+        <p>ความเสียหายส่วนใหญ่อยู่ข้างในครับ เหล็กเป็นสนิมในเนื้อปูน คอนกรีตร้าวข้างใน จุดต่อคลายตัว
+        กว่าจะเห็นรอยร้าวโผล่ที่ผิว มันก็ลามไปเยอะแล้ว เหมือนคนที่ปวดฟันตอนที่ฟันผุถึงโพรงประสาทแล้ว</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">A3</span>เอาไปทำอะไรได้จริงบ้าง</summary><div class="acc-body">
+        <p>ใช้เฝ้าตึกเก่า อาคารเรียน สะพาน หรือเฝ้าหลังแผ่นดินไหวว่าตึกยังปลอดภัยพอให้คนกลับเข้าไปไหมครับ
+        แทนที่จะให้วิศวกรปีนไปตรวจปีละครั้ง ระบบนี้เฝ้าให้ตลอด 24 ชั่วโมง</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">A4</span>เซ็นเซอร์นี่คืออะไร ทำงานยังไง</summary><div class="acc-body">
+        <p>ข้างในมีมวลจิ๋วผูกกับสปริงจิ๋วครับ เล็กระดับที่มองไม่เห็นด้วยตาเปล่า พอกล่องถูกเขย่า มวลจะเหวี่ยงไปอีกทาง
+        วงจรวัดว่ามันเหวี่ยงไปเท่าไรแล้วแปลงเป็นตัวเลข เป็นตัวเดียวกับที่อยู่ในมือถือคุณ ตัวที่ทำให้จอหมุนตามตอนคุณตะแคงเครื่อง</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">A5</span>ทำไมต้องเอาลำโพงมาเขย่า</summary><div class="acc-body">
+        <p>เพราะตึกจำลองเล็กและเบา ลมธรรมดาเขย่าไม่ไหวครับ เราเลยใช้เสียงเบส ๆ ที่ความถี่ต่ำมาสั่นแทน
+        ตึกจริงไม่ต้องใช้ เพราะมีลม มีรถวิ่งผ่าน มีคนเดิน คอยเขย่าให้ฟรีอยู่แล้ว</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">A6</span>ตึกนี้ทำจากอะไร ทำไมเล็กจัง</summary><div class="acc-body">
+        <p>ทำจากแผ่นพื้นแข็ง ๆ กับเสาบาง ๆ ครับ ที่ต้องเล็กเพราะเราต้องทำให้มันเสียหายจริง ๆ เพื่อพิสูจน์ว่าระบบตรวจเจอ
+        จะไปคลายน็อตตึกเรียนไม่ได้ และตึกจำลองทำซ้ำได้ คลายแล้วขันกลับ ทดลอง 20 รอบก็ได้</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">A7</span>ถ้าตึกจริงจะใช้ได้ไหม</summary><div class="acc-body">
+        <p>หลักการเดียวกันเป๊ะครับ แต่ต้องปรับ 4 อย่าง — ตึกจริงสั่นช้ากว่ามากประมาณ 1–5 ครั้งต่อวินาที ต้องใช้เซ็นเซอร์ไวกว่านี้ ·
+        ต้องมีระบบชดเชยผลของอุณหภูมิและความชื้น · ต้องเพิ่มจำนวนเซ็นเซอร์ · และใช้ลมกับการจราจรเขย่าแทนลำโพง
+        ซึ่งเป็นเทคนิคที่เรียกว่า operational modal analysis</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">A8</span>ราคาเท่าไร</summary><div class="acc-body">
+        <p>หลักพันบาทครับ บอร์ดประมาณ 300–500 บาท เซ็นเซอร์ตัวละไม่ถึง 100 บาท สามตัวก็ไม่ถึง 300
+        ส่วนซอฟต์แวร์และเว็บใช้ของฟรีทั้งหมด เทียบกับระบบเชิงพาณิชย์ที่ราคาหลักแสนถึงหลักล้าน</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">A9</span>ทำนานแค่ไหน</summary><div class="acc-body">
+        <p>ตอบตามจริงว่ากี่เดือน แล้วเสริมว่าส่วนที่ใช้เวลามากที่สุดไม่ใช่การประกอบ
+        แต่เป็นการไล่หาสาเหตุตอนที่ค่ามันไม่ตรงกับที่ควรจะเป็น เราเจอปัญหาหลายอย่างที่ต้องแก้ เช่นเรื่องข้อมูลมาไม่สม่ำเสมอ และเรื่องความถี่ปลอม</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">A10</span>ทำกันกี่คน แบ่งงานยังไง</summary><div class="acc-body">
+        <p>ตอบตามจริง แล้วบอกว่าแบ่งเป็น 6 ด้าน — โครงสร้าง / อิเล็กทรอนิกส์ / ทฤษฎี / ประมวลผลสัญญาณ / ซอฟต์แวร์ / วิธีการทดลอง
+        แล้วชี้ว่าใครดูด้านไหน จะดูเป็นทีมที่จัดการงานเป็น</p></div></details>
+      </div>
+
+      <!-- กลุ่ม B -->
+      <div class="block reveal">
+        <h3>กลุ่ม B — กรรมการสายฟิสิกส์</h3>
+
+        <details class="acc"><summary><span class="q-tag">B1</span>ทำไมความถี่ธรรมชาติถึงลดลงเมื่อโครงสร้างเสียหาย</summary><div class="acc-body">
+        <p>จากสมการ f<sub>n</sub> เท่ากับหนึ่งส่วนสองพาย คูณรากที่สองของ k ส่วน m ครับ ความเสียหายทำให้โครงสร้างต้านการโยกได้น้อยลง ค่า k ลดลง
+        ในขณะที่มวลไม่เปลี่ยน เพราะเศษปูนที่ร้าวไม่ได้หายไปไหน ดังนั้นการที่ f<sub>n</sub> ลดลงต้องมาจาก k ลดอย่างเดียว
+        นี่คือเหตุผลที่เราสรุปย้อนกลับจาก f<sub>n</sub> ไปหา k ได้</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">B2</span>ทำไม Health ถึงยกกำลังสอง</summary><div class="acc-body">
+        <p>เพราะ f<sub>n</sub> เป็นสัดส่วนกับรากที่สองของ k ครับ ถ้าอยากได้อัตราส่วนของ k ต้องยกกำลังสองอัตราส่วนของ f<sub>n</sub>
+        ไม่ใช่ตัวเลขที่เราตั้งขึ้นเอง แต่มาจากการจัดรูปสมการโดยตรง ผลข้างเคียงที่ดีคือมันขยายสัญญาณความเสียหายให้เห็นชัดขึ้นเท่าตัว —
+        f<sub>n</sub> ลด 5% ทำให้ Health ลด 10%</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">B3</span>โหมดการสั่นคืออะไร ทำไมสนใจแค่โหมดที่ 1</summary><div class="acc-body">
+        <p>ตึก 3 ชั้นสั่นได้ 3 รูปแบบครับ แต่ละแบบมีความถี่ของตัวเอง โดยความถี่เป็น 1 : 2.80 : 4.05 เท่า
+        เราสนใจโหมดที่ 1 เพราะความถี่ต่ำสุดจึงตรวจง่ายสุด อยู่ในช่วงที่เซ็นเซอร์เราวัดได้
+        และเป็นโหมดที่ตึกจริงสั่นเป็นหลักตอนแผ่นดินไหว เพราะพลังงานของแผ่นดินไหวอยู่ที่ความถี่ต่ำ</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">B4</span>รู้ได้ยังไงว่ากำลังวัดโหมดที่ 1 อยู่จริง</summary><div class="acc-body">
+        <p>ดูรูปทรงการแกว่งครับ โหมดที่ 1 ต้องมีแอมพลิจูดเพิ่มขึ้นตามความสูงเสมอ
+        ค่าที่เราวัดได้คือ <strong>0.0918 / 0.1568 / 0.2175</strong> ซึ่งเรียงเพิ่มเป็นขั้นบันได
+        และถ้าชั้นกลางแกว่งน้อยกว่าทั้งชั้นบนและชั้นล่าง แปลว่าไปโดนโหมดสูงเข้าแล้ว ระบบเรามีตัวตรวจจับกรณีนี้และเตือนอัตโนมัติ</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">B5</span>จุดโหนดคืออะไร</summary><div class="acc-body">
+        <p>คือตำแหน่งที่ไม่ขยับเลยในโหมดนั้นครับ โหมดที่ 2 และ 3 มีจุดโหนดอยู่
+        ถ้าบังเอิญวางเซ็นเซอร์ตรงจุดโหนดพอดี มันจะอ่านได้เกือบศูนย์ทั้งที่ตึกสั่นแรงมาก เป็นกับดักที่ทำให้ตีความผลผิดทั้งหมด</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">B6</span>เรโซแนนซ์เกี่ยวอะไรกับงานนี้</summary><div class="acc-body">
+        <p>เราเลือกความถี่กระตุ้นให้ใกล้ความถี่ธรรมชาติครับ เพราะที่จุดนั้นระบบไวต่อการเปลี่ยนแปลงมากที่สุด
+        ถ้ากระตุ้นห่างจากเรโซแนนซ์มาก ตึกจะขยับตามลำโพงไปทั้งก้อนเหมือนแท่งเดียว แอมพลิจูดทั้ง 3 ชั้นเกือบเท่ากัน แยกไม่ออกว่าชั้นไหนเป็นยังไง</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">B7</span>ทำไมความถี่ทั้ง 3 ชั้นถึงเท่ากันหมด ไม่ควรต่างกันเหรอ</summary><div class="acc-body">
+        <p>ถูกต้องแล้วที่เท่ากันครับ ความถี่ธรรมชาติเป็นสมบัติของทั้งโครงสร้าง ไม่ใช่ของชั้นใดชั้นหนึ่ง ทุกชั้นสั่นด้วยความถี่เดียวกัน
+        สิ่งที่ต่างกันคือขนาดการแกว่ง ซึ่งเราใช้ตรงนั้นหาตำแหน่งความเสียหาย
+        ถ้าความถี่ออกมาไม่เท่ากัน นั่นเป็นสัญญาณว่ามีชั้นใดชั้นหนึ่งจับสัญญาณผิด และระบบเราแจ้งเตือนกรณีนี้ด้วย</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">B8</span>การหน่วง (damping) ทำไมไม่ใช้</summary><div class="acc-body">
+        <p>การหน่วงก็เปลี่ยนตามความเสียหายเหมือนกันครับ และเป็นตัวชี้วัดที่มีงานวิจัยรองรับ
+        แต่การวัดค่าการหน่วงให้แม่นยำต้องการข้อมูลที่สะอาดกว่านี้มาก และค่าที่ได้แกว่งสูง
+        เราจึงเลือกใช้ตัวชี้วัดที่วัดได้เสถียรกว่าในระดับอุปกรณ์ที่เรามี — เป็นข้อจำกัดที่เรารู้ตัว</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">B9</span>อุณหภูมิมีผลไหม</summary><div class="acc-body">
+        <p>มีครับ และเป็นปัญหาที่รู้จักกันดี งานของ Peeters และ De Roeck ที่ติดตามสะพาน Z24 ต่อเนื่องหนึ่งปี
+        พบว่าความถี่ธรรมชาติแกว่งตามอุณหภูมิในระดับที่อาจใหญ่กว่าสัญญาณของความเสียหายจริง
+        เราควบคุมโดยทดลองในห้องอุณหภูมิคงที่และจดอุณหภูมิทุกครั้ง ถ้าใช้กับตึกจริงต้องมีการชดเชย</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">B10</span>หน่วยของค่าที่วัดได้คืออะไร</summary><div class="acc-body">
+        <p>ความเร่งครับ หน่วยเป็น g โดย 1 g เท่ากับความเร่งโน้มถ่วงโลก ค่าที่เราวัดได้อยู่ราว 0.05 ถึง 0.25 g
+        ส่วนกราฟสเปกตรัมมีหน่วยเป็น g² ต่อ Hz ซึ่งเป็นความหนาแน่นของพลังงานต่อหนึ่งหน่วยความถี่ ไม่ใช่พลังงานตรง ๆ
+        ถ้าอยากได้พลังงานรวมต้องอินทิเกรตเทียบแกนความถี่</p></div></details>
+      </div>
+
+      <!-- กลุ่ม C -->
+      <div class="block reveal">
+        <h3>กลุ่ม C — กรรมการสายวิศวกรรมโยธา</h3>
+
+        <details class="acc"><summary><span class="q-tag">C1</span>แบบจำลอง shear building สมเหตุสมผลไหม</summary><div class="acc-body">
+        <p>เป็นสมมติฐานมาตรฐานในวิชาวิศวกรรมแผ่นดินไหวครับ ตั้งอยู่บนเงื่อนไขว่าพื้นแข็งกว่าเสามาก
+        ซึ่งตึกจริงเป็นแบบนั้นเพราะพื้นคอนกรีตหนาและมีคานรับ เราออกแบบตึกจำลองให้เข้าเงื่อนไขนี้โดยตั้งใจ
+        และตรวจสอบด้วยการเทียบอัตราส่วนการสั่นที่วัดได้กับผลเฉลยเชิงวิเคราะห์ ต่างกันไม่เกิน 11%</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">C2</span>ระบุตำแหน่งความเสียหายได้ละเอียดแค่ไหน</summary><div class="acc-body">
+        <p>ระดับช่วงชั้นครับ คือบอกได้ว่าอยู่ระหว่างชั้นไหนกับชั้นไหน แต่บอกไม่ได้ว่าเป็นเสาต้นไหนใน 4 ต้น เพราะเรามีเซ็นเซอร์ชั้นละตัว
+        ถ้าอยากละเอียดถึงระดับเสาต้องเพิ่มเซ็นเซอร์ให้ครอบคลุมแต่ละต้น</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">C3</span>ทำไมไม่มีเซ็นเซอร์ที่ฐาน</summary><div class="acc-body">
+        <p>เป็นข้อจำกัดที่เรารู้ตัวครับ การไม่มีเซ็นเซอร์ที่ฐานทำให้ตรวจช่วงชั้น 1 ตรง ๆ ไม่ได้ ต้องอนุมานทางอ้อม
+        จากการคำนวณเราพบว่าความเสียหายที่ช่วงชั้น 1 จะทำให้ T<sub>21</sub> ลดลง ในขณะที่ความเสียหายที่ช่วงชั้น 2 ทำให้ T<sub>21</sub> เพิ่มขึ้น
+        จึงแยกได้จากทิศทาง แต่การเพิ่มเซ็นเซอร์ตัวที่ 4 ที่ฐานเป็นแผนขยายลำดับแรกของเรา</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">C4</span>คลายน็อตเทียบเท่ากับความเสียหายจริงเหรอ</summary><div class="acc-body">
+        <p>เทียบเท่าในเชิงกลไกครับ น็อตที่แน่นทำให้จุดต่อเสา-พื้นเป็นแบบยึดแน่นหมุนไม่ได้ พอคลายออกจุดต่อเริ่มหมุนได้
+        เสาจึงต้านการโยกได้น้อยลง ซึ่งคือการลดค่าความแข็งเกร็ง k เหมือนกับที่เกิดตอนคอนกรีตร้าวหรือเหล็กเป็นสนิม
+        ต่างกันที่คลายน็อตย้อนกลับได้และควบคุมระดับได้ จึงเหมาะกับการทดลองที่ต้องทำซ้ำ</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">C5</span>ตรวจความเสียหายได้เล็กแค่ไหน</summary><div class="acc-body">
+        <p>จากการคำนวณเชิงทฤษฎี ความเสียหาย 20% ที่ช่วงชั้น 2 ทำให้ T<sub>21</sub> เปลี่ยน 12.2% ซึ่งเกินเกณฑ์ 10% ที่เราตั้งไว้ จับได้
+        แต่ที่ 10% เปลี่ยนแค่ 5.4% จับไม่ได้ และความเสียหายที่ช่วงชั้นบนสุดขนาด 30% ทำให้เปลี่ยนแค่ 9.8% ซึ่งเฉียดเกณฑ์พอดี
+        เราจึงระบุขีดจำกัดนี้ไว้ชัดเจน ทางแก้คือลดเกณฑ์แลกกับการแจ้งเตือนผิดที่มากขึ้น หรือเพิ่มเซ็นเซอร์</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">C6</span>ถ้าความเสียหายอยู่ที่พื้นไม่ใช่เสาล่ะ</summary><div class="acc-body">
+        <p>ระบบเราออกแบบมาจับการเปลี่ยนแปลงของความแข็งเกร็งด้านข้าง ซึ่งมาจากเสาเป็นหลักครับ
+        ถ้าพื้นเสียหายจนเปลี่ยนมวลหรือความแข็งของพื้นเอง สมมติฐาน shear building จะไม่จริงแล้ว และการตีความจะผิด
+        เป็นข้อจำกัดที่ต้องระบุ ในทางปฏิบัติต้องมีเซ็นเซอร์บนพื้นหลายจุดเพื่อตรวจการดัดของพื้น</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">C7</span>ระบบนี้แทนวิศวกรได้ไหม</summary><div class="acc-body">
+        <p>ไม่ได้ครับ และไม่ควรแทน ระบบนี้เป็นเครื่องมือคัดกรอง บอกว่า “ตรงนี้ควรไปดู”
+        เพื่อให้วิศวกรใช้เวลากับจุดที่น่าสงสัยแทนที่จะไล่ตรวจทุกจุดเท่ากันหมด
+        การตัดสินใจว่าต้องซ่อมหรือปิดอาคารยังเป็นหน้าที่ของวิศวกรที่มีใบอนุญาต</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">C8</span>ในกรอบมาตรฐานของวงการ ระบบนี้อยู่ระดับไหน</summary><div class="acc-body">
+        <p>ในกรอบ 4 ระดับของ Rytter ปี 1993 เราทำได้ถึงระดับ 2 คือระบุตำแหน่ง และแตะระดับ 3 คือประเมินความรุนแรงบางส่วน
+        ส่วนระดับ 4 คือทำนายอายุที่เหลือ เราทำไม่ได้และไม่ได้อ้างว่าทำได้
+        งานวิจัยระดับนานาชาติส่วนใหญ่ก็หยุดที่ระดับ 2–3 เหมือนกัน ระดับ 4 ยังเป็นโจทย์เปิดของวงการ</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">C9</span>ทำไมไม่ใช้ strain gauge ซึ่งวัดความเครียดตรง ๆ</summary><div class="acc-body">
+        <p>strain gauge วัดได้แม่นแต่วัดได้เฉพาะจุดที่ติดครับ ถ้าความเสียหายเกิดห่างจากจุดที่ติดไป 10 เซนติเมตร มันจะไม่เห็นเลย
+        ส่วนการวัดการสั่นเป็นการวัดพฤติกรรมของทั้งระบบ ครอบคลุมกว่า และ accelerometer ติดตั้งง่ายกว่ามาก
+        ไม่ต้องเตรียมผิวและติดกาวพิเศษ ในงานจริงมักใช้ทั้งสองอย่างเสริมกัน</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">C10</span>ถ้าตึกมี 20 ชั้นจะยังใช้ได้ไหม</summary><div class="acc-body">
+        <p>หลักการยังใช้ได้ แต่มีสองปัญหาครับ หนึ่ง — ตึกสูงมีความถี่ธรรมชาติต่ำมาก อาจต่ำกว่า 1 เฮิรตซ์ ต้องใช้เซ็นเซอร์ที่วัดความถี่ต่ำได้ดี
+        สอง — จำนวนช่วงชั้นที่ต้องแยกเพิ่มขึ้นเป็น 20 ทำให้ต้องมีเซ็นเซอร์มากขึ้นและตรรกะการแยกแยะซับซ้อนขึ้นมาก
+        โค้ดปัจจุบันของเราผูกกับ 3 ชั้นตายตัว ต้องเขียนส่วนนั้นใหม่</p></div></details>
+      </div>
+
+      <!-- กลุ่ม D -->
+      <div class="block reveal">
+        <h3>กลุ่ม D — กรรมการสายคอมพิวเตอร์</h3>
+
+        <details class="acc"><summary><span class="q-tag">D1</span>ทำไมใช้สองภาษา</summary><div class="acc-body">
+        <p>เพราะสองฝั่งมีข้อจำกัดต่างกันครับ ฝั่งบอร์ดต้องการภาษาที่คอมไพล์เป็นภาษาเครื่องเพื่อคุมจังหวะเวลาให้แม่นระดับมิลลิวินาที
+        Python ทำไม่ได้เพราะมีตัวเก็บขยะหน่วยความจำที่หยุดโปรแกรมเป็นช่วง ๆ
+        ส่วนฝั่งวิเคราะห์ต้องการไลบรารีคณิตศาสตร์ที่ครบซึ่งอยู่ใน Python
+        การเลือกภาษาที่เหมาะกับงานแต่ละฝั่งแล้วเชื่อมด้วย API มาตรฐานเป็นแนวทางปกติของระบบ IoT</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">D2</span>ทำไมต้องแยกสองคอร์</summary><div class="acc-body">
+        <p>เพราะการอ่านเซ็นเซอร์ต้องตรงเวลาทุก 20 มิลลิวินาที แต่การส่งข้อมูลขึ้นเน็ตใช้เวลา 200 ถึง 2,000 มิลลิวินาทีและเดาไม่ได้
+        ถ้าใช้คอร์เดียว ช่วงที่กำลังส่งข้อมูลจะไม่ได้วัดเลย ข้อมูลหายเป็นช่วง ๆ ซึ่งทำให้สเปกตรัมความถี่เพี้ยนแบบที่มองไม่ออกด้วยตา
+        เราจึงแยกงานที่มีข้อกำหนดเวลาเข้มงวดออกจากงานที่เวลาไม่แน่นอนไปคนละคอร์ เชื่อมด้วยคิวแบบไม่บล็อก</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">D3</span>ทำไมยอมทิ้งข้อมูลตอนคิวเต็ม</summary><div class="acc-body">
+        <p>เพราะเราเลือกยอมเสียข้อมูลบางชุดดีกว่ายอมให้จังหวะการสุ่มเสียครับ
+        ข้อมูลที่หายไปทั้งชุดเราตรวจจับได้จากช่องว่างของเวลา แต่ข้อมูลที่จังหวะเพี้ยนจะทำให้สเปกตรัมผิดโดยที่มองไม่ออกว่าผิด
+        และเรานับจำนวนที่ทิ้งไว้ในสถิติที่ส่งไปกับ heartbeat เพื่อให้รู้ว่าเกิดบ่อยแค่ไหน</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">D4</span>ออกแบบโครงสร้างโค้ดยังไง</summary><div class="acc-body">
+        <p>แยกชั้นการคำนวณออกจากชั้นการแสดงผลอย่างเด็ดขาดครับ โมดูลที่คำนวณไม่ import ไลบรารีหน้าจอเลย ทำให้เขียน unit test ได้
+        ปัจจุบันมี 35 เคสที่รันได้ในไม่ถึง 2 วินาที ครอบคลุมทั้งการประมวลผลสัญญาณ ตรรกะการประเมิน และเคสข้อมูลผิดปกติ
+        และลูกศรการพึ่งพากันชี้ทางเดียวเสมอ ไม่มี circular import</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">D5</span>รู้ได้ยังไงว่าโค้ดถูก</summary><div class="acc-body">
+        <p>มีแบบทดสอบอัตโนมัติ 35 เคสครับ และเคสส่วนใหญ่เขียนขึ้นหลังจากเจอบั๊กจริง เพื่อไม่ให้บั๊กเดิมกลับมาอีก
+        มีเคสหนึ่งที่กวาดทุกการผสมของค่าที่หายไป 144 แบบ เพื่อให้แน่ใจว่าหน้าเว็บไม่พังไม่ว่ากรณีไหน</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">D6</span>Firebase ปลอดภัยไหม</summary><div class="acc-body">
+        <p>ไม่ปลอดภัยโดยอัตโนมัติครับ ขึ้นอยู่กับกฎความปลอดภัยที่ตั้งไว้ ข้อมูลของเราไม่มีข้อมูลส่วนบุคคล เป็นแค่ค่าความเร่ง
+        ความเสี่ยงหลักจึงไม่ใช่เรื่องความลับ แต่เป็นเรื่องความพร้อมใช้งาน ถ้ามีคนเขียนข้อมูลขยะเข้ามาหรือดึงจนโควตาหมด ระบบจะใช้งานไม่ได้
+        เราจึงใช้โทเคนยืนยันตัวตนในการเขียนและแยกไฟล์ความลับออกจากซอร์สโค้ดสาธารณะ</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">D7</span>เจอบั๊กที่ยากที่สุดคืออะไร</summary><div class="acc-body">
+        <p>ปุ่มเรียก AI กดแล้วไม่มีอะไรเกิดขึ้นเลยครับ ไล่หาสาเหตุจนต้องไปเปิดซอร์สโค้ดฝั่งเบราว์เซอร์ของไลบรารีรีเฟรชอัตโนมัติ
+        แล้วพบว่ามันใช้ <code>setInterval</code> ซึ่งยิงซ้ำแม้ขณะที่โปรแกรมยังทำงานไม่เสร็จ ทำให้งานที่ใช้เวลานานถูกตัดกลางคันทุกครั้ง
+        แก้โดยแยกการกดปุ่มออกจากการเรียก API ให้อยู่คนละรอบ และตั้งคาบรีเฟรชให้ยาวกว่าเวลาประมวลผลจริงเสมอ</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">D8</span>ใช้ AI ช่วยเขียนโค้ดหรือเปล่า</summary><div class="acc-body">
+        <p><strong>ตอบตรง ๆ อย่าโกหก</strong> — “ใช้เครื่องมือช่วยเขียนและตรวจโค้ดครับ แต่ทุกบรรทัดผ่านการทำความเข้าใจและทดสอบด้วยตัวเอง”
+        แล้วพิสูจน์ทันทีด้วยการอธิบายส่วนที่ยากที่สุด เช่นทำไมต้องตรึงขนาดหน้าต่างที่ 512 หรือทำไมใช้ค่ามัธยฐานแทนค่าเฉลี่ย
+        การอธิบายได้คือหลักฐานที่ดีที่สุด และการโดนจับได้ว่าโกหกเสียหายกว่าการยอมรับหลายเท่า</p></div></details>
+      </div>
+
+      <!-- กลุ่ม E -->
+      <div class="block reveal">
+        <h3>กลุ่ม E — กรรมการสายระเบียบวิธีวิจัย</h3>
+
+        <details class="acc"><summary><span class="q-tag">E1</span>ตัวแปรต้น ตัวแปรตาม ตัวแปรควบคุมคืออะไร</summary><div class="acc-body">
+        <p>ตัวแปรต้นคือระดับและตำแหน่งของความเสียหายที่เราสร้างขึ้น · ตัวแปรตามคือ f<sub>n</sub>, Health, T<sub>21</sub>, T<sub>32</sub> และแอมพลิจูดแต่ละชั้น ·
+        ตัวแปรควบคุมคือความถี่และความแรงของลำโพง ตำแหน่งลำโพง น้ำหนักบนตึก ตำแหน่งเซ็นเซอร์ การยึดฐาน อุณหภูมิห้อง และระยะเวลาเก็บข้อมูล</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">E2</span>ตัวแปรควบคุมข้อไหนสำคัญที่สุด</summary><div class="acc-body">
+        <p>น้ำหนักบนตึกครับ เพราะจากสูตร f<sub>n</sub> เป็นสัดส่วนกับรากที่สองของ k ส่วน m
+        การวางของหนักเพิ่มทำให้ f<sub>n</sub> ลดลงเหมือนกับตอนตึกเสียหายเป๊ะ ถ้าลืมข้อนี้ ผลการทดลองจะตีความไม่ได้เลย</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">E3</span>ทดลองซ้ำกี่ครั้ง</summary><div class="acc-body">
+        <p>อย่างน้อย 3 ครั้งต่อเงื่อนไขครับ และมีรอบขันน็อตกลับคืนสภาพเดิมสลับอยู่ทุกครั้ง
+        เพื่อยืนยันว่าค่าที่เปลี่ยนไปเกิดจากความเสียหายจริง ไม่ใช่จากการที่ระบบค่อย ๆ ไหลไปเองตามเวลา</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">E4</span>รอบขันกลับสำคัญยังไง</summary><div class="acc-body">
+        <p>เป็นการควบคุมเชิงลบครับ ถ้าขันกลับแล้วค่ากลับมาที่เดิม แสดงว่าระบบวัดสิ่งที่มันควรวัดจริง ๆ
+        ถ้าค่าไม่กลับมา แปลว่ามีตัวแปรอื่นแทรก เช่นการไหลของเซ็นเซอร์ตามเวลาหรืออุณหภูมิที่เปลี่ยน ซึ่งเราต้องแก้ก่อนสรุปผล</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">E5</span>ค่าความคลาดเคลื่อนเท่าไร</summary><div class="acc-body">
+        <p>ความละเอียดเชิงความถี่ของเราคือ 0.098 เฮิรตซ์ต่อขีดครับ และใช้การประมาณค่าแบบพาราโบลาทำให้ละเอียดขึ้นอีกราว 10 เท่า
+        เมื่อเทียบค่าที่วัดได้กับแบบจำลองทางทฤษฎี T<sub>21</sub> ต่างจากทฤษฎี 5.2% และ T<sub>32</sub> ต่างกัน 10.8%
+        ซึ่งอยู่ในเกณฑ์ที่ยอมรับได้สำหรับแบบจำลองอย่างง่ายที่ไม่รวมผลของมวลเสาและความยืดหยุ่นของพื้น</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">E6</span>ผลลัพธ์ทำซ้ำได้ไหม</summary><div class="acc-body">
+        <p>ได้ครับ และเราพิสูจน์ด้วยแบบทดสอบอัตโนมัติเคสหนึ่งที่ชื่อว่า <code>test_same_input_gives_identical_output</code>
+        ซึ่งยืนยันว่าข้อมูลชุดเดิมให้คำตอบเดิมเป๊ะทุกครั้ง เพราะการตัดสินทั้งหมดมาจากกฎที่กำหนดไว้ ไม่ใช่จากโมเดลที่ตอบไม่เหมือนเดิม</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">E7</span>มีการเปรียบเทียบกับวิธีมาตรฐานไหม</summary><div class="acc-body">
+        <p>เทียบกับผลเฉลยเชิงวิเคราะห์ของแบบจำลอง 3 องศาอิสระครับ ซึ่งตรวจสอบด้วยมือได้ ไม่ใช่กล่องดำแบบไฟไนต์เอลิเมนต์
+        เราคำนวณล่วงหน้าว่าอัตราส่วนการสั่นควรเป็นเท่าไร แล้วเทียบกับค่าที่วัดได้จริง</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">E8</span>สมมติฐานของงานคืออะไร</summary><div class="acc-body">
+        <p>สมมติฐานหลักคือ ถ้าความแข็งเกร็งของช่วงชั้นใดช่วงหนึ่งลดลง อัตราส่วนการสั่นของช่วงนั้นจะเปลี่ยนไปมากกว่าช่วงอื่นอย่างมีนัยสำคัญ
+        ซึ่งเราทดสอบด้วยการทำให้เสียหายทีละช่วงแล้วดูว่าระบบชี้ถูกไหม</p></div></details>
+      </div>
+
+      <!-- กลุ่ม F -->
+      <div class="block reveal">
+        <h3>กลุ่ม F — คำถามกดดันและเชิงลบ</h3>
+        <p class="lede">ตอบด้วยความสงบ ไม่แก้ตัว ไม่โต้กลับ</p>
+
+        <details class="acc"><summary><span class="q-tag">F1</span>“นี่มันแค่ของเล่น ใช้จริงไม่ได้หรอก”</summary><div class="acc-body">
+        <p>ถูกครับ ในสภาพปัจจุบันยังใช้กับตึกจริงไม่ได้ แต่เป้าหมายของงานคือพิสูจน์ว่าหลักการใช้ได้จริงด้วยอุปกรณ์ราคาต่ำ
+        ซึ่งเราพิสูจน์แล้วด้วยการเทียบกับทฤษฎี ส่วนการนำไปใช้จริงต้องแก้อีก 4 ข้อที่เราระบุไว้ชัดเจน</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">F2</span>“ทำไมไม่ใช้ AI ให้เต็มที่ไปเลย ยุคนี้แล้ว”</summary><div class="acc-body">
+        <p>เพราะระบบที่เกี่ยวกับความปลอดภัยไม่ควรพึ่งพาสิ่งที่ให้คำตอบไม่คงที่ครับ
+        การตัดสินของเรามาจากสูตรฟิสิกส์และเกณฑ์ที่เปิดโค้ดชี้ให้ดูได้ทุกบรรทัด ถ้าถอด AI ออกทั้งหมดระบบยังทำงานครบ 100%
+        เราวาง AI เป็นตัวเรียบเรียงคำอธิบายเท่านั้น</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">F3</span>“ตรวจไม่เจอความเสียหายเล็ก ๆ แล้วจะมีประโยชน์อะไร”</summary><div class="acc-body">
+        <p>เป็นข้อจำกัดของวิธีการวัดการสั่นทั้งวงการครับ ไม่ใช่เฉพาะงานเรา
+        บทความทบทวนของ Salawu ปี 1997 ก็สรุปว่าการเปลี่ยนแปลงความถี่มักเล็กเกินกว่าจะใช้ตรวจความเสียหายเบา ๆ ได้อย่างมั่นใจ
+        ประโยชน์ของระบบคือการเฝ้าต่อเนื่องเพื่อจับแนวโน้ม ซึ่งวิธีตรวจแบบเป็นครั้ง ๆ ทำไม่ได้</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">F4</span>“ค่าที่โชว์บนจอมันจริงหรือแค่ตัวเลขสวย ๆ”</summary><div class="acc-body">
+        <p>จริงครับ ทุกค่ามาจากการคำนวณสัญญาณดิบที่เซ็นเซอร์ส่งมา และเรามีแผงข้อมูลทางเทคนิคที่แสดงค่าดิบทั้งหมดพร้อมเวลาประมวลผล
+        ให้ตรวจสอบย้อนกลับได้ ถ้าอยากดู ผมเปิดให้ดูได้ตอนนี้เลยครับ — <strong>แล้วเปิดแผง debug ให้ดูจริง</strong></p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">F5</span>“งานนี้มีคนทำมาเยอะแล้ว ไม่ใหม่”</summary><div class="acc-body">
+        <p>หลักการทางฟิสิกส์ไม่ใหม่ครับ มีมาก่อนปี 1990 สิ่งที่เราทำคือประกอบเป็นระบบครบวงจรด้วยอุปกรณ์หลักพันบาท
+        ที่ทำงานได้จริงตั้งแต่วัดจนถึงแจ้งเตือน และมีกลไกปฏิเสธข้อมูลที่เชื่อไม่ได้
+        จุดที่เราภูมิใจที่สุดคือการแสดงเชิงตัวเลขว่าที่ความเสียหาย 20% ตัวชี้วัดความถี่ยังบอกว่าปกติ แต่อัตราส่วนการสั่นจับได้แล้ว</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">F6</span>“ถ้าระบบเตือนผิดแล้วคนอพยพออกจากตึกฟรี ๆ ใครรับผิดชอบ”</summary><div class="acc-body">
+        <p>เป็นคำถามที่สำคัญมากครับ ระบบเราไม่ได้ออกแบบให้สั่งอพยพ แต่ออกแบบให้บอกว่า “จุดนี้ควรให้วิศวกรไปตรวจ”
+        การตัดสินใจปิดอาคารเป็นหน้าที่ของวิศวกรที่มีใบอนุญาต และเราออกแบบให้ระบบต้องเห็นความผิดปกติต่อเนื่อง 3 รอบขึ้นไปจึงเปลี่ยนสถานะ
+        เพื่อลดการเตือนผิดจากเหตุการณ์ชั่วครู่</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">F7</span>“ถ้าผมเดินไปเตะโต๊ะตอนนี้ ค่าจะเปลี่ยนไหม”</summary><div class="acc-body">
+        <p>เปลี่ยนครับ และนั่นคือสาเหตุที่ระบบมีกลไกป้องกัน 3 ชั้น — หนึ่ง ค่า coherence จะตกทันทีเมื่อมีแรงจากแหล่งอื่น ทำให้ระบบปฏิเสธข้อมูลรอบนั้น ·
+        สอง ตัวกรองมัธยฐาน 7 จุดทำให้ค่าโดดครั้งเดียวไม่มีผล · สาม ต้องเห็นความผิดปกติต่อเนื่อง 3 รอบจึงเปลี่ยนสถานะ
+        <strong>เชิญลองได้เลยครับ</strong> — ถ้ากล้าพอ ให้เขาลองจริงแล้วชี้ให้ดูว่า coherence ตกจริง นี่คือช่วงเวลาที่ทำให้กรรมการจำงานเราได้</p></div></details>
+
+        <details class="acc"><summary><span class="q-tag">F8</span>“ทำไมค่าบนจอถึงกระพริบ/ไม่นิ่ง”</summary><div class="acc-body">
+        <p>เป็นเรื่องปกติของการวัดครับ ทุกการวัดมีสัญญาณรบกวน เราจึงใช้ตัวกรองมัธยฐานและการเฉลี่ยแบบ Welch เพื่อลดความแกว่ง
+        และตั้งกลไกยืนยัน 3 รอบก่อนเปลี่ยนสถานะ ถ้าค่าแกว่งมากผิดปกติ นั่นเป็นสัญญาณว่ามีบางอย่างผิด
+        เช่นเซ็นเซอร์หลวมหรือแรงกระตุ้นไม่พอ ซึ่งระบบจะแจ้งเองในการ์ดสรุป</p></div></details>
+      </div>
+
+      <!-- เมื่อไม่รู้คำตอบ -->
+      <div class="block reveal">
+        <h3>เทคนิคเมื่อไม่รู้คำตอบ</h3>
+        <p class="lede">ห้ามเดา ห้ามแต่ง เพราะกรรมการที่ถามมักรู้คำตอบอยู่แล้ว และการเดาผิดเสียหายกว่าการบอกว่าไม่รู้มาก</p>
+        <ol class="steps">
+          <li><b>ยอมรับตรง ๆ</b><span>“ข้อนี้ผมยังไม่ได้ศึกษาลึกพอครับ”</span></li>
+          <li><b>บอกสิ่งที่รู้ที่ใกล้เคียงที่สุด</b><span>“แต่เท่าที่เข้าใจ มันน่าจะเกี่ยวกับ… เพราะ…”</span></li>
+          <li><b>บอกว่าจะหาคำตอบยังไง</b><span>“ถ้าจะตอบให้แน่ใจ ผมต้องทดลองเพิ่มโดย… หรือไปอ่านงานของ…”</span></li>
+        </ol>
+        <div class="callout callout-ok" style="margin-top:24px">
+          <div class="callout-title">ตัวอย่างการตอบเมื่อไม่รู้ที่ได้คะแนน</div>
+          <p>“เรื่องค่าการหน่วงผมยังไม่ได้ศึกษาลึกพอที่จะตอบเป็นตัวเลขครับ แต่เท่าที่เข้าใจ การหน่วงก็เปลี่ยนตามความเสียหายเหมือนกัน
+          และเป็นตัวชี้วัดที่มีงานวิจัยรองรับ เพียงแต่วัดให้แม่นยากกว่าความถี่มาก
+          ถ้าจะตอบให้แน่ใจ ผมต้องทดลองวัดค่าการหน่วงด้วยวิธี half-power bandwidth แล้วดูว่าค่าที่ได้เสถียรพอจะใช้เป็นตัวชี้วัดไหมครับ”</p>
+          <p style="margin-bottom:0"><span class="mini">คำตอบนี้แสดงให้เห็น 3 อย่าง — ซื่อสัตย์ · รู้ขอบเขตความรู้ตัวเอง · รู้ว่าจะไปหาคำตอบยังไง
+          ทั้งสามอย่างคือคุณสมบัติของนักวิจัย และกรรมการให้คะแนนตรงนี้มากกว่าการตอบถูกทุกข้อ</span></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 10 ══════════ -->
+<section class="section" id="references">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">10 — สำหรับวันแข่ง</span>
+      <h2>งานวิจัยอ้างอิง</h2>
+      <div class="asks"><span class="asks-label">คำถามที่ส่วนนี้ตอบ</span><p>หลักการนี้มีงานวิจัยรองรับไหม และงานเราอยู่ตรงไหนของวงการ</p></div>
+    </div>
+
+    <div class="stack-lg">
+
+      <!-- Rytter -->
+      <div class="block reveal">
+        <h3>กรอบ 4 ระดับของ Rytter — ใช้บอกว่างานเราไปได้ไกลแค่ไหน</h3>
+        <p class="lede">กรอบมาตรฐานที่ทั้งวงการใช้จัดระดับความสามารถของระบบ SHM เสนอไว้ตั้งแต่ปี 1993</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>ระดับ</th><th>ชื่อ</th><th>ตอบคำถามว่า</th><th>SmartVibe</th></tr></thead>
+            <tbody>
+              <tr><th class="num">1</th><td>Detection</td><td>มีความเสียหายเกิดขึ้นไหม</td><td class="t-ok">ทำได้ — จาก f<sub>n</sub> ที่เปลี่ยนไป</td></tr>
+              <tr><th class="num">2</th><td>Localization</td><td>ความเสียหายอยู่ตรงไหน</td><td class="t-ok">ทำได้ในระดับช่วงชั้น — จาก Transmissibility</td></tr>
+              <tr><th class="num">3</th><td>Assessment</td><td>ความเสียหายรุนแรงแค่ไหน</td><td class="t-warn">ทำได้บางส่วน — Health บอกเป็นเปอร์เซ็นต์ แต่ยังไม่ได้เทียบกับความเสียหายจริงเชิงปริมาณ</td></tr>
+              <tr><th class="num">4</th><td>Prediction</td><td>โครงสร้างจะอยู่ได้อีกนานเท่าไร</td><td class="t-danger">ทำไม่ได้ — ต้องใช้แบบจำลองความล้าและข้อมูลวัสดุ</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <blockquote class="pull" style="margin-top:26px">ระบบเราทำได้ถึงระดับที่ 2 คือระบุตำแหน่ง และแตะระดับที่ 3 บางส่วน
+        ส่วนระดับที่ 4 คือการทำนายอายุที่เหลือ เราทำไม่ได้และไม่ได้อ้างว่าทำได้
+        งานวิจัยระดับนานาชาติส่วนใหญ่ก็หยุดอยู่ที่ระดับ 2–3 เหมือนกัน ระดับ 4 ยังเป็นโจทย์เปิดของวงการ</blockquote>
+      </div>
+
+      <!-- สัจพจน์ -->
+      <div class="block reveal">
+        <h3>สัจพจน์พื้นฐานของวงการที่งานเราออกแบบให้สอดคล้อง</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>สัจพจน์</th><th>ใจความ</th><th>SmartVibe ทำอะไรให้สอดคล้อง</th></tr></thead>
+            <tbody>
+              <tr><th>การประเมินความเสียหายต้องเป็นการเปรียบเทียบ</th><td>ไม่มีทางรู้ว่าเสียหายถ้าไม่รู้ว่า “ปกติ” เป็นยังไง</td><td>บังคับให้ล็อก Baseline ตอนโครงสร้างสมบูรณ์ก่อน ระบบปฏิเสธการทำงานถ้ายังไม่ล็อก</td></tr>
+              <tr><th>การตรวจหาและระบุตำแหน่งทำได้แบบไม่มีผู้สอน แต่การประเมินความรุนแรงต้องมีผู้สอน</th><td>จะบอกว่ารุนแรงแค่ไหนต้องมีข้อมูลของสภาพเสียหายที่รู้คำตอบมาสอน</td><td>ระวังไม่อ้างว่าค่า Health แปลตรงเป็นระดับความเสียหายจริง</td></tr>
+              <tr><th>ยิ่งความเสียหายเล็ก ยิ่งต้องวัดละเอียดและวัดใกล้จุดเสียหาย</th><td>เซ็นเซอร์น้อย = ตรวจเจอเฉพาะความเสียหายที่ใหญ่พอ</td><td>ยอมรับตรง ๆ ว่าเซ็นเซอร์ 3 ตัวจับได้แค่ระดับช่วงชั้น</td></tr>
+              <tr><th>มีการแลกกันเสมอระหว่างความไวต่อความเสียหาย กับความไวต่อสัญญาณรบกวน</th><td>ตั้งเกณฑ์ไวไป = เตือนผิดบ่อย · ตั้งทื่อไป = ตรวจไม่เจอ</td><td>ตั้งเกณฑ์ 10% พร้อมกลไกยืนยัน 3 รอบ และคำนวณให้เห็นว่าเกณฑ์นี้จับความเสียหาย 30% ได้พอดี</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ต่างยังไง -->
+      <div class="block reveal">
+        <h3>งานเราต่างจากงานวิจัยที่มีอยู่ยังไง</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>ประเด็น</th><th>งานวิจัยที่มีอยู่</th><th>SmartVibe</th></tr></thead>
+            <tbody>
+              <tr><th>ตัวชี้วัด</th><td>ส่วนใหญ่เลือกอย่างใดอย่างหนึ่ง — ความถี่ หรือ transmissibility</td><td class="t-ok">ใช้ทั้งสองคู่กัน พร้อมอธิบายว่าแต่ละตัวตอบคำถามคนละข้อ</td></tr>
+              <tr><th>การจัดการข้อมูลที่เชื่อไม่ได้</th><td>มักรายงานค่าเสมอ ให้ผู้ใช้ตีความเอง</td><td class="t-ok">ปฏิเสธการสรุปเมื่อ coherence ต่ำ และแสดงคะแนนความเชื่อมั่นเป็นตัวเลข</td></tr>
+              <tr><th>บทบาทของ AI</th><td>งานสมัยใหม่ใช้ machine learning ตัดสิน</td><td class="t-ok">ให้กฎวิศวกรรมตัดสิน AI แค่เรียบเรียงคำอธิบาย — ตรวจสอบย้อนกลับได้ทุกบรรทัด</td></tr>
+              <tr><th>ต้นทุน</th><td>เซ็นเซอร์เกรดวิจัยหลักหมื่นถึงหลักแสนต่อจุด</td><td class="t-ok">หลักร้อยบาทต่อจุด อยู่ในกลุ่มเดียวกับอ้างอิงหมายเลข 11–12</td></tr>
+              <tr><th>การพิสูจน์</th><td>เทียบกับแบบจำลองไฟไนต์เอลิเมนต์</td><td class="t-ok">เทียบกับผลเฉลยเชิงวิเคราะห์ของ 3-DOF ซึ่งตรวจสอบด้วยมือได้</td></tr>
+              <tr><th>การชดเชยอุณหภูมิ</th><td>มีในงานที่ติดตั้งจริงระยะยาว</td><td class="t-danger">ยังไม่มี — เป็นข้อจำกัดที่เรารู้ตัว</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- บรรณานุกรม -->
+      <div class="block reveal">
+        <h3>บรรณานุกรม</h3>
+
+        <h4 style="margin:26px 0 12px">กลุ่ม A — ปูพื้นและกรอบแนวคิดของ SHM</h4>
+        <div class="table-scroll">
+          <table>
+            <tbody>
+              <tr><th class="num" style="width:44px">1</th><td>Farrar, C.R. &amp; Worden, K. (2007). <em>An introduction to structural health monitoring.</em> Philosophical Transactions of the Royal Society A, 365(1851), 303–315.</td></tr>
+              <tr><th class="num">2</th><td>Rytter, A. (1993). <em>Vibrational Based Inspection of Civil Engineering Structures.</em> PhD thesis, Aalborg University, Denmark.</td></tr>
+              <tr><th class="num">3</th><td>Worden, K., Farrar, C.R., Manson, G. &amp; Park, G. (2007). <em>The fundamental axioms of structural health monitoring.</em> Proceedings of the Royal Society A, 463(2082), 1639–1664.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="margin:26px 0 12px">กลุ่ม B — การใช้ความถี่และรูปทรงการสั่นตรวจความเสียหาย</h4>
+        <div class="table-scroll">
+          <table>
+            <tbody>
+              <tr><th class="num" style="width:44px">4</th><td>Salawu, O.S. (1997). <em>Detection of structural damage through changes in frequency: a review.</em> Engineering Structures, 19(9), 718–723.</td></tr>
+              <tr><th class="num">5</th><td>Ho Thu, H. &amp; Mita, A. (2014). <em>Damage Location and Quantification Indices of Shear Structures Based on Changes in the First Two or Three Natural Frequencies.</em> International Scholarly Research Notices.</td></tr>
+              <tr><th class="num">7</th><td>Maia, N.M.M., Silva, J.M.M., Almas, E.A.M. &amp; Sampaio, R.P.C. (2003). <em>Damage detection in structures: from mode shape to frequency response function methods.</em> Mechanical Systems and Signal Processing.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="margin:26px 0 12px">กลุ่ม C — Transmissibility</h4>
+        <div class="table-scroll">
+          <table>
+            <tbody>
+              <tr><th class="num" style="width:44px">6</th><td>Li, Q., Liao, M. &amp; Jing, X. (2021). <em>Transmissibility function-based fault diagnosis methods for beam-like engineering structures: a review of theory and properties.</em> Nonlinear Dynamics, 106, 2131–2163.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="margin:26px 0 12px">กลุ่ม D — ผลของสิ่งแวดล้อมและอุณหภูมิ</h4>
+        <div class="table-scroll">
+          <table>
+            <tbody>
+              <tr><th class="num" style="width:44px">8</th><td>Peeters, B. &amp; De Roeck, G. (2001). <em>One-year monitoring of the Z24-Bridge: environmental effects versus damage events.</em> Earthquake Engineering &amp; Structural Dynamics, 30(2), 149–171.</td></tr>
+              <tr><th class="num">9</th><td>Sohn, H. (2007). <em>Effects of environmental and operational variability on structural health monitoring.</em> Philosophical Transactions of the Royal Society A, 365(1851), 539–560.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="margin:26px 0 12px">กลุ่ม E — การประมวลผลสัญญาณ</h4>
+        <div class="table-scroll">
+          <table>
+            <tbody>
+              <tr><th class="num" style="width:44px">10</th><td>Welch, P.D. (1967). <em>The use of fast Fourier transform for the estimation of power spectra: A method based on time averaging over short, modified periodograms.</em> IEEE Transactions on Audio and Electroacoustics, 15(2), 70–73.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="margin:26px 0 12px">กลุ่ม F — เซ็นเซอร์ราคาต่ำและระบบ IoT (สายเดียวกับงานเราตรง ๆ)</h4>
+        <div class="table-scroll">
+          <table>
+            <tbody>
+              <tr><th class="num" style="width:44px">11</th><td>Komarizadehasl, S. et al. (2022). <em>Low-Cost Wireless Structural Health Monitoring of Bridges.</em> Sensors, 22(15), 5725.</td></tr>
+              <tr><th class="num">12</th><td>Komarizadehasl, S. et al. (2022). <em>Operational and Analytical Modal Analysis of a Bridge Using Low-Cost Wireless Arduino-Based Accelerometers.</em> Sensors, 22(24), 9808.</td></tr>
+              <tr><th class="num">13</th><td><em>Use of IoT for structural health monitoring of civil engineering structures: a state-of-the-art review.</em> Urban Lifeline (Springer), 2024.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout" style="margin-top:26px">
+          <div class="callout-title">หมายเหตุเรื่องการอ้างอิง</div>
+          <p>งานวิจัยทุกชิ้นในรายการนี้ตรวจสอบชื่อเรื่อง ผู้แต่ง วารสาร และปีจากแหล่งจริงแล้ว
+          แต่ก่อนนำไปใส่บรรณานุกรมของรายงานฉบับจริง <strong>ควรเปิดต้นฉบับยืนยันเลขหน้าอีกครั้ง</strong> เพราะบางรายการเข้าถึงได้แค่หน้าบทคัดย่อ</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 11 ══════════ -->
+<section class="section" id="circular">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">11 — แนวคิดของงาน</span>
+      <h2>วิศวกรรมเชิงหมุนเวียน</h2>
+      <div class="asks"><span class="asks-label">คำถามที่ส่วนนี้ตอบ</span><p>งานนี้เกี่ยวกับเศรษฐกิจหมุนเวียนตรงไหน</p></div>
+    </div>
+
+    <div class="stack-lg">
+
+      <div class="block prose reveal">
+        <h3>ขยะก้อนใหญ่ที่สุดในงานก่อสร้างไม่ใช่เศษวัสดุ</h3>
+        <p>แต่คือ <strong>ตัวอาคารทั้งหลังที่ถูกทุบทิ้งก่อนที่วัสดุจะหมดอายุจริง</strong>
+        คอนกรีตและเหล็กเสริมที่ยังรับแรงได้อีกหลายสิบปีกลายเป็นเศษซากในชั่วข้ามคืน และการสร้างใหม่ก็ต้องดึงทรัพยากรใหม่เข้ามาอีกรอบ
+        นี่คือรูปแบบเศรษฐกิจเชิงเส้นตรงที่ชัดเจนที่สุดในงานวิศวกรรมโยธา</p>
+        <p>คำถามที่เราสนใจคือ <em>ทำไมอาคารจึงถูกทุบทิ้ง</em> เมื่อศึกษาข้อมูลพบว่าหลายครั้งอาคารไม่ได้ถูกรื้อเพราะวัสดุใช้ไม่ได้แล้ว
+        แต่ถูกรื้อเพราะ <strong>ความเชื่อมั่นในสภาพโครงสร้างหมดลง</strong> — เจ้าของอาคารไม่มีข้อมูลยืนยันว่าโครงสร้างภายในยังปลอดภัยหรือไม่</p>
+      </div>
+
+      <blockquote class="pull reveal">ผลกระทบหลักของ SmartVibe ไม่ได้อยู่ที่การประหยัดวัสดุในตัวเครื่องซึ่งหนักไม่ถึงหนึ่งกิโลกรัม
+      แต่อยู่ที่อาคารทั้งหลังที่ไม่ต้องถูกทุบทิ้ง</blockquote>
+
+      <!-- 3 กลยุทธ์ -->
+      <div class="block reveal">
+        <h3>3 กลยุทธ์ที่ใช้เป็นเกณฑ์ออกแบบตั้งแต่วันแรก</h3>
+        <p class="lede">ไม่ใช่นำมาอธิบายภายหลัง แต่ใช้ตัดสินใจตั้งแต่ตอนออกแบบ</p>
+        <div class="grid-3">
+          <div class="card">
+            <span class="kicker">กลยุทธ์ที่ 1</span>
+            <h4>ชะลอวงจร</h4>
+            <p class="mini" style="margin:8px 0 0"><strong>ยืดอายุการใช้งาน</strong> — ทำให้อาคารถูกซ่อมทันเวลาและใช้งานต่อได้ ไม่ถูกทุบทิ้ง</p>
+          </div>
+          <div class="card">
+            <span class="kicker">กลยุทธ์ที่ 2</span>
+            <h4>ลดขนาดวงจร</h4>
+            <p class="mini" style="margin:8px 0 0"><strong>ใช้ทรัพยากรน้อยลงต่อการทำงานหนึ่งครั้ง</strong> — ชี้เป้าได้ว่าช่วงชั้นไหนเสียหาย จึงซ่อมเฉพาะจุด ไม่ต้องรื้อเผื่อทั้งชั้น</p>
+          </div>
+          <div class="card">
+            <span class="kicker">กลยุทธ์ที่ 3</span>
+            <h4>ปิดวงจร</h4>
+            <p class="mini" style="margin:8px 0 0"><strong>นำวัสดุกลับเข้าระบบ</strong> — ยึดทุกจุดด้วยน็อต ไม่ใช้กาว ถอดกลับเป็นชิ้นส่วนตั้งต้นได้ 100%</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ถอดประกอบ -->
+      <div class="block reveal">
+        <h3>การประเมินด้วยเกณฑ์ “ถอดประกอบได้หรือไม่” ทีละชิ้น</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>ชิ้นส่วน</th><th>วิธียึด</th><th>เมื่อสิ้นสุดการใช้งาน</th></tr></thead>
+            <tbody>
+              <tr><th>พื้นอะคริลิก 3 ชั้น</th><td>น็อต + เสารองหกเหลี่ยม</td><td>ถอดเป็นแผ่นเรียบ ใช้ทำโครงสร้างชุดใหม่ หรือส่งรีไซเคิลได้</td></tr>
+              <tr><th>เสารองและชุดน็อต/สกรู</th><td>เกลียวมาตรฐาน</td><td>ใช้ซ้ำได้ไม่จำกัดรอบ เป็นชิ้นส่วนมาตรฐานหาแทนได้</td></tr>
+              <tr><th>MPU-6050 ×3, TCA9548A, ESP32-S3</th><td>ขาเสียบ + สายจั๊มเปอร์ (ไม่บัดกรีถาวร)</td><td>ถอดไปใช้ในโครงงานอื่นได้ทันที ไม่กลายเป็นขยะอิเล็กทรอนิกส์</td></tr>
+              <tr><th>รางสไลด์ลูกปืนเชิงเส้น</th><td>น็อตยึดกับฐาน</td><td>เป็นอุปกรณ์เกรดอุตสาหกรรม อายุใช้งานยาว ถอดใช้ต่อได้</td></tr>
+              <tr><th>ลำโพงส่งกำลังและโมดูลขยาย</th><td>น็อต + ขั้วต่อ</td><td>ใช้ลำโพงที่ปลดระวางแล้วมาทำ และถอดใช้ต่อได้อีก</td></tr>
+              <tr><th>สายจั๊มเปอร์ / สาย USB</th><td>ขั้วต่อถอดได้</td><td>ใช้ซ้ำได้ทั้งหมด</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-ok" style="margin-top:22px">
+          <p><strong>ไม่มีชิ้นส่วนใดในเครื่องต้นแบบที่ยึดด้วยกาวหรือการเชื่อมถาวร</strong>
+          ทั้งเครื่องกลับคืนสู่สภาพชิ้นส่วนตั้งต้นได้ 100% เมื่อโครงงานจบ อุปกรณ์อิเล็กทรอนิกส์ทั้งหมดจะถูกส่งคืนเข้าห้องปฏิบัติการวิทยาศาสตร์ของโรงเรียนเพื่อใช้เป็นสื่อการสอน ไม่ใช่ถูกทิ้ง</p>
+          <p style="margin-bottom:0">ระบบยังไม่ใช้แบตเตอรี่ (จ่ายไฟผ่าน USB) จึงไม่สร้างขยะแบตเตอรี่ในระยะยาว
+          และการเพิ่มความสามารถใหม่ทำที่ซอฟต์แวร์ฝั่งคลาวด์ จึงอัปเกรดได้โดยไม่ต้องเปลี่ยนฮาร์ดแวร์</p>
+        </div>
+        <div class="callout" style="margin-top:16px">
+          <p>การยึดด้วยน็อตไม่ได้ทำเพื่อความหมุนเวียนอย่างเดียว — <strong>ในทางวิทยาศาสตร์มันทำให้จำลองการคลายตัวของข้อต่อได้จริงโดยที่มวล <i>m</i> ไม่เปลี่ยน</strong>
+          จึงมั่นใจได้ว่าความถี่ที่เปลี่ยนไปเกิดจากค่า <i>k</i> เพียงอย่างเดียว เป็นการควบคุมตัวแปรและเป็นความหมุนเวียนไปพร้อมกัน</p>
+        </div>
+      </div>
+
+      <!-- ทรัพยากรดิจิทัล -->
+      <div class="block reveal">
+        <h3>ความหมุนเวียนของทรัพยากรดิจิทัล</h3>
+        <p class="lede">เราประเมินการใช้ทรัพยากรดิจิทัลด้วยตัวเลขที่วัดได้จริง ไม่ใช่คำกล่าวอ้างลอย ๆ</p>
+        <div class="grid-3">
+          <div class="card"><div class="stat-num">30<small> เท่า</small></div><div class="stat-label">ปริมาณข้อมูลที่รับส่งลดลง จากการเปลี่ยนไปดึงเฉพาะข้อมูลใหม่</div></div>
+          <div class="card"><div class="stat-num">65<small>%</small></div><div class="stat-label">ลดลงอีก จากการงดส่งแกน Y และ Z ที่ไม่ได้ใช้</div></div>
+          <div class="card"><div class="stat-num">0<small> บาท</small></div><div class="stat-label">ค่าใช้จ่ายรายเดือน — ออกแบบให้อยู่ใต้โควตาฟรีอย่างตั้งใจ</div></div>
+        </div>
+        <p class="table-note" style="margin-top:16px">ขนาดฐานข้อมูลถูกตรึงให้คงที่ด้วยการลบอัตโนมัติทุก 15 วินาที เก็บย้อนหลังเพียง 60 วินาที
+        ผลรวมคือระบบใช้พลังงานเซิร์ฟเวอร์และพื้นที่จัดเก็บเท่าที่จำเป็นจริง</p>
+        <div class="callout" style="margin-top:22px">
+          <p>แนวคิดเดียวกันนี้ใช้กับ AI ด้วย — ปุ่ม AI ทำงานเฉพาะเมื่อผู้ใช้กด ไม่ใช่ทุกรอบที่หน้าเว็บรีเฟรช
+          และเก็บคำตอบไว้ใช้ซ้ำได้ 5 นาที เพราะเคยลองแบบทำทุกรอบแล้วพบว่าใช้โควตาหมดภายในไม่ถึง 10 นาที</p>
+        </div>
+      </div>
+
+      <!-- งบ -->
+      <div class="block reveal">
+        <h3>ต้นทุนทั้งระบบ</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>รายการ</th><th>จำนวน</th><th>ราคาประมาณ (บาท)</th><th>หมายเหตุเชิงหมุนเวียน</th></tr></thead>
+            <tbody>
+              <tr><th>บอร์ด ESP32-S3</th><td class="num">1</td><td class="num">300</td><td>ถอดใช้ต่อในงานอื่นได้</td></tr>
+              <tr><th>เซ็นเซอร์ MPU-6050</th><td class="num">3</td><td class="num">180</td><td>ขยายจุดวัดเพิ่มได้ตัวละ 60 บาท</td></tr>
+              <tr><th>โมดูล TCA9548A</th><td class="num">1</td><td class="num">60</td><td>ใช้ซ้ำได้</td></tr>
+              <tr><th>แผ่นอะคริลิกใส 3 มม.</th><td class="num">1</td><td class="num">300</td><td>ใช้เศษอะคริลิกเหลือจากงานตัดได้</td></tr>
+              <tr><th>เสารองหกเหลี่ยม + น็อต/สกรู</th><td class="num">1 ชุด</td><td class="num">150</td><td>ชิ้นส่วนมาตรฐาน ใช้ซ้ำ</td></tr>
+              <tr><th>รางสไลด์ลูกปืนเชิงเส้น</th><td class="num">2 ชุด</td><td class="num">500</td><td>ใช้ของที่มีอยู่ในห้องปฏิบัติการ</td></tr>
+              <tr><th>ลำโพงส่งกำลัง + โมดูลขยายเสียง</th><td class="num">1 ชุด</td><td class="num">250</td><td>ใช้ลำโพงที่ปลดระวางแล้ว</td></tr>
+              <tr><th>แผ่นพีซีบีอเนกประสงค์ สายจั๊มเปอร์ สาย USB</th><td class="num">1 ชุด</td><td class="num">150</td><td>ใช้ซ้ำได้</td></tr>
+              <tr><th>Firebase และแดชบอร์ด Streamlit</th><td>—</td><td class="num t-ok">0</td><td>ใช้แพ็กเกจฟรีได้จริงตลอดการใช้งาน หลังปรับระบบให้ประหยัดข้อมูล</td></tr>
+              <tr class="row-hl"><th>รวม</th><td></td><td class="num">1,890</td><td>ค่าใช้จ่ายรายเดือน 0 บาท</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">เทียบกับระบบ SHM เชิงพาณิชย์ที่ราคาหลักแสนถึงหลักล้านบาท ต้นทุนนี้ต่ำกว่าหลายร้อยเท่า
+        และการเพิ่มจุดเฝ้าระวังอีก 1 ชั้นมีค่าใช้จ่ายเพียงประมาณ 60 บาท โดยไม่ต้องเปลี่ยนบอร์ดหรือรื้อระบบเดิม</p>
+      </div>
+
+      <!-- ผลกระทบ -->
+      <div class="block reveal">
+        <h3>คุณค่าและผลกระทบ</h3>
+        <div class="grid-2">
+          <div class="card">
+            <span class="kicker">ด้านสิ่งแวดล้อม</span>
+            <h4>อาคารทั้งหลังที่ไม่ต้องถูกทุบทิ้ง</h4>
+            <p class="mini" style="margin:8px 0 0">เมื่อความเสียหายถูกพบและซ่อมได้ทันเวลา คอนกรีตและเหล็กเสริมพร้อมคาร์บอนที่ฝังอยู่ในวัสดุจะยังคงถูกใช้งานต่อไป
+            และเมื่อระบบชี้เป้าได้ว่าช่วงชั้นไหนอ่อนแอ การซ่อมจะทำเฉพาะจุด ใช้วัสดุน้อยลง</p>
+          </div>
+          <div class="card">
+            <span class="kicker">ด้านเศรษฐกิจ</span>
+            <h4>เปลี่ยนจากจ่ายก้อนโตเมื่อพัง เป็นจ่ายเล็กน้อยเพื่อป้องกัน</h4>
+            <p class="mini" style="margin:8px 0 0">ต้นทุนขยายจุดวัดที่ต่ำมาก (60 บาทต่อชั้น) และค่าใช้จ่ายรายเดือนศูนย์บาท ทำให้ระบบขยายขนาดได้จริงในเชิงเศรษฐศาสตร์
+            และช่วยลดการนำเข้าเครื่องมือราคาแพง</p>
+          </div>
+          <div class="card">
+            <span class="kicker">ด้านสังคม</span>
+            <h4>เปลี่ยนความกลัวให้เป็นการตัดสินใจบนข้อมูล</h4>
+            <p class="mini" style="margin:8px 0 0">เมื่อเกิดแผ่นดินไหวหรือพายุ ผู้อยู่อาศัยในอาคารสูงมักตื่นตระหนกเพราะไม่มีข้อมูล
+            การมีแดชบอร์ดที่รายงานเปอร์เซ็นต์ความแข็งแรงแบบเรียลไทม์พร้อมแจ้งเตือนเข้ามือถือช่วยลดความตื่นตระหนก</p>
+          </div>
+          <div class="card">
+            <span class="kicker">ด้านการศึกษา</span>
+            <h4>หมุนเวียนทั้งวัสดุและองค์ความรู้</h4>
+            <p class="mini" style="margin:8px 0 0">ใช้เป็นสื่อการสอนแบบลงมือปฏิบัติในวิชาฟิสิกส์ (การสั่นและการสั่นพ้อง) และวิทยาการคำนวณ
+            โดยตัวเครื่องถอดประกอบได้ นักเรียนรุ่นต่อไปจึงประกอบและทดลองซ้ำได้เอง</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>SmartVibe — ระบบตรวจสุขภาพโครงสร้างอาคารรายชั้นด้วยความถี่ธรรมชาติและไอโอที<br>
+    เนื้อหาทั้งหมดบนหน้านี้มาจากเอกสารและซอร์สโค้ดของโครงงาน ไม่มีตัวเลขใดถูกสร้างขึ้นใหม่</p>
+  </div>
+</footer>
+
+<!-- ══════════ OVERLAY: เมนูหัวข้อ ══════════ -->
+<div class="overlay" id="menu" role="dialog" aria-modal="true" aria-label="สารบัญหัวข้อ">
+  <div class="overlay-bar">
+    <div class="overlay-bar-inner">
+      <span class="overlay-title">หัวข้อทั้งหมด</span>
+      <button class="btn" data-close="menu">ปิด</button>
+    </div>
+  </div>
+  <div class="overlay-body">
+    <div class="menu-group">
+      <div class="menu-group-label">เริ่มต้นที่นี่</div>
+      <div class="menu-cards">
+        <a class="menu-card" href="#what"><span class="menu-card-n">01</span><div class="menu-card-t">โปรเจกต์นี้คืออะไร</div><div class="menu-card-d">ปัญหาที่แก้ · ไอเดียหลัก · ขอบเขตที่ตอบได้และตอบไม่ได้</div></a>
+        <a class="menu-card" href="#how"><span class="menu-card-n">02</span><div class="menu-card-t">ระบบทำงานยังไง</div><div class="menu-card-d">เส้นทางข้อมูล 6 ขั้น จากลำโพงถึงหน้าจอ</div></a>
+        <a class="menu-card" href="#simple"><span class="menu-card-n">03</span><div class="menu-card-t">อธิบายแบบไม่ใช้ศัพท์เทคนิค</div><div class="menu-card-d">แก้วร้าว · สายกีตาร์ · ไม้บรรทัดขอบโต๊ะ</div></a>
+      </div>
+    </div>
+    <div class="menu-group">
+      <div class="menu-group-label">เจาะลึก</div>
+      <div class="menu-cards">
+        <a class="menu-card" href="#theory"><span class="menu-card-n">04</span><div class="menu-card-t">ทฤษฎีการสั่นสะเทือน</div><div class="menu-card-d">fn · Health · โหมด · Transmissibility · ตารางความไว</div></a>
+        <a class="menu-card" href="#dsp"><span class="menu-card-n">05</span><div class="menu-card-t">การประมวลผลสัญญาณ</div><div class="menu-card-d">8 ขั้นตอน · Welch · Nyquist · coherence</div></a>
+        <a class="menu-card" href="#hardware"><span class="menu-card-n">06</span><div class="menu-card-t">โครงสร้างและฮาร์ดแวร์</div><div class="menu-card-d">ตึกจำลอง · ESP32-S3 · TCA9548A · สองคอร์</div></a>
+        <a class="menu-card" href="#software"><span class="menu-card-n">07</span><div class="menu-card-t">ซอฟต์แวร์และโค้ด</div><div class="menu-card-d">สถาปัตยกรรม 43 ไฟล์ · ระบบสรุปผลสองชั้น</div></a>
+      </div>
+    </div>
+    <div class="menu-group">
+      <div class="menu-group-label">สำหรับวันแข่ง</div>
+      <div class="menu-cards">
+        <a class="menu-card" href="#warstories"><span class="menu-card-n">08</span><div class="menu-card-t">ปัญหาที่เจอและวิธีแก้</div><div class="menu-card-d">บั๊กใหญ่ 6 ตัว · วิวัฒนาการ 3 รุ่น</div></a>
+        <a class="menu-card" href="#qa"><span class="menu-card-n">09</span><div class="menu-card-t">คำถามที่กรรมการจะถาม</div><div class="menu-card-d">6 กลุ่มคำถาม พร้อมคำตอบที่พูดได้ทันที</div></a>
+        <a class="menu-card" href="#references"><span class="menu-card-n">10</span><div class="menu-card-t">งานวิจัยอ้างอิง</div><div class="menu-card-d">13 รายการ · กรอบ 4 ระดับของ Rytter</div></a>
+      </div>
+    </div>
+    <div class="menu-group">
+      <div class="menu-group-label">แนวคิดของงาน</div>
+      <div class="menu-cards">
+        <a class="menu-card" href="#circular"><span class="menu-card-n">11</span><div class="menu-card-t">วิศวกรรมเชิงหมุนเวียน</div><div class="menu-card-d">ชะลอวงจร · ลดขนาดวงจร · ปิดวงจร</div></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ OVERLAY: เนื้อล้วน ══════════ -->
+<div class="overlay" id="essentials" role="dialog" aria-modal="true" aria-label="เนื้อล้วน">
+  <div class="overlay-bar no-print">
+    <div class="overlay-bar-inner">
+      <span class="overlay-title">เนื้อล้วน · Essentials</span>
+      <button class="btn" id="btn-print">พิมพ์หน้านี้</button>
+      <button class="btn" data-close="essentials">ปิด</button>
+    </div>
+  </div>
+  <div class="overlay-body" id="essentials-body">
+   <div class="e-wrap">
+
+    <div class="e-head">
+      <h2>SmartVibe — เนื้อล้วน</h2>
+      <p>ข้อเท็จจริง ตัวเลข สูตร และตารางเท่านั้น</p>
+    </div>
+
+    <!-- 1 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">01</span><span class="t">นิยาม</span></div>
+      <p class="e-def">ระบบเฝ้าระวังความเสียหายโครงสร้างจากการเปลี่ยนแปลงความถี่ธรรมชาติและอัตราส่วนการสั่นระหว่างชั้น</p>
+    </div>
+
+    <!-- 2 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">02</span><span class="t">สูตรหลัก</span></div>
+      <div class="e-eq">
+        <span>f<sub>n</sub> = (1/2&pi;) &radic;(k/m)</span>
+        <span>Health = (f<sub>n</sub>/f<sub>n0</sub>)<sup>2</sup> &times; 100</span>
+        <span>T<sub>21</sub> = X<sub>2</sub>/X<sub>1</sub></span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">03</span><span class="t">สเปกฮาร์ดแวร์</span></div>
+      <div class="e-kv">
+        <span>ESP32-S3 N16R8</span><span>MPU-6050 ×3</span><span>TCA9548A @0x70</span>
+        <span>I2C 400 kHz</span><span>SDA 8 · SCL 9</span><span>50 Hz</span><span>Nyquist 25 Hz</span>
+        <span>BATCH 25</span><span>QUEUE 8</span><span>KEEP 60 s</span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">04</span><span class="t">ค่าที่วัดได้จริง</span></div>
+      <div class="e-kv">
+        <span>f<sub>n</sub> = 11.00 Hz</span>
+        <span>แอมพลิจูด 0.0918 / 0.1568 / 0.2175</span>
+        <span>T<sub>21</sub> = 1.708 (coh 0.99)</span>
+        <span>T<sub>32</sub> = 1.382 (coh 0.99)</span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">05</span><span class="t">ทฤษฎี vs วัดจริง</span></div>
+      <div class="table-scroll"><table>
+        <thead><tr><th></th><th>ทฤษฎี</th><th>วัดได้จริง</th><th>ต่างกัน</th></tr></thead>
+        <tbody>
+          <tr><th>T<sub>21</sub></th><td class="num">1.802</td><td class="num">1.708</td><td class="num">5.2%</td></tr>
+          <tr><th>T<sub>32</sub></th><td class="num">1.247</td><td class="num">1.382</td><td class="num">10.8%</td></tr>
+          <tr><th>แอมพลิจูด 1:2:3</th><td class="num">0.445 : 0.802 : 1.000</td><td class="num">0.42 : 0.72 : 1.00</td><td>—</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- 6 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">06</span><span class="t">โหมดการสั่น · shear building 3-DOF</span></div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>โหมด</th><th>ความถี่เทียบโหมด 1</th><th>ชั้น 1</th><th>ชั้น 2</th><th>ชั้น 3</th><th>รูปร่าง</th></tr></thead>
+        <tbody>
+          <tr><th>1</th><td class="num">1.000</td><td class="num">0.445</td><td class="num">0.802</td><td class="num">1.000</td><td>เอนทางเดียวกันทั้งตึก</td></tr>
+          <tr><th>2</th><td class="num">2.802</td><td class="num">−1.000</td><td class="num">−0.445</td><td class="num">0.802</td><td>บิดกลับทิศ 1 ครั้ง</td></tr>
+          <tr><th>3</th><td class="num">4.049</td><td class="num">0.802</td><td class="num">−1.000</td><td class="num">0.445</td><td>บิดกลับทิศ 2 ครั้ง</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- 7 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">07</span><span class="t">ลายนิ้วมือความเสียหาย · ลด k 30% ทีละช่วงชั้น</span></div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>ความเสียหายอยู่ที่</th><th>&Delta;f<sub>n</sub></th><th>Health</th><th>&Delta;T<sub>21</sub></th><th>&Delta;T<sub>32</sub></th></tr></thead>
+        <tbody>
+          <tr><th>ไม่มี</th><td class="num">0%</td><td class="num">100%</td><td class="num">0%</td><td class="num">0%</td></tr>
+          <tr><th>ช่วงชั้น 1</th><td class="num">−10.1%</td><td class="num">80.8%</td><td class="num">−14.5%</td><td class="num">−4.5%</td></tr>
+          <tr><th>ช่วงชั้น 2</th><td class="num">−6.9%</td><td class="num">86.8%</td><td class="num">+21.2%</td><td class="num">−3.2%</td></tr>
+          <tr><th>ช่วงชั้น 3</th><td class="num">−2.3%</td><td class="num">95.4%</td><td class="num">+0.5%</td><td class="num">+9.8%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- 8 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">08</span><span class="t">ตารางความไว · ช่วงชั้น 2 เสียหายหนักขึ้นทีละขั้น</span></div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>k หายไป</th><th>&Delta;f<sub>n</sub></th><th>Health</th><th>สถานะจาก f<sub>n</sub></th><th>&Delta;T<sub>21</sub></th><th>สถานะจาก T</th></tr></thead>
+        <tbody>
+          <tr><th class="num">10%</th><td class="num">−1.9%</td><td class="num">96.2%</td><td>ปกติ</td><td class="num">+5.4%</td><td>ปกติ</td></tr>
+          <tr class="row-hl"><th class="num">20%</th><td class="num">−4.1%</td><td class="num">91.9%</td><td>ยังบอกว่าปกติ</td><td class="num">+12.2%</td><td>จับได้แล้ว</td></tr>
+          <tr><th class="num">30%</th><td class="num">−6.9%</td><td class="num">86.8%</td><td>เฝ้าระวัง</td><td class="num">+21.2%</td><td>อันตราย</td></tr>
+          <tr><th class="num">40%</th><td class="num">−10.2%</td><td class="num">80.7%</td><td>เฝ้าระวัง</td><td class="num">+33.2%</td><td>อันตราย</td></tr>
+          <tr><th class="num">50%</th><td class="num">−14.3%</td><td class="num">73.4%</td><td>เฝ้าระวัง</td><td class="num">+50.4%</td><td>อันตราย</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- 9 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">09</span><span class="t">พารามิเตอร์ประมวลผล</span></div>
+      <div class="e-kv">
+        <span>nperseg 512</span><span>Hann</span><span>overlap 50%</span><span>&Delta;f 0.098 Hz</span>
+        <span>buffer 900</span><span>median 7 จุด</span><span>COH_MIN 0.75</span><span>MIN_CONSEC 3</span>
+        <span>ค้นหา 2–22.5 Hz</span><span>REFRESH_MS 2200</span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">10</span><span class="t">เกณฑ์ตัดสิน</span></div>
+      <div class="e-kv">
+        <span>g2y 90</span><span>y2r 70</span><span>y2g 94</span><span>r2y 75</span>
+        <span>rms_min 0.010</span><span>T_NOTABLE 10%</span><span>T_STRONG 20%</span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">11</span><span class="t">กฎการระบุตำแหน่ง</span></div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>เงื่อนไข</th><th>สรุปว่า</th></tr></thead>
+        <tbody>
+          <tr><th>ทั้งสองช่วงเปลี่ยน &lt; 10%</th><td>ไม่พบความผิดปกติ</td></tr>
+          <tr><th>เฉพาะ T<sub>21</sub> เปลี่ยน ≥ 10%</th><td>ความเสียหายที่ช่วงชั้น 2 (เกิน 20% = แดง)</td></tr>
+          <tr><th>เฉพาะ T<sub>32</sub> เปลี่ยน ≥ 10%</th><td>ความเสียหายที่ช่วงชั้น 3</td></tr>
+          <tr><th>ทั้งคู่เปลี่ยนไปทางเดียวกัน</th><td>ผิดปกติทั้งโครงสร้าง</td></tr>
+          <tr><th>coherence ต่ำจนอ่านไม่ได้</th><td>“ยังอ่านค่าไม่ได้” ไม่ใช่ “ปกติ”</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- 12 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">12</span><span class="t">ข้อจำกัด</span></div>
+      <ol class="e-list">
+        <li>ระบุตำแหน่งได้แค่ระดับช่วงชั้น ไม่ถึงระดับเสาแต่ละต้น</li>
+        <li>ไม่มีเซ็นเซอร์ที่ฐาน ตรวจช่วงชั้น 1 ตรง ๆ ไม่ได้</li>
+        <li>ยังไม่ชดเชยผลของอุณหภูมิ</li>
+        <li>ความเสียหายเบาที่ช่วงชั้นบนสุดอาจอยู่ใต้เกณฑ์ตรวจจับ</li>
+      </ol>
+    </div>
+
+    <!-- 13 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">13</span><span class="t">ระดับตามกรอบ Rytter (1993)</span></div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>ระดับ</th><th>ชื่อ</th><th>SmartVibe</th></tr></thead>
+        <tbody>
+          <tr><th class="num">1</th><td>Detection</td><td>ทำได้</td></tr>
+          <tr><th class="num">2</th><td>Localization</td><td>ทำได้ระดับช่วงชั้น</td></tr>
+          <tr><th class="num">3</th><td>Assessment</td><td>ทำได้บางส่วน</td></tr>
+          <tr><th class="num">4</th><td>Prediction</td><td>ทำไม่ได้</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- 14 -->
+    <div class="e-block">
+      <div class="e-h"><span class="n">14</span><span class="t">5 ประโยคที่ต้องท่อง</span></div>
+      <ol class="e-list">
+        <li>ตึกทุกหลังมีเสียงประจำตัว ถ้าข้างในเสียหาย เสียงจะเปลี่ยน</li>
+        <li>โครงสร้างอ่อนแอลงทำให้สั่นช้าลง เพราะ f<sub>n</sub> แปรผันตามรากที่สองของ k/m</li>
+        <li>ความถี่บอกว่ามีปัญหา อัตราส่วนการสั่นระหว่างชั้นบอกว่าปัญหาอยู่ตรงไหน</li>
+        <li>ระบบมีเกณฑ์ปฏิเสธข้อมูลตัวเอง ถ้าข้อมูลเชื่อไม่ได้ มันจะไม่ยอมสรุป</li>
+        <li>AI เป็นแค่ตัวเรียบเรียงคำอธิบาย การตัดสินทั้งหมดมาจากสูตรฟิสิกส์ที่เปิดโค้ดชี้ให้ดูได้</li>
+      </ol>
+    </div>
+
+   </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

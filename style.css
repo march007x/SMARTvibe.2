@@ -1,0 +1,968 @@
+/* ============================================================
+   SmartVibe — ระบบดีไซน์
+   โทน: พื้นที่ว่างเยอะ · สีน้อย · ตัวอักษรเป็นพระเอก · เส้นขอบ 1px
+   ============================================================ */
+
+/* ---------- 1. โทเคนสี : โหมดสว่าง (ค่าเริ่มต้น) ---------- */
+:root {
+  --bg:            #fbfaf8;
+  --bg-2:          #f3f1ec;
+  --surface:       #ffffff;
+  --surface-2:     #f7f5f1;
+  --border:        #e2dfd8;
+  --border-strong: #c9c5ba;
+
+  --text:   #17170f;
+  --text-2: #46443c;
+  --text-3: #706d63;
+
+  --accent:      #a63f18;
+  --accent-weak: #f2e7e1;
+  --accent-line: #d9b6a5;
+
+  --ok:     #1f6b45;
+  --ok-bg:  #e6f2ea;
+  --warn:   #7d5600;
+  --warn-bg:#f7efdc;
+  --danger: #a51f1a;
+  --danger-bg:#f6e5e3;
+
+  --radius:    12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+
+  --maxw:      1120px;
+  --prose:     720px;
+
+  /* สีของกราฟ — ผ่านการตรวจ contrast และการมองเห็นสีบกพร่องแล้ว */
+  --s1: #a63f18;   /* อัตราส่วนการสั่น T21 */
+  --s2: #1f6f9c;   /* ความถี่ธรรมชาติ fn */
+
+  --font-sans: "IBM Plex Sans Thai", "Noto Sans Thai", "Sarabun",
+               "Leelawadee UI", "Thonburi", -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", ui-monospace,
+               SFMono-Regular, Menlo, Consolas, monospace;
+
+  --ease: cubic-bezier(.4, 0, .2, 1);
+  color-scheme: light;
+}
+
+/* ---------- 2. โหมดมืด : ตามระบบ ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:            #100f0d;
+    --bg-2:          #171613;
+    --surface:       #1a1916;
+    --surface-2:     #211f1b;
+    --border:        #2e2c27;
+    --border-strong: #423f38;
+
+    --text:   #f2f0ea;
+    --text-2: #c1bdb3;
+    --text-3: #8e8a80;
+
+    --accent:      #f0906a;
+    --accent-weak: #2b1d16;
+    --accent-line: #5c3927;
+
+    --ok:     #66c391;
+    --ok-bg:  #16281f;
+    --warn:   #e0ac4a;
+    --warn-bg:#2a2113;
+    --danger: #f07a70;
+    --danger-bg:#2c1917;
+    --s1: #d9744c;
+    --s2: #4593cf;
+    color-scheme: dark;
+  }
+}
+
+/* ---------- 3. โหมดมืด : ผู้ใช้กดปุ่มเอง ---------- */
+:root[data-theme="dark"] {
+  --bg:            #100f0d;
+  --bg-2:          #171613;
+  --surface:       #1a1916;
+  --surface-2:     #211f1b;
+  --border:        #2e2c27;
+  --border-strong: #423f38;
+
+  --text:   #f2f0ea;
+  --text-2: #c1bdb3;
+  --text-3: #8e8a80;
+
+  --accent:      #f0906a;
+  --accent-weak: #2b1d16;
+  --accent-line: #5c3927;
+
+  --ok:     #66c391;
+  --ok-bg:  #16281f;
+  --warn:   #e0ac4a;
+  --warn-bg:#2a2113;
+  --danger: #f07a70;
+  --danger-bg:#2c1917;
+  --s1: #d9744c;
+  --s2: #4593cf;
+  color-scheme: dark;
+}
+
+/* ---------- 4. รีเซ็ต ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.85;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { max-width: 100%; }
+svg { display: block; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+::selection { background: var(--accent-weak); color: var(--text); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- 5. ตัวอักษร ---------- */
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+h1 { font-size: clamp(2.35rem, 6.2vw, 4.25rem); line-height: 1.22; letter-spacing: -0.03em; font-weight: 650; }
+h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem);  line-height: 1.28; letter-spacing: -0.025em; }
+h3 { font-size: clamp(1.12rem, 2vw, 1.32rem); letter-spacing: -0.01em; }
+h4 { font-size: 1.02rem; letter-spacing: 0; }
+
+p { margin: 0 0 1.15em; color: var(--text-2); }
+p:last-child { margin-bottom: 0; }
+
+strong { font-weight: 600; color: var(--text); }
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  letter-spacing: 0;
+}
+
+code:not(pre code) {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1em 0.38em;
+  color: var(--text);
+}
+
+/* ---------- 6. โครงหน้า ---------- */
+.wrap  { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+.prose { max-width: var(--prose); }
+
+.section {
+  padding: 96px 0;
+  border-top: 1px solid var(--border);
+}
+.section:first-of-type { border-top: none; }
+
+.section-head { margin-bottom: 44px; }
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 14px;
+}
+
+.lede {
+  font-size: 1.13rem;
+  color: var(--text-2);
+  margin-top: 18px;
+  max-width: var(--prose);
+}
+
+/* คำถามที่ส่วนนี้ตอบ */
+.asks {
+  margin: 22px 0 0;
+  padding: 14px 18px;
+  border-left: 2px solid var(--accent-line);
+  background: var(--surface-2);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  max-width: var(--prose);
+}
+.asks-label {
+  display: block;
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+.asks p { margin: 0; color: var(--text); font-weight: 500; }
+
+.stack > * + * { margin-top: 28px; }
+.stack-lg > * + * { margin-top: 56px; }
+
+/* ---------- 7. Header ---------- */
+.progress {
+  position: fixed; top: 0; left: 0;
+  height: 2px; width: 0%;
+  background: var(--accent);
+  z-index: 90;
+  transition: width .1s linear;
+}
+
+.header {
+  position: sticky; top: 0;
+  z-index: 80;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(1.6) blur(12px);
+  -webkit-backdrop-filter: saturate(1.6) blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .header { background: var(--bg); }
+}
+
+.header-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand {
+  display: flex; align-items: baseline; gap: 9px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-size: 1.02rem;
+  text-decoration: none;
+  margin-right: auto;
+  min-width: 0;
+}
+.brand:hover { text-decoration: none; }
+.brand-sub {
+  font-size: 0.74rem;
+  font-weight: 400;
+  color: var(--text-3);
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+}
+.btn:hover { background: var(--surface-2); border-color: var(--text-3); text-decoration: none; }
+.btn:active { background: var(--bg-2); }
+
+.btn-accent {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-weak);
+}
+.btn-accent:hover { background: var(--accent-weak); border-color: var(--accent); filter: brightness(0.98); }
+
+.btn-solid {
+  background: var(--text); color: var(--bg); border-color: var(--text);
+}
+.btn-solid:hover { background: var(--text-2); border-color: var(--text-2); color: var(--bg); }
+
+.btn-lg { height: 46px; padding: 0 22px; font-size: 0.95rem; }
+
+.btn-icon { width: 36px; padding: 0; justify-content: center; }
+
+.btn-label-sm { display: inline; }
+
+/* ---------- 8. Hero ---------- */
+.hero {
+  padding: 92px 0 84px;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 { max-width: 15ch; }
+.hero-quote {
+  margin: 30px 0 0;
+  max-width: 640px;
+  font-size: 1.16rem;
+  line-height: 1.85;
+  color: var(--text-2);
+  border-left: 2px solid var(--accent-line);
+  padding-left: 20px;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 5px 14px;
+  margin-bottom: 28px;
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 38px; }
+
+/* ---------- 9. Stat cards ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 64px;
+}
+.stat { background: var(--bg); padding: 22px 20px; }
+.stat-num {
+  font-size: 1.72rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.stat-num small { font-size: 0.62em; font-weight: 500; color: var(--text-3); letter-spacing: 0; }
+.stat-label { font-size: 0.82rem; color: var(--text-3); margin-top: 5px; line-height: 1.5; }
+
+/* ---------- 10. การ์ด ---------- */
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 24px 26px;
+}
+.card h3 { margin-bottom: 10px; }
+.card > p:last-child { margin-bottom: 0; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+
+.card-ok     { border-color: color-mix(in srgb, var(--ok) 34%, var(--border)); }
+.card-danger { border-color: color-mix(in srgb, var(--danger) 34%, var(--border)); }
+.card-accent { border-color: var(--accent-line); background: var(--accent-weak); }
+/* พื้นหลังสีอ่อนทำให้สีเทาจาง contrast ไม่ผ่าน WCAG AA จึงยกระดับขึ้นหนึ่งขั้น */
+.card-accent .kicker, .card-accent .mini,
+.asks .asks-label, .callout .mini,
+tr.row-hl .mini { color: var(--text-2); }
+
+/* ---------- 11. ตาราง ---------- */
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  -webkit-overflow-scrolling: touch;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  min-width: 460px;
+}
+thead th {
+  text-align: left;
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  color: var(--text-3);
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border-strong);
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+tbody td {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  color: var(--text-2);
+  vertical-align: top;
+}
+tbody tr:first-child td { border-top: none; }
+tbody th {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+  font-weight: 500;
+  color: var(--text);
+  vertical-align: top;
+}
+tbody tr:first-child th { border-top: none; }
+.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.t-ok     { color: var(--ok); font-weight: 500; }
+.t-warn   { color: var(--warn); font-weight: 500; }
+.t-danger { color: var(--danger); font-weight: 500; }
+tr.row-hl td, tr.row-hl th {
+  background: var(--accent-weak);
+  border-top-color: var(--accent-line);
+}
+tr.row-hl + tr td, tr.row-hl + tr th { border-top-color: var(--accent-line); }
+.table-note { font-size: 0.83rem; color: var(--text-3); margin-top: 10px; }
+
+/* ---------- 12. สูตรคณิตศาสตร์ ---------- */
+.formula {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 26px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  text-align: center;
+}
+.formula-eq {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: clamp(1.05rem, 3vw, 1.4rem);
+  color: var(--text);
+  line-height: 1.4;
+}
+.formula-eq i { font-style: italic; font-family: var(--font-sans); font-weight: 500; }
+.formula-cap { font-size: 0.85rem; color: var(--text-3); max-width: 46ch; line-height: 1.7; }
+
+.frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  line-height: 1.25;
+  margin: 0 2px;
+}
+.frac .num-part { padding: 0 6px 2px; }
+.frac .den-part { padding: 2px 6px 0; border-top: 1.4px solid currentColor; }
+
+.sqrt {
+  display: inline-flex;
+  align-items: stretch;
+  margin: 0 1px;
+}
+.sqrt::before { content: "√"; font-size: 1.35em; line-height: 1; }
+.sqrt > span {
+  border-top: 1.4px solid currentColor;
+  padding: 2px 5px 0;
+  margin-top: 1px;
+}
+
+sup, sub { font-size: 0.68em; line-height: 0; }
+
+/* ---------- 13. ขั้นตอน / ลิสต์ ---------- */
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: s; max-width: 820px; }
+.steps li {
+  counter-increment: s;
+  position: relative;
+  padding: 0 0 0 46px;
+  min-height: 30px;
+}
+.steps li + li { margin-top: 20px; }
+.steps li::before {
+  content: counter(s);
+  position: absolute; left: 0; top: 1px;
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-3);
+  background: var(--surface);
+}
+.steps b { display: block; color: var(--text); font-weight: 600; }
+.steps span { color: var(--text-2); font-size: 0.94rem; }
+
+.ticks { list-style: none; margin: 0; padding: 0; }
+.ticks li {
+  position: relative;
+  padding-left: 26px;
+  color: var(--text-2);
+}
+.ticks li + li { margin-top: 9px; }
+.ticks li::before {
+  content: "";
+  position: absolute; left: 4px; top: 0.78em;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--text-3);
+}
+.ticks-ok li::before  { background: var(--ok); }
+.ticks-no li::before  { background: var(--danger); }
+
+/* ---------- 14. Overlay (เมนู + เนื้อล้วน) ---------- */
+.overlay {
+  position: fixed; inset: 0;
+  z-index: 100;
+  background: var(--bg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .22s var(--ease), visibility .22s var(--ease);
+}
+.overlay.open { opacity: 1; visibility: visible; }
+
+.overlay-bar {
+  position: sticky; top: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  z-index: 2;
+}
+.overlay-bar-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 62px;
+  display: flex; align-items: center; gap: 12px;
+}
+.overlay-title { font-weight: 650; letter-spacing: -0.02em; margin-right: auto; }
+.overlay-body { max-width: var(--maxw); margin: 0 auto; padding: 44px 24px 96px; }
+
+.menu-group + .menu-group { margin-top: 44px; }
+.menu-group-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 16px;
+}
+.menu-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+.menu-card {
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 20px 22px;
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color .2s var(--ease), background .2s var(--ease);
+}
+.menu-card:hover { border-color: var(--text-3); background: var(--surface-2); text-decoration: none; }
+.menu-card-n {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-3);
+  display: block;
+  margin-bottom: 7px;
+}
+.menu-card-t { font-weight: 600; font-size: 1.02rem; letter-spacing: -0.01em; }
+.menu-card-d { font-size: 0.86rem; color: var(--text-3); margin-top: 5px; line-height: 1.6; }
+
+/* ---------- 15. Accordion ---------- */
+.acc {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+.acc + .acc { margin-top: 14px; }
+.acc > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 16px 20px;
+  font-weight: 500;
+  color: var(--text);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  transition: background .2s var(--ease);
+}
+.acc > summary::-webkit-details-marker { display: none; }
+.acc > summary:hover { background: var(--surface-2); }
+.acc > summary::after {
+  content: "+";
+  margin-left: auto;
+  font-family: var(--font-mono);
+  color: var(--text-3);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  transition: transform .2s var(--ease);
+  flex: none;
+}
+.acc[open] > summary::after { content: "−"; }
+.acc[open] > summary { border-bottom: 1px solid var(--border); }
+.acc-body { padding: 18px 20px 22px; color: var(--text-2); font-size: 0.96rem; }
+.acc-body > *:last-child { margin-bottom: 0; }
+.q-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  flex: none;
+  line-height: 1.5;
+}
+
+/* ---------- 16. คำเตือน / กล่องเน้น ---------- */
+.callout {
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent-line);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--surface-2);
+  padding: 18px 22px;
+  max-width: 880px;
+}
+.callout-title {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+.callout p:last-child { margin-bottom: 0; }
+.callout-danger { border-left-color: var(--danger); }
+.callout-ok     { border-left-color: var(--ok); }
+
+:where(.pull) { margin: 0; }
+.pull {
+  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+  line-height: 1.7;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  border-left: 2px solid var(--accent);
+  padding-left: 24px;
+  max-width: 900px;
+}
+
+/* ---------- 16b. ยูทิลิตี้ ---------- */
+.block > h3 { margin-bottom: 16px; }
+.block > .lede { margin-top: 0; margin-bottom: 20px; }
+
+.bigline {
+  font-size: clamp(1.05rem, 2.5vw, 1.38rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px 12px;
+  color: var(--text-2);
+  background: var(--surface);
+  white-space: nowrap;
+}
+
+.dl { margin: 0; }
+.dl > div { padding: 13px 0; border-top: 1px solid var(--border); }
+.dl > div:first-child { border-top: none; padding-top: 0; }
+.dl dt { font-weight: 600; color: var(--text); font-size: 0.97rem; }
+.dl dd { margin: 4px 0 0; color: var(--text-2); font-size: 0.93rem; }
+
+.mini { font-size: 0.86rem; color: var(--text-3); }
+
+pre {
+  margin: 0;
+  padding: 20px 22px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--text-2);
+  tab-size: 2;
+}
+pre b { color: var(--accent); font-weight: 500; }
+pre i { color: var(--text-3); font-style: normal; }
+
+.fig-slot:empty { display: none; }
+.fig {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 24px 20px 18px;
+}
+.fig-cap { font-size: 0.85rem; color: var(--text-3); margin-top: 14px; text-align: center; }
+.fig svg { width: 100%; height: auto; }
+
+/* จอเล็ก: ให้ไดอะแกรมเลื่อนแนวนอนในกรอบตัวเอง แทนที่จะย่อจนตัวหนังสืออ่านไม่ออก */
+.svg-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+@media (max-width: 760px) {
+  .svg-scroll svg { min-width: var(--minw, 560px); }
+  .svg-scroll { margin: 0 -4px; padding: 0 4px; }
+  .fig::after {
+    content: "เลื่อนไดอะแกรมแนวนอนได้";
+    display: block;
+    margin-top: 10px;
+    font-size: 0.78rem;
+    color: var(--text-3);
+    text-align: center;
+  }
+}
+
+/* ---------- 16d. ไดอะแกรม SVG ---------- */
+.d-grid  { stroke: var(--border); stroke-width: 1; }
+.d-axis  { stroke: var(--border-strong); stroke-width: 1; }
+.d-tick  { fill: var(--text-3); font-size: 12px; font-family: var(--font-sans); }
+.d-label { fill: var(--text-2); font-size: 13px; font-family: var(--font-sans); }
+.d-title { fill: var(--text); font-size: 13px; font-weight: 600; font-family: var(--font-sans); }
+.d-muted { fill: var(--text-3); font-size: 11.5px; font-family: var(--font-sans); }
+.d-mono  { font-family: var(--font-mono); font-size: 12px; }
+
+.d-s1 { stroke: var(--s1); }
+.d-s2 { stroke: var(--s2); }
+.d-f1 { fill: var(--s1); }
+.d-f2 { fill: var(--s2); }
+
+.d-line { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.d-dot  { stroke: var(--surface); stroke-width: 2; }
+.d-thr  { stroke: var(--text-3); stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; }
+.d-guide{ stroke: var(--accent-line); stroke-width: 1.5; stroke-dasharray: 4 4; fill: none; }
+
+.d-box {
+  fill: var(--surface-2);
+  stroke: var(--border-strong);
+  stroke-width: 1;
+}
+.d-box-accent { fill: var(--accent-weak); stroke: var(--accent-line); }
+.d-arrow { stroke: var(--border-strong); stroke-width: 1.5; fill: none; }
+.d-slab  { stroke: var(--text-2); stroke-width: 3.5; stroke-linecap: round; }
+.d-col   { stroke: var(--text-3); stroke-width: 1.8; fill: none; }
+
+.d-boxtitle { fill: var(--text); font-size: 17px; font-weight: 600; font-family: var(--font-sans); }
+.d-boxsub   { fill: var(--text-3); font-size: 13px; font-family: var(--font-mono); }
+
+/* กล่องที่กดได้ในแผนผังระบบ */
+.d-hit { cursor: pointer; }
+.d-hit rect.d-box { transition: fill .2s var(--ease), stroke .2s var(--ease); }
+.d-hit:hover rect.d-box, .d-hit[aria-expanded="true"] rect.d-box {
+  fill: var(--accent-weak);
+  stroke: var(--accent);
+}
+.d-hit:focus { outline: none; }
+.d-hit:focus-visible rect.d-box { stroke: var(--accent); stroke-width: 2; }
+
+.fig-note {
+  margin-top: 14px;
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent-line);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--surface-2);
+  padding: 14px 18px;
+  font-size: 0.92rem;
+  color: var(--text-2);
+  min-height: 74px;
+}
+.fig-note b { display: block; color: var(--text); margin-bottom: 3px; }
+
+/* tooltip ของกราฟความไว */
+.chart-wrap { position: relative; }
+.chart-tip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--text-2);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity .15s var(--ease);
+  z-index: 3;
+}
+.chart-tip.on { opacity: 1; }
+.chart-tip b { display: block; color: var(--text); margin-bottom: 3px; }
+.chart-tip i { font-style: normal; font-variant-numeric: tabular-nums; }
+.tip-key { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; vertical-align: 0; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 16px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; font-size: 0.86rem; color: var(--text-2); }
+.legend i { width: 16px; height: 3px; border-radius: 2px; display: inline-block; }
+
+/* ---------- 16c. หน้า "เนื้อล้วน" ---------- */
+.e-wrap { max-width: 900px; margin: 0 auto; }
+
+.e-head { margin-bottom: 30px; }
+.e-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+.e-head p { margin: 8px 0 0; font-size: 0.92rem; }
+
+.e-block { margin-bottom: 26px; }
+
+.e-h {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  border-bottom: 1px solid var(--border-strong);
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+.e-h .n { color: var(--accent); font-weight: 500; }
+.e-h .t { color: var(--text); font-family: var(--font-sans); font-weight: 600; font-size: 0.95rem; letter-spacing: 0; }
+
+.e-def { font-size: 1.02rem; font-weight: 500; color: var(--text); line-height: 1.65; margin: 0; }
+
+.e-block table { min-width: 0; font-size: 0.85rem; }
+.e-block thead th { padding: 8px 12px; font-size: 0.72rem; }
+.e-block tbody td, .e-block tbody th { padding: 7px 12px; }
+.e-block .table-scroll { border-radius: var(--radius-sm); }
+
+.e-kv { display: flex; flex-wrap: wrap; gap: 7px; }
+.e-kv span {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 4px 10px;
+  color: var(--text);
+  background: var(--surface);
+  white-space: nowrap;
+}
+
+.e-list { margin: 0; padding-left: 1.3em; }
+.e-list li { color: var(--text); margin-bottom: 5px; font-size: 0.93rem; }
+.e-list li:last-child { margin-bottom: 0; }
+
+.e-eq {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.e-eq span { white-space: nowrap; }
+
+/* ---------- 17. เชิงอรรถ / footer ---------- */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 48px 0 64px;
+  color: var(--text-3);
+  font-size: 0.87rem;
+}
+.footer a { color: var(--text-2); }
+
+/* ---------- 18. แอนิเมชัน ---------- */
+/* ซ่อนไว้ก่อนเฉพาะเมื่อมี JS เท่านั้น — ถ้า JS ไม่ทำงาน เนื้อหาต้องเห็นครบ */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.js .reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+  .js .reveal { opacity: 1; transform: none; }
+}
+
+/* ---------- 19. จอเล็ก ---------- */
+@media (max-width: 720px) {
+  body { font-size: 16.5px; }
+  .wrap, .header-inner, .overlay-bar-inner, .overlay-body { padding-left: 18px; padding-right: 18px; }
+  .section { padding: 64px 0; }
+  .hero { padding: 60px 0 56px; }
+  .brand-sub { display: none; }
+  .btn-label-sm { display: none; }
+  .btn { padding: 0 11px; }
+  .card { padding: 20px 18px; }
+  .stats { margin-top: 44px; }
+  .pull { padding-left: 18px; }
+}
+
+@media (max-width: 380px) {
+  .wrap, .header-inner, .overlay-bar-inner, .overlay-body { padding-left: 14px; padding-right: 14px; }
+}
+
+/* ---------- 20. พิมพ์ (ใช้กับหน้า "เนื้อล้วน") ---------- */
+@media print {
+  @page { size: A4 portrait; margin: 12mm 12mm; }
+
+  html, body { background: #fff !important; color: #000 !important; font-size: 9.6pt; line-height: 1.5; }
+  .header, .progress, .footer, .hero, .section, #menu, .no-print { display: none !important; }
+
+  #essentials {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+  #essentials .overlay-bar { display: none !important; }
+  #essentials .overlay-body { max-width: none; padding: 0; }
+
+  .js .reveal { opacity: 1 !important; transform: none !important; }
+  .e-block { break-inside: avoid; page-break-inside: avoid; margin-bottom: 16px; }
+  .e-h { break-after: avoid; page-break-after: avoid; border-bottom-color: #000 !important; }
+  .e-h .n { color: #000 !important; }
+  .e-kv span { border-color: #999 !important; background: #fff !important; color: #000 !important; }
+  .e-def, .e-list li, .e-eq { color: #000 !important; }
+  .e-head h2 { font-size: 15pt; }
+  .table-scroll, .card, .formula, .callout { border-color: #999 !important; background: #fff !important; }
+  table { min-width: 0; font-size: 8.6pt; }
+  thead th { color: #000 !important; border-bottom-color: #000 !important; padding: 4px 6px; }
+  tbody td, tbody th { border-top-color: #ccc !important; padding: 3.5px 6px; color: #000 !important; }
+  tr.row-hl td, tr.row-hl th { background: #eee !important; font-weight: 700; }
+  a { color: #000 !important; text-decoration: none; }
+  .t-ok, .t-warn, .t-danger { color: #000 !important; }
+}
